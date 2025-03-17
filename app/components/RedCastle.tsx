@@ -3,7 +3,7 @@ import { StylableFC } from "@/lib/types/misc";
 /**
  * The iconic Red Castle of Intania serves as this year’s background.
  */
-const RedCastle: StylableFC = ({ className }) => (
+const RedCastle: StylableFC = ({ className, style }) => (
   <svg
     width={432}
     height={250}
@@ -11,6 +11,7 @@ const RedCastle: StylableFC = ({ className }) => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     className={className}
+    style={style}
   >
     <path
       fillRule="evenodd"
