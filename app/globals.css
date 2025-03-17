@@ -2,6 +2,7 @@
 
 @theme {
   --font-sans: "Archivo", "Chakra Petch", sans-serif;
+  --font-icon: "icon";
 
   --color-dark-red: #420d12;
   --color-just-red: #821923;

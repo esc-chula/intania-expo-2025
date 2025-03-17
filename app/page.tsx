@@ -1,9 +1,9 @@
-import TopAppBar from "./components/TopAppBar";
+import TopAppBar from "@/app/components/TopAppBar";
 
 export default function Home() {
   return (
     <div>
-      <TopAppBar>Page name</TopAppBar>
+      <TopAppBar parentURL="#">Page name</TopAppBar>
     </div>
   );
 }

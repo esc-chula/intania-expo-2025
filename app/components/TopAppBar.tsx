@@ -1,5 +1,6 @@
 import cn from "@/lib/helpers/cn";
 import { StylableFC } from "@/lib/types/misc";
+import Icon from "./Icon";
 
 /**
  * Top App Bar displays the page name and a back button to navigate up.
@@ -10,7 +11,7 @@ import { StylableFC } from "@/lib/types/misc";
 const TopAppBar: StylableFC<{
   children: React.ReactNode;
   parentURL?: string;
-}> = ({ children, className, style }) => (
+}> = ({ children, parentURL, className, style }) => (
   <header
     className={cn(
       `bg-dark-red fixed top-0 flex h-16 w-screen max-w-108 items-center gap-4
@@ -19,7 +20,7 @@ const TopAppBar: StylableFC<{
     )}
     style={style}
   >
-    <div className="border-bright-red h-6 w-6 border-1" /> {/* Placeholder */}
+    {parentURL && <Icon name="arrow_back" />}
     <h1
       className={cn(`text-headline-sm leading-headline-sm grow truncate
         font-bold`)}
