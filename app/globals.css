@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Archivo", "Chakra Petch", sans-serif;
+
+  --color-dark-red: #420d12;
+  --color-just-red: #821923;
+  --color-bright-red: #af2024;
+  --color-yellow: #fef200;
+  --color-cream: #cfc3ad;
+  --color-brown: #292723;
+  --color-dark-gray: #111312;
+  --color-black: #000000;
+  --color-white: 
+  --size-phone: 402px;
+}
