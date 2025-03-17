@@ -7,6 +7,8 @@ import Icon from "./Icon";
  *
  * @param children The name of the page.
  * @param parentURL The URL to navigate up to.
+ * 
+ * @note A temporary example to what a component can look like.
  */
 const TopAppBar: StylableFC<{
   children: React.ReactNode;
