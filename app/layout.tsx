@@ -1,3 +1,4 @@
+import RedCastle from "@/app/components/RedCastle";
 import "@/app/globals.css";
 import cn from "@/lib/helpers/cn";
 import type { Metadata, Viewport } from "next";
@@ -34,6 +35,12 @@ export default function RootLayout({
           `antialiased bg-black text-white`
         )}
       >
+        <div className="bg-dark-red fixed -z-10 w-screen h-32">
+          <RedCastle
+            className={cn(`text-black bg-dark-red w-108 absolute left-1/2
+              -translate-x-1/2`)}
+          />
+        </div>
         <div className="max-w-108 mx-auto">{children}</div>
       </body>
     </html>
