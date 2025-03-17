@@ -41,7 +41,7 @@ export default function RootLayout({
               -translate-x-1/2`)}
           />
         </div>
-        <div className="max-w-108 mx-auto">{children}</div>
+        <div className="max-w-108 font-sans mx-auto">{children}</div>
       </body>
     </html>
   );
