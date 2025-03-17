@@ -1,7 +1,9 @@
+import TopAppBar from "./components/TopAppBar";
+
 export default function Home() {
   return (
-    <p className="font-sans text-center font-bold italic py-4">
-      Intania Expo 2025
-    </p>
+    <div>
+      <TopAppBar>Page name</TopAppBar>
+    </div>
   );
 }
