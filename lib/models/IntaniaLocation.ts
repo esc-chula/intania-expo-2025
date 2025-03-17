@@ -9,16 +9,16 @@ export default class IntaniaLocation {
   /** The building name, i.e. 2, iCanteen, etc. Omit the word building. */
   #building: string;
 
-  constructor(room: string, floor: string, building: string) {
+  constructor(room: string | null, floor: string, building: string) {
     this.#room = room;
     this.#floor = floor;
     this.#building = building;
   }
 
   /** Formats the location as a string. */
-  get string() {
+  get text() {
     return [
-      ...(this.#room ? [SEPARATOR] : []),
+      ...(this.#room ? [this.#room, SEPARATOR] : []),
       `ตึก ${this.#building}`,
       `ชั้น ${this.#floor}`,
     ].join(" ");
