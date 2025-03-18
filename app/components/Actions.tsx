@@ -9,7 +9,10 @@ import { StyleableFC } from "@/lib/types/misc";
 const Actions: StyleableFC<{
   children: React.ReactNode;
 }> = ({ children, className, style }) => (
-  <div className={cn(`flex items-center gap-2`, className)} style={style}>
+  <div
+    className={cn(`iex-actions flex items-center gap-2`, className)}
+    style={style}
+  >
     {children}
   </div>
 );

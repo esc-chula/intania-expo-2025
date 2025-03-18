@@ -1,3 +1,4 @@
+import cn from "@/lib/helpers/cn";
 import { StyleableFC } from "@/lib/types/misc";
 
 /**
@@ -10,7 +11,7 @@ const RedCastle: StyleableFC = ({ className, style }) => (
     viewBox="0 0 432 250"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className={className}
+    className={cn(`iex-red-castle`, className)}
     style={style}
   >
     <path
