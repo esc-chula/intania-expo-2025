@@ -81,7 +81,6 @@ const Interactive: StyleableFC<
         const [x, y] = getRipplePosition(touch);
         startRipple(x, y);
       }}
-      onMouseEnter={() => setTouched(false)}
       onMouseDown={(event: React.MouseEvent) => {
         // Prevent double ripples on touch devices.
         if (touched) return;
