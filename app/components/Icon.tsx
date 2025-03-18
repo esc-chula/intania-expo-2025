@@ -1,5 +1,5 @@
 import cn from "@/lib/helpers/cn";
-import { StylableFC } from "@/lib/types/misc";
+import { StyleableFC } from "@/lib/types/misc";
 
 /**
  * Icon displays a Material Symbol.
@@ -10,7 +10,7 @@ import { StylableFC } from "@/lib/types/misc";
  * 
  * @see {@link https://fonts.google.com/icons Google Fonts}
  */
-const Icon: StylableFC<{
+const Icon: StyleableFC<{
   name: string;
   fill?: boolean;
   size?: number;

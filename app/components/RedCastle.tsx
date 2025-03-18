@@ -1,9 +1,9 @@
-import { StylableFC } from "@/lib/types/misc";
+import { StyleableFC } from "@/lib/types/misc";
 
 /**
  * The iconic Red Castle of Intania serves as this year’s background.
  */
-const RedCastle: StylableFC = ({ className, style }) => (
+const RedCastle: StyleableFC = ({ className, style }) => (
   <svg
     width={432}
     height={250}

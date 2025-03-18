@@ -1,16 +1,16 @@
+import Icon from "@/app/components/Icon";
 import cn from "@/lib/helpers/cn";
-import { StylableFC } from "@/lib/types/misc";
-import Icon from "./Icon";
+import { StyleableFC } from "@/lib/types/misc";
 
 /**
  * Top App Bar displays the page name and a back button to navigate up.
  *
  * @param children The name of the page.
  * @param parentURL The URL to navigate up to.
- * 
+ *
  * @note A temporary example to what a component can look like.
  */
-const TopAppBar: StylableFC<{
+const TopAppBar: StyleableFC<{
   children: React.ReactNode;
   parentURL?: string;
 }> = ({ children, parentURL, className, style }) => (
