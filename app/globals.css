@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Archivo", "Chakra Petch", sans-serif;
+  --font-icon: "icon";
+
+  --color-dark-red: #420d12;
+  --color-just-red: #821923;
+  --color-bright-red: #af2024;
+  --color-yellow: #fef200;
+  --color-cream: #cfc3ad;
+  --color-brown: #292723;
+  --color-dark-gray: #111312;
+  --color-black: #000000;
+  --color-white: #ffffff;
+
+  --border-1: 1px;
+
+  /**
+   * A simple implementation of Material 3 Typography.
+   * Font size and leading should in most cases be used in tandem.
+   * 
+   * @example `text-body-md leading-body-md`
+   * @see https://m3.material.io/styles/typography/type-scale-tokens
+   */
+
+  --text-body-sm: 0.75rem;
+  --text-body-md: 0.875rem;
+  --text-body-lg: 1rem;
+  --text-title-sm: 0.875rem;
+  --text-title-md: 1rem;
+  --text-title-lg: 1.375rem;
+  --text-headline-sm: 1.5rem;
+  --text-headline-md: 1.75rem;
+  --text-headline-lg: 2rem;
+  --text-display-sm: 2.25rem;
+  --text-display-md: 2.8125rem;
+  --text-display-lg: 3.5625rem;
+  --text-body-md: 0.875rem;
+
+  --leading-body-sm: 1rem;
+  --leading-body-md: 1.25rem;
+  --leading-body-lg: 1.5rem;
+  --leading-title-sm: 1.25rem;
+  --leading-title-md: 1.5rem;
+  --leading-title-lg: 1.75rem;
+  --leading-headline-sm: 2rem;
+  --leading-headline-md: 2.25rem;
+  --leading-headline-lg: 2.5rem;
+  --leading-display-sm: 2.75rem;
+  --leading-display-md: 3.25rem;
+  --leading-display-lg: 4rem;
+}
