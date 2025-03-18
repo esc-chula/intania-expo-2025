@@ -3,11 +3,11 @@ import { StyleableFC } from "@/lib/types/misc";
 
 /**
  * Icon displays a Material Symbol.
- * 
+ *
  * @param name The icon name (see link below for full list).
  * @param fill Whether to fill the icon. Shouldn’t be done in most cases.
  * @param size Size in pixels.
- * 
+ *
  * @see {@link https://fonts.google.com/icons Google Fonts}
  */
 const Icon: StyleableFC<{
@@ -32,7 +32,7 @@ const Icon: StyleableFC<{
         fontVariationSettings: `"FILL" ${fill ? 1 : 0}, "opsz" ${size}`,
       }}
       className={cn(
-        `font-icon block leading-none not-italic select-all`,
+        `iex-icon font-icon block leading-none not-italic select-all`,
         className,
       )}
       translate="no"
