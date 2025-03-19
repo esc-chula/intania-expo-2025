@@ -14,7 +14,7 @@ export default function FormItem({
   label: string;
 }) {
   return (
-    <div className="mx-4 my-3 flex h-13 items-center justify-between text-white">
+    <div className="iex-form-item mx-4 my-3 flex h-13 items-center justify-between text-white">
       <span className="w-3/10 self-center pr-5 text-right text-title-md font-semibold italic">
         {label}
       </span>

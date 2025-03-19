@@ -59,7 +59,7 @@ export default function Field({
         onChange(newValue);
       }}
       className={cn(
-        "invalid:border-bright-red valid:border-cream ",
+        "iex-field invalid:border-bright-red valid:border-cream ",
         "h-full w-full border-2 bg-black/40 p-2 focus:placeholder-transparent",
       )}
     />

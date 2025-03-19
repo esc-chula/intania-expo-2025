@@ -22,7 +22,7 @@ export default function NavigationCard({
   href: string;
 }) {
   return (
-    <Link href={href}>
+    <Link href={href} className="iex-navigation-card">
       <Card className="border-cream relative aspect-2/1 flex-col items-center border-1 z-20">
         <span
           className={cn(
