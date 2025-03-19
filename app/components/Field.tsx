@@ -1,3 +1,6 @@
+"use client"
+import cn from "@/lib/helpers/cn";
+
 /**
  * Field is a box for the user to enter data.
  * 
@@ -6,10 +9,6 @@
  * @param placeholder Placeholder text for the field, transparent on focus
  * @param type Type of field.
  */
-
-"use client"
-import cn from "@/lib/helpers/cn";
-
 export default function Field({
   value,
   onChange,
