@@ -14,9 +14,9 @@ const TopAppBar: StyleableFC<{
 }> = ({ children, appearance = "filled", className, style }) => (
   <header
     className={cn(
-      `iex-top-app-bar text-headline-sm leading-headline-sm fixed top-0 flex
-      h-16 w-screen max-w-108 items-center gap-2 px-2 text-white [&_h1]:grow
-      [&_h1]:truncate [&_h1]:font-bold`,
+      `iex-top-app-bar text-headline-sm leading-headline-sm fixed top-0 z-40
+      flex h-16 w-screen max-w-108 items-center gap-2 px-2 text-white
+      [&_h1]:grow [&_h1]:truncate [&_h1]:font-bold`,
       {
         filled: `bg-dark-red`,
         scrim: `*:z-10 before:absolute before:inset-0 before:h-30
