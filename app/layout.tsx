@@ -7,6 +7,7 @@ import localFont from "next/font/local";
 
 const archivo = Archivo({
   subsets: ["latin"],
+  axes: ["wdth"],
 });
 const chakraPetch = Chakra_Petch({
   subsets: ["thai"],
