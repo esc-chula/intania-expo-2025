@@ -1,22 +1,18 @@
-"use client"
+"use client";
 import cn from "@/lib/helpers/cn";
+import { StyleableFC } from "@/lib/types/misc";
 
 /**
  * Field is a box for the user to enter data.
- * 
+ *
  * @param value The field value
  * @param onChange Function to handle when value changes
  * @param placeholder Placeholder text for the field, transparent on focus
  * @param type Type of field.
  */
-export default function Field({
-  value,
-  onChange,
-  placeholder,
-  type = "text",
-}: {
+const Field: StyleableFC<{
   value: string | number;
-  onChange: Function;
+  onChange: (value: string | number) => void;
   placeholder?: string;
   type:
     | "date"
@@ -31,21 +27,14 @@ export default function Field({
     | "time"
     | "url"
     | "week";
-}) {
+}> = ({ value, onChange, placeholder, type = "text", className }) => {
   function formatPhone(value: string) {
-    const cleaned = value.replace(/\D/g, "");
+    const formatted = value.replace(/\D/g, "");
 
     // Format as "xxx xxx xxxx"
-    if (cleaned.length <= 3) {
-      console.log(cleaned);
-      return cleaned;
-    } else if (cleaned.length <= 6) {
-      console.log(cleaned);
-      return `${cleaned.slice(0, 3)} ${cleaned.slice(3)}`;
-    } else {
-      console.log(cleaned);
-      return `${cleaned.slice(0, 3)} ${cleaned.slice(3, 6)} ${cleaned.slice(6, 10)}`;
-    }
+    if (formatted.length <= 3) return formatted;
+    if (formatted.length <= 6) return `${formatted.slice(0, 3)} ${formatted.slice(3)}`;
+    return `${formatted.slice(0, 3)} ${formatted.slice(3, 6)} ${formatted.slice(6, 10)}`;
   }
 
   return (
@@ -59,9 +48,12 @@ export default function Field({
         onChange(newValue);
       }}
       className={cn(
-        "iex-field invalid:border-bright-red valid:border-cream ",
-        "h-full w-full border-2 bg-black/40 p-2 focus:placeholder-transparent",
+        `iex-field invalid:border-bright-red valid:border-cream 
+        h-full w-full border-2 bg-black/40 p-2 focus:placeholder-transparent`,
+        className,
       )}
     />
   );
-}
+};
+
+export default Field;
