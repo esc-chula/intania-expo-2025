@@ -6,10 +6,10 @@ import TopAppBar from "@/app/components/TopAppBar";
 import ScanFeed from "@/app/scan/components/ScanFeed";
 import ScanSheet from "@/app/scan/components/ScanSheet";
 import ScanTooltip from "@/app/scan/components/ScanTooltip";
-import { useState } from "react";
+import useScanner from "@/app/scan/helpers/useScanner";
 
 export default function ScanPage() {
-  const [paused, setPaused] = useState(false);
+  const { sixDigitCode, visitor, handleCapture, handleCheckin } = useScanner();
 
   return (
     <>
@@ -23,21 +23,17 @@ export default function ScanPage() {
         </Button>
       </TopAppBar>
 
-      <ScanFeed
-        onCapture={() => {
-          if (paused) return;
-          setPaused(true);
-        }}
-      />
+      <ScanFeed onCapture={handleCapture} />
 
       <ScanSheet
-        show={paused}
-        onCheckIn={() => setPaused(false)}
+        show={visitor !== null}
+        onCheckIn={handleCheckin}
         className="fixed -bottom-30 z-30"
       />
       <ScanTooltip
-        show={!paused}
-        className="fixed bottom-11 left-1/2 z-20 -translate-x-1/2"
+        open={!visitor}
+        sixDigitCode={sixDigitCode}
+        className="fixed inset-x-0 bottom-11 left-1/2 z-20 -translate-1/2"
       />
     </>
   );
