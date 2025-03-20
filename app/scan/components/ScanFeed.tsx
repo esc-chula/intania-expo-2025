@@ -11,9 +11,11 @@ import { DecodeHintType, useZxing } from "react-zxing";
  * @param onCapture Passes the decoded text when a barcode is captured.
  */
 const ScanFeed: StyleableFC<{
-  onCapture: (sixDigitCode: string) => void;
-}> = ({ onCapture, className, style }) => {
+  paused?: boolean;
+  onCapture: (barcode: string) => void;
+}> = ({ paused, onCapture, className, style }) => {
   const { ref } = useZxing({
+    paused,
     hints: new Map([
       [DecodeHintType.POSSIBLE_FORMATS, ["CODE_128"]],
       [DecodeHintType.ALLOWED_LENGTHS, [7]],
