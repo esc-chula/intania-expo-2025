@@ -1,3 +1,6 @@
+import cn from "@/lib/helpers/cn";
+import { StyleableFC } from "@/lib/types/misc";
+
 /**
  * Form Item displays the form label and corresponding input field.
  *
@@ -6,19 +9,27 @@
  *
  */
 
-export default function FormItem({
-  children,
-  label,
-}: {
+const FormItem: StyleableFC<{
   children: React.ReactNode;
   label: string;
-}) {
-  return (
-    <div className="iex-form-item mx-4 my-3 flex h-13 items-center justify-between text-white">
-      <span className="w-3/10 self-center pr-5 text-right text-title-md font-semibold italic">
-        {label}
-      </span>
-      <div className="grow self-center content-center h-full">{children}</div>
-    </div>
-  );
-}
+}> = ({ children, label, className, style }) => (
+  <div
+    className={cn(
+      `iex-form-item mx-4 my-3 grid h-12 grid-cols-3 items-center text-white`,
+      className,
+    )}
+    style={style}
+  >
+    <label
+      className={cn(
+        `text-title-md leading-title-md col-span-1 self-center pr-5 
+        text-right font-bold tracking-wide italic`,
+      )}
+    >
+      {label}
+    </label>
+    <div className="col-span-2 h-full self-center">{children}</div>
+  </div>
+);
+
+export default FormItem;
