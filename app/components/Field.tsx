@@ -27,7 +27,7 @@ const Field: StyleableFC<{
     | "time"
     | "url"
     | "week";
-}> = ({ value, onChange, placeholder, type = "text", className }) => {
+}> = ({ value, onChange, placeholder, type = "text", className, style }) => {
   function formatPhone(value: string) {
     const formatted = value.replace(/\D/g, "");
 
@@ -49,9 +49,11 @@ const Field: StyleableFC<{
       }}
       className={cn(
         `iex-field invalid:border-bright-red valid:border-cream 
-        h-full w-full border-2 bg-black/40 p-2 focus:placeholder-transparent`,
+        text-title-md leading-title-md h-full w-full border-2 bg-black/40 
+        py-3 pr-3.5 pl-5 tracking-wide text-ellipsis focus:placeholder-transparent`,
         className,
       )}
+      style={style}
     />
   );
 };

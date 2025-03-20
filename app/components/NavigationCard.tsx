@@ -39,7 +39,7 @@ const NavigationCard: StyleableFC<{
         </span>
         <span
           className={cn(
-            `text-body-lg leading-body-lg m-1 
+            `text-body-lg leading-body-lg mt-1 
             px-1.5 text-center font-semibold whitespace-pre-line`,
           )}
         >
