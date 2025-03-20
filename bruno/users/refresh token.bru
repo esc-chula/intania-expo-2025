@@ -1,0 +1,19 @@
+meta {
+  name: refresh token
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{url}}/api/auth/refresh
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "tokenId": "fe24ae2a-8a8d-49ff-98e2-d53036ef4311",
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImkuZGVlcGF1bmdAZ21haWwuY29tIiwicm9sZSI6IlZJU0lUT1IiLCJpYXQiOjE3NDIzMDQ0MDIsImV4cCI6MTc0MjMwODAwMiwiaXNzIjoiaW50YW5pYS1leHBvLTIwMjUtYXBpIiwic3ViIjoiYWNjZXNzLXRva2VuIn0.DY9OD5ln9Oj-ZJDvgF2LouINzj5twQJu9Ke05b6H3kw",
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImkuZGVlcGF1bmdAZ21haWwuY29tIiwicm9sZSI6IlZJU0lUT1IiLCJpYXQiOjE3NDIzMDQ0MDIsImV4cCI6MTc0MjM5MDgwMiwiaXNzIjoiaW50YW5pYS1leHBvLTIwMjUtYXBpIiwic3ViIjoicmVmcmVzaC10b2tlbiJ9.Me7hoAfArvRk1WfToOP_BNm8dbhlDl59f0m4McTiE_U"
+  }
+}
