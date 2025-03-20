@@ -13,7 +13,8 @@
     "next": "15.2.2",
     "radash": "^12.1.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-zxing": "^2.1.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
