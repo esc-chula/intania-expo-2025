@@ -1,10 +1,10 @@
-import { Building, Floor, Room } from "@/common/types/buildingFloorRoom";
-import { Competition } from "@/common/types/competition";
-import { Event, EventTag } from "@/common/types/event";
-import { IntaniaLocation } from "@/common/types/intaniaLocation";
-import { Major } from "@/common/types/major";
-import { ExpoStaff, Visitor, WorkshopStaff } from "@/common/types/user";
-import { Workshop, WorkshopSlot } from "@/common/types/workshop";
+import { Building, Floor, Room } from "@/lib/backend/types/buildingFloorRoom";
+import { Competition } from "@/lib/backend/types/competition";
+import { Event, EventTag } from "@/lib/backend/types/event";
+import { IntaniaLocation } from "@/lib/backend/types/intaniaLocation";
+import { Major } from "@/lib/backend/types/major";
+import { ExpoStaff, Visitor, WorkshopStaff } from "@/lib/backend/types/user";
+import { Workshop, WorkshopSlot } from "@/lib/backend/types/workshop";
 import { PrismaClient } from "@prisma/client";
 import { randomUUID } from "crypto";
 import * as dotenv from "dotenv";
