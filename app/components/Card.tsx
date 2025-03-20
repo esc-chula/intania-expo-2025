@@ -1,19 +1,18 @@
 import cn from "@/lib/helpers/cn";
+import { StyleableFC } from "@/lib/types/misc";
 
 /**
  * A simple brown box.
  *
  * @param children Content which will be displayed inside the Card.
- * @param className Additional styling classes other than the given base.
  */
-export default function Card({
-  children,
-  className,
-}: {
+
+const Card: StyleableFC<{
   children: React.ReactNode;
-  className?: string;
-}) {
-  return (
-    <div className={cn("bg-brown mx-4 flex p-2", className)}>{children}</div>
-  );
-}
+}> = ({ children, className, style }) => (
+  <div className={cn(`iex-card bg-brown text-white`, className)} style={style}>
+    {children}
+  </div>
+);
+
+export default Card;
