@@ -4,6 +4,7 @@ import Button from "@/app/components/Button";
 import Icon from "@/app/components/Icon";
 import TopAppBar from "@/app/components/TopAppBar";
 import ScanFeed from "@/app/scan/components/ScanFeed";
+import ScanSheet from "@/app/scan/components/ScanSheet";
 import { useState } from "react";
 
 export default function ScanPage() {
@@ -26,6 +27,12 @@ export default function ScanPage() {
           if (paused) return;
           setPaused(true);
         }}
+      />
+
+      <ScanSheet
+        show={paused}
+        onCheckIn={() => setPaused(false)}
+        className="fixed -bottom-30 z-30"
       />
     </>
   );
