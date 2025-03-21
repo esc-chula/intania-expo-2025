@@ -18,7 +18,8 @@ model User {
   workshopId String?   @db.Uuid
 
   // fields for Visitor
-  sixDigitCode         String? @unique
+  sixDigitCode         String? @unique // S-{incrementCode}
+  incrementCode        Int     @default(autoincrement())
   name                 String?
   surname              String?
   gender               String?
