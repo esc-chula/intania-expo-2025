@@ -1,4 +1,3 @@
-"use client";
 import cn from "@/lib/helpers/cn";
 import { StyleableFC } from "@/lib/types/misc";
 
@@ -11,10 +10,10 @@ import { StyleableFC } from "@/lib/types/misc";
  * @param type Type of field.
  */
 const Field: StyleableFC<{
-  value: string | number;
-  onChange: (value: string | number) => void;
+  value: string;
+  onChange: (value: string) => void;
   placeholder?: string;
-  type:
+  type?:
     | "date"
     | "datetime-local"
     | "email"
@@ -27,13 +26,20 @@ const Field: StyleableFC<{
     | "time"
     | "url"
     | "week";
-}> = ({ value, onChange, placeholder, type = "text", className, style }) => {
-  function formatPhone(value: string) {
+}> = ({ value, onChange, placeholder, type = "text" }) => {
+  /**
+   * Handle special behavior for when `type` is `tel`.
+   * 
+   * Instead of sending the raw value to `onChange`, we format it to
+   * `XXX XXX XXXX` first.
+   * 
+   * @param value The raw value from the Change Event.
+   */
+  function handleTelChange(value: string) {
     const formatted = value.replace(/\D/g, "");
-
-    // Format as "xxx xxx xxxx"
     if (formatted.length <= 3) return formatted;
-    if (formatted.length <= 6) return `${formatted.slice(0, 3)} ${formatted.slice(3)}`;
+    if (formatted.length <= 6)
+      return `${formatted.slice(0, 3)} ${formatted.slice(3)}`;
     return `${formatted.slice(0, 3)} ${formatted.slice(3, 6)} ${formatted.slice(6, 10)}`;
   }
 
@@ -42,18 +48,13 @@ const Field: StyleableFC<{
       value={value}
       type={type}
       placeholder={placeholder}
-      onChange={(e) => {
-        let newValue: string = e.target.value;
-        if (type === "tel") newValue = formatPhone(newValue);
-        onChange(newValue);
-      }}
-      className={cn(
-        `iex-field invalid:border-bright-red valid:border-cream 
-        text-title-md leading-title-md h-full w-full border-2 bg-black/40 
-        py-3 pr-3.5 pl-5 tracking-wide text-ellipsis focus:placeholder-transparent`,
-        className,
-      )}
-      style={style}
+      onChange={({ target: { value } }) =>
+        onChange(type === "tel" ? handleTelChange(value) : value)
+      }
+      className={cn(`iex-field focus:bg-cream focus:text-dark-gray
+        invalid:border-bright-red valid:border-cream block border-2
+        bg-black/40 px-4.5 py-2.5 focus:placeholder-transparent
+        focus:outline-none`)}
     />
   );
 };

@@ -6,29 +6,26 @@ import { StyleableFC } from "@/lib/types/misc";
  *
  * @param children The input field (Field/Select), displays on the right.
  * @param label The form label, displays on the left.
- *
  */
-
 const FormItem: StyleableFC<{
   children: React.ReactNode;
   label: string;
 }> = ({ children, label, className, style }) => (
   <div
     className={cn(
-      `iex-form-item mx-4 my-3 grid h-12 grid-cols-3 items-center text-white`,
+      `iex-form-item grid grid-cols-4 items-center justify-between gap-4 px-4
+      [&_.iex-field]:col-span-3`,
       className,
     )}
     style={style}
   >
     <label
-      className={cn(
-        `text-title-md leading-title-md col-span-1 self-center pr-5 
-        text-right font-bold tracking-wide italic`,
-      )}
+      className={cn(`text-title-md leading-title-md text-right font-semibold
+        text-white italic`)}
     >
       {label}
     </label>
-    <div className="col-span-2 h-full self-center">{children}</div>
+    {children}
   </div>
 );
 
