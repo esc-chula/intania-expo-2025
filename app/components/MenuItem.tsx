@@ -1,4 +1,5 @@
 "use client";
+
 import { useContext } from "react";
 import cn from "@/lib/helpers/cn";
 import { StyleableFC } from "@/lib/types/misc";
@@ -10,15 +11,12 @@ import { SelectContext } from "@/app/components/Select";
  * @param children The menu item content. Can include text and a checkbox.
  * @param value The identifier for use within select.
  */
-
 const MenuItem: StyleableFC<{
   children: React.ReactNode;
   value: string;
 }> = ({ children, value, className, style }) => {
   const context = useContext(SelectContext);
-  if (!context) {
-    throw new Error("MenuItem must be a child of Select.");
-  }
+  if (!context) throw new Error("MenuItem must be a child of Select.");
 
   const { value: selectedValue, handleSelect, maxChoices } = context;
   const isSelected =
