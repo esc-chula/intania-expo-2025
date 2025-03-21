@@ -4,6 +4,9 @@
   --font-sans: "Archivo", "Chakra Petch", sans-serif;
   --font-icon: "icon";
 
+  --font-narrow: var(--font-sans);
+  --font-narrow--font-variation-settings: "wdth" 75;
+
   --color-dark-red: #420d12;
   --color-just-red: #821923;
   --color-bright-red: #af2024;
