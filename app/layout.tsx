@@ -6,10 +6,12 @@ import { Archivo, Chakra_Petch } from "next/font/google";
 import localFont from "next/font/local";
 
 const archivo = Archivo({
+  style: ["normal", "italic"],
   subsets: ["latin"],
   axes: ["wdth"],
 });
 const chakraPetch = Chakra_Petch({
+  style: ["normal", "italic"],
   subsets: ["thai"],
   weight: ["400", "600", "700"],
 });
