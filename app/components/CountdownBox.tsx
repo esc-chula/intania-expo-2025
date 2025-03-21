@@ -18,9 +18,13 @@ const CountdownBox: StyleableFC<{
 
   const ref = useRef<HTMLSpanElement>(null);
   useEffect(() => {
+    // Don't animate if the user prefers reduced motion.
+    if (window.matchMedia(`(prefers-reduced-motion: reduce)`).matches) return;
+
     const span = ref.current;
     const fadeOutClassList = ["translate-y-0.5", "opacity-0", "duration-100"];
     if (!span) return;
+
     // For the seconds segment and when the next segment is zero, animate the
     // fade-out effect.
     if (segments.slice(i + 1).every(({ value }) => value === 0)) {
