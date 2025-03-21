@@ -50,14 +50,10 @@ export async function GET(request: Request) {
     select: { id: true },
   });
 
+  // redirect back to appropriate url. default to "/"
   if (redirectUrl == "") {
-    return NextResponse.json(
-      { tokenId, accessToken, refreshToken },
-      { status: 200 },
-    );
+    redirectUrl = "/";
   }
-
-  // redirect back to appropriate url
   const searchParams = new URLSearchParams({
     tokenId,
     accessToken,
