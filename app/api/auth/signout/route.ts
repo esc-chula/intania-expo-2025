@@ -31,12 +31,13 @@ export async function POST(
       where: { id: tokenId, accessToken: accessToken },
     });
   } catch (error) {
-    return returnPrismaError(
-      error,
-      "P2025",
-      "token not found",
-      StatusCodes.NOT_FOUND,
-    );
+    return returnPrismaError(error, [
+      {
+        code: "P2025",
+        msg: "token not found",
+        status: StatusCodes.NOT_FOUND,
+      },
+    ]);
   }
 
   return NextResponse.json({}, { status: StatusCodes.OK });

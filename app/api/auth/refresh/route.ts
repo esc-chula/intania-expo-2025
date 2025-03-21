@@ -55,12 +55,13 @@ export async function POST(
       },
     });
   } catch (error) {
-    return returnPrismaError(
-      error,
-      "P2025",
-      "invalid token id",
-      StatusCodes.BAD_REQUEST,
-    );
+    return returnPrismaError(error, [
+      {
+        code: "P2025",
+        msg: "invalid token id",
+        status: StatusCodes.BAD_REQUEST,
+      },
+    ]);
   }
 
   return NextResponse.json(
