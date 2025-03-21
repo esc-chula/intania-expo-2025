@@ -23,10 +23,7 @@ const CountdownBox: StyleableFC<{
     if (!span) return;
     // For the seconds segment and when the next segment is zero, animate the
     // fade-out effect.
-    if (
-      // i === segments.length - 1 ||
-      segments.slice(i + 1).every(({ value }) => value === 0)
-    ) {
+    if (segments.slice(i + 1).every(({ value }) => value === 0)) {
       setTimeout(() => span.classList.add(...fadeOutClassList), 800);
       setTimeout(() => span.classList.remove(...fadeOutClassList), 1000);
     }
