@@ -8,12 +8,9 @@ export default function Events() {
     {
       title: "Intania Hackathon",
       description:
-        "เตรียมตัวพบกับ Intania Hackathon​ - งานที่จะสร้าง บรรยากาศที่ทำให้ทุกคนได้สร้างสิ่งใหม่ ๆ แก้ไขปัญหาใหม่ ๆ ที่สร้าง Impact ได้จริงไปด้วยกัน",
+        "เตรียมตัวพบกับ Intania Hackathon By Garena ชิงเงินรางวัลมูลค่า 250,000 บาท - งานที่จะสร้างบรรยากาศที่ทำให้ทุกคนได้สร้างสิ่งใหม่ ๆ แก้ไขปัญหาใหม่ ๆ ที่สร้าง Imapct ได้จริงไปด้วยกันในเวลา 48 ชั่วโมง",
       image: "/arena/ih.png",
-      links: [
-        { name: "ชมถ่ายทอดสด", url: "/" },
-        { name: "ติดตาม", url: "/" },
-      ],
+      links: [{ name: "ชมเว็บไซต์", url: "https://intania.tech/hackathon" }],
     },
     {
       title: "Integration Bee Challenge",
