@@ -2,6 +2,7 @@
 
 import cn from "@/lib/helpers/cn";
 import { StyleableFC } from "@/lib/types/misc";
+import Link from "next/link";
 import { useRef, useState } from "react";
 
 /**
@@ -20,7 +21,13 @@ const Interactive: StyleableFC<
     onClick?: () => void;
   } & React.AriaAttributes
 > = ({ children, href, onClick, className, style, ...props }) => {
-  const Element = href ? `a` : onClick ? `button` : `div`;
+  const Element = href
+    ? href.startsWith("/")
+      ? Link
+      : `a`
+    : onClick
+      ? `button`
+      : `div`;
 
   const rippleContainerRef = useRef<HTMLSpanElement>(null);
   const [touched, setTouched] = useState(false);
@@ -73,7 +80,7 @@ const Interactive: StyleableFC<
 
   return (
     <Element
-      href={href}
+      href={href!}
       onClick={onClick}
       onTouchStart={(event: React.TouchEvent) => {
         setTouched(true);
