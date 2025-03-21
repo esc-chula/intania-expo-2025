@@ -15,13 +15,18 @@ import { useEffect, useState } from "react";
 const Countdown: StyleableFC<{
   date: Date;
 }> = ({ date, className, style }) => {
-  const [now, setNow] = useState<Date>(new Date());
+  const [now, setNow] = useState<Date | null>(null);
   useEffect(() => {
+    setNow(new Date());
     const interval = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(interval);
   }, []);
 
-  const diff = date.getTime() - now.getTime();
+  const diff = now
+    ? date.getTime() -
+      now.getTime() +
+      (now.getTimezoneOffset() || 0) * 60 * 1000
+    : 1000; // Default cannot be 0 because that triggers an animation.
   if (diff < 0)
     return (
       <section className={cn(`relative flex gap-2`, className)} style={style}>
@@ -46,7 +51,17 @@ const Countdown: StyleableFC<{
   ];
 
   return (
-    <ul role="list" className={cn(`flex gap-2`, className)} style={style}>
+    <ul
+      role="list"
+      className={cn(
+        `flex gap-2`,
+        // Hide numbers on server-side render.
+        !now &&
+          `[&_span:first-child]:translate-y-0.5 [&_span:first-child]:opacity-0`,
+        className,
+      )}
+      style={style}
+    >
       {segments.map((_, i) => (
         <CountdownBox key={i} segments={segments} index={i} />
       ))}
