@@ -1,0 +1,17 @@
+meta {
+  name: mock signin
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{url}}/api/test/auth/mock-signin
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "i.deepaung@chula.ac.th"
+  }
+}
