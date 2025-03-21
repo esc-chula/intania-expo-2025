@@ -1,16 +1,13 @@
-import Button from "@/app/components/Button";
-import Icon from "@/app/components/Icon";
-import TopAppBar from "@/app/components/TopAppBar";
+import Logo from "@/app/components/Logo";
+import cn from "@/lib/helpers/cn";
 
 export default function Home() {
   return (
-    <div>
-      <TopAppBar>
-        <Button appearance="text">
-          <Icon name="arrow_back" />
-        </Button>
-        <h1>Page name</h1>
-      </TopAppBar>
+    <div
+      className={cn(`flex flex-col items-center justify-center px-4 pt-7 pb-10
+        text-center`)}
+    >
+      <Logo size={280} />
     </div>
   );
 }
