@@ -1,12 +1,16 @@
 import { generateToken } from "@/lib/backend/jwt";
 import { handleCallback } from "@/lib/backend/oauth";
 import { prisma } from "@/lib/backend/prisma";
+import { redirect } from "next/navigation";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   let email: string;
+  let redirectUrl: string;
   try {
-    email = await handleCallback(request.url);
+    const result = await handleCallback(request.url);
+    email = result.email;
+    redirectUrl = result.redirectUrl;
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json({ error: error.message }, { status: 400 });
@@ -46,8 +50,18 @@ export async function GET(request: Request) {
     select: { id: true },
   });
 
-  return NextResponse.json(
-    { tokenId, accessToken, refreshToken },
-    { status: 200 },
-  );
+  if (redirectUrl == "") {
+    return NextResponse.json(
+      { tokenId, accessToken, refreshToken },
+      { status: 200 },
+    );
+  }
+
+  // redirect back to appropriate url
+  const searchParams = new URLSearchParams({
+    tokenId,
+    accessToken,
+    refreshToken,
+  });
+  return redirect(redirectUrl + "?" + searchParams);
 }

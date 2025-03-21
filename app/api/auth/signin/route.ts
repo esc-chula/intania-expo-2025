@@ -2,5 +2,6 @@ import { getOAuthSignInUrl } from "@/lib/backend/oauth";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
-  return NextResponse.redirect(getOAuthSignInUrl());
+  const redirectUrl = new URL(request.url).searchParams.get("redirect") || "";
+  return NextResponse.redirect(getOAuthSignInUrl(redirectUrl));
 }

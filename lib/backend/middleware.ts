@@ -28,8 +28,6 @@ export function onlyAuthorized(
   }
 
   const accessToken = authHeader.split(" ")[1]; // "Bearer ........"
-  console.log(accessToken);
-
   const payload = parseToken(accessToken);
   if (!payload) {
     return {
