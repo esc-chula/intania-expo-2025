@@ -101,9 +101,11 @@ const Interactive: StyleableFC<
         startRipple(rect.width / 2, rect.height / 2);
       }}
       className={cn(
-        `iex-interactive overflow-hidden before:absolute before:inset-0
-        before:rounded-[inherit] before:opacity-0 before:content-['']
-        hover:before:opacity-8 focus-visible:before:opacity-10
+        `iex-interactive relative block overflow-hidden
+        before:pointer-events-none before:absolute before:inset-0
+        before:rounded-[inherit] before:opacity-0 before:transition-opacity
+        before:content-[''] hover:before:opacity-8 hover:before:duration-25
+        focus-visible:before:opacity-10 focus-visible:before:duration-25
         active:before:opacity-10`,
         className,
       )}
@@ -113,7 +115,7 @@ const Interactive: StyleableFC<
       <span
         aria-hidden
         ref={rippleContainerRef}
-        className="absolute inset-0 blur-xs"
+        className="pointer-events-none absolute inset-0 blur-xs"
       />
       {children}
     </Element>
