@@ -63,8 +63,8 @@ export async function POST(
     return returnPrismaError(error, [
       {
         code: "P2002",
-        msg: "email already exists",
-        status: StatusCodes.BAD_REQUEST,
+        msg: "already registered",
+        status: StatusCodes.CONFLICT,
       },
     ]);
   }
