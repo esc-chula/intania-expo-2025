@@ -58,7 +58,7 @@
 }
 
 @utility state-layer-* {
-  color: --value(--color- *);
+  color: --value(--color-*);
 
   &::before,
   .iex-ripple {
