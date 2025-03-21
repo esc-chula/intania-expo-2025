@@ -1,6 +1,7 @@
 import RedCastle from "@/app/components/RedCastle";
 import "@/app/globals.css";
 import cn from "@/lib/helpers/cn";
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import { Archivo, Chakra_Petch } from "next/font/google";
 import localFont from "next/font/local";
@@ -55,6 +56,7 @@ export default function RootLayout({
           />
         </div>
         <div className="mx-auto max-w-108 font-sans">{children}</div>
+        <Analytics />
       </body>
     </html>
   );
