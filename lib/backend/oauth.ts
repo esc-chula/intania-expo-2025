@@ -22,7 +22,6 @@ export async function handleCallback(
   const { searchParams } = new URL(callbackUrl);
   const code = searchParams.get("code");
   const redirectUrl = searchParams.get("state") || ""; // get url to redirect after finished OAuth
-
   if (!code) {
     throw new Error("Authorization code is missing");
   }
