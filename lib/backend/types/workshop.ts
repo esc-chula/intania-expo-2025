@@ -1,5 +1,9 @@
-import { IntaniaLocation } from "@prisma/client";
+import { IntaniaLocation, Prisma } from "@prisma/client";
 import { UUID } from "crypto";
+
+export type WorkshopDetail = Prisma.WorkshopGetPayload<{
+  include: { intaniaLocation: true; workshopSlots: true };
+}>;
 
 export type Workshop = {
   id: UUID;
