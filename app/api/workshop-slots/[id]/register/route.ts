@@ -21,24 +21,49 @@ export async function POST(
 
   const { id: workshopSlotId } = await params;
 
-  const result = await prisma.user.findFirst({
+  // get visitor id
+  const userResult = await prisma.user.findFirst({
     where: { email: payload.email },
     select: { id: true },
   });
-  if (!result) {
+  if (!userResult) {
     // payload email should be valid
     return NextResponse.json(
       { error: ReasonPhrases.INTERNAL_SERVER_ERROR },
       { status: StatusCodes.INTERNAL_SERVER_ERROR },
     );
   }
-  const visitorId = result.id;
+  const visitorId = userResult.id;
+
+  // get workshop id
+  let workshopSlotResult;
+  try {
+    workshopSlotResult = await prisma.workshopSlot.findFirstOrThrow({
+      where: { id: workshopSlotId },
+      select: { workshopId: true },
+    });
+  } catch (error) {
+    return returnPrismaError(error, [
+      {
+        code: "P2023",
+        msg: "invalid workshop slot id",
+        status: StatusCodes.BAD_REQUEST,
+      },
+      {
+        code: "P2025",
+        msg: "invalid workshop slot id",
+        status: StatusCodes.BAD_REQUEST,
+      },
+    ]);
+  }
+  const workshopId = workshopSlotResult.workshopId;
 
   try {
     await prisma.registeredWorkshopSlotOnVisitor.create({
       data: {
         visitorId: visitorId,
         registeredWorkshopSlotId: workshopSlotId,
+        workshopId: workshopId,
         checkIn: false,
       },
     });
@@ -46,7 +71,17 @@ export async function POST(
     return returnPrismaError(error, [
       {
         code: "P2002",
-        msg: "already registered",
+        msg: "already registered this workshop",
+        status: StatusCodes.BAD_REQUEST,
+      },
+      {
+        code: "P2003",
+        msg: "invalid workshop slot id",
+        status: StatusCodes.BAD_REQUEST,
+      },
+      {
+        code: "P2023",
+        msg: "invalid workshop slot id",
         status: StatusCodes.BAD_REQUEST,
       },
     ]);

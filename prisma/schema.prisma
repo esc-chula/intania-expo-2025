@@ -62,7 +62,7 @@ model Token {
   refreshToken String
 
   // not needed
-  User User @relation(fields: [userId], references: [id])
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Building {
@@ -134,7 +134,8 @@ model Workshop {
   intaniaLocationId String?          @db.Uuid
 
   // not needed
-  users User[]
+  users                           User[]
+  RegisteredWorkshopSlotOnVisitor RegisteredWorkshopSlotOnVisitor[]
 }
 
 model WorkshopSlot {
@@ -151,13 +152,16 @@ model WorkshopSlot {
 }
 
 model RegisteredWorkshopSlotOnVisitor {
-  registeredWorkshopSlot   WorkshopSlot @relation(fields: [registeredWorkshopSlotId], references: [id])
+  registeredWorkshopSlot   WorkshopSlot @relation(fields: [registeredWorkshopSlotId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   registeredWorkshopSlotId String       @map("workshopSlotId") @db.Uuid
-  visitor                  User         @relation(fields: [visitorId], references: [id])
+  workshop                 Workshop     @relation(fields: [workshopId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  workshopId               String       @db.Uuid
+  visitor                  User         @relation(fields: [visitorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   visitorId                String       @map("userId") @db.Uuid
   checkIn                  Boolean
 
   @@id([visitorId, registeredWorkshopSlotId])
+  @@unique([visitorId, workshopId])
 }
 
 model Competition {
