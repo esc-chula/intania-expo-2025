@@ -1,0 +1,15 @@
+meta {
+  name: check in workshop
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{url}}/api/workshop-slots/03bc24c5-46c1-4599-ac1a-b6d602827322/check-in/S-000010
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN0YWZmMV93b3Jrc2hvcEBjaHVsYS5hYy50aCIsInJvbGUiOiJXT1JLU0hPUF9TVEFGRiIsImlhdCI6MTc0MjYwNjIyNiwiZXhwIjoxNzQyNjA5ODI2LCJpc3MiOiJpbnRhbmlhLWV4cG8tMjAyNS1hcGkiLCJzdWIiOiJhY2Nlc3MtdG9rZW4ifQ.nQ3uuCerMdy-DC8tMzzS2mu1YR5vM7Kjua-hfgjt2Nw
+}

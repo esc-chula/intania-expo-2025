@@ -1,0 +1,15 @@
+meta {
+  name: get all workshops
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{url}}/api/workshops?data={"search": "1"}
+  body: none
+  auth: none
+}
+
+query {
+  data: {"search": "1"}
+}

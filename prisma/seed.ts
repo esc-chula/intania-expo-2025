@@ -35,6 +35,8 @@ async function main() {
   await prisma.room.deleteMany();
   await prisma.room.createMany({ data: rooms });
 
+  await prisma.registeredWorkshopSlotOnVisitor.deleteMany();
+
   await prisma.workshop.deleteMany();
   await prisma.workshop.createMany({
     data: workshops.map((obj) => {
@@ -63,6 +65,7 @@ async function main() {
   await prisma.major.deleteMany();
   await prisma.major.createMany({ data: majors });
 
+  await prisma.token.deleteMany();
   await prisma.user.deleteMany();
   await prisma.user.createMany({
     data: expoStaffs,
