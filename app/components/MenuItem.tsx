@@ -19,27 +19,22 @@ const MenuItem: StyleableFC<{
 }> = ({ children, value, className, style }) => {
   const context = useContext(SelectContext);
   if (!context) throw new Error("MenuItem must be a child of Select.");
-  const {
-    value: selectedValue,
-    handleSelect,
-    maxChoices,
-    isMenuOpen,
-  } = context;
-  const isSelected = selectedValue.includes(value);
+  const { values, handleSelect, maxChoices, isMenuOpen } = context;
+  const isSelected =
+    values.find((_value) => _value.value === value) !== undefined;
 
   return (
     <Interactive
+      data-value={value}
+      disabled={!isMenuOpen}
+      onClick={() => handleSelect(value, children as string)}
       className={cn(
-        `iex-menu-item text-body-lg leading-headline-lg state-layer-white flex
-        h-12 items-center gap-4 px-4`,
+        `iex-menu-item text-body-lg leading-body-lg state-layer-white flex
+        items-center gap-4 px-3.5 py-2.5 text-start`,
         isSelected && `bg-just-red`,
         className,
       )}
-      data-value={value}
       style={style}
-      onClick={
-        isMenuOpen ? () => handleSelect(value, children as string) : undefined
-      }
     >
       {maxChoices !== 1 && (
         <Icon
