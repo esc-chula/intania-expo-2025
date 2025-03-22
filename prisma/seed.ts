@@ -73,6 +73,18 @@ async function main() {
   await prisma.user.createMany({
     data: visitors,
   });
+  visitors.forEach(async (visitor) => {
+    const data = await prisma.user.findFirst({
+      where: { id: visitor.id },
+      select: { incrementCode: true },
+    });
+    const formatNumber = ("000000" + data?.incrementCode).slice(-6);
+    const sixDigitCode = "S-" + formatNumber;
+    await prisma.user.update({
+      where: { id: visitor.id },
+      data: { sixDigitCode: sixDigitCode },
+    });
+  });
 }
 
 const expoStaffs: ExpoStaff[] = [
@@ -98,7 +110,7 @@ const visitors: Visitor[] = [
   {
     id: randomUUID(),
     email: "user1@gmail.com",
-    sixDigitCode: "904769",
+    sixDigitCode: "",
     name: "name1",
     surname: "surname1",
     gender: "male",
@@ -330,12 +342,12 @@ const majors: Major[] = [
   },
   {
     id: randomUUID(),
-    name: "CP",
+    name: "CEDT",
     description: "CEDT description here",
   },
   {
     id: randomUUID(),
-    name: "CP",
+    name: "ICE",
     description: "ICE description here",
   },
 ];

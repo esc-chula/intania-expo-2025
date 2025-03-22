@@ -11,13 +11,20 @@ if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 
 export function returnPrismaError(
   error: any,
-  code: string,
-  msg: string,
-  status: number,
+  errorCases: {
+    code: string;
+    msg: string;
+    status: number;
+  }[],
 ): NextResponse<HTTPError> {
   if (error instanceof Prisma.PrismaClientKnownRequestError) {
-    if (error.code == code) {
-      return NextResponse.json({ error: msg }, { status: status });
+    for (let i = 0; i < errorCases.length; i++) {
+      if (error.code == errorCases[i].code) {
+        return NextResponse.json(
+          { error: errorCases[i].msg },
+          { status: errorCases[i].status },
+        );
+      }
     }
   }
 
