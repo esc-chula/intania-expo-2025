@@ -1,39 +1,35 @@
 import { prisma, returnPrismaError } from "@/lib/backend/prisma";
 import { HTTPError } from "@/lib/backend/types/httpError";
-import { WorkshopDetail } from "@/lib/backend/types/workshop";
+import { FloorDetail } from "@/lib/backend/types/map";
 import { StatusCodes } from "http-status-codes";
 import { NextResponse } from "next/server";
 
-//Get an Workshop by ID
 export async function GET(
   _: Request,
   { params }: { params: Promise<{ id: string }> },
-): Promise<NextResponse<WorkshopDetail | HTTPError>> {
+): Promise<NextResponse<FloorDetail | HTTPError>> {
   const { id } = await params;
 
+  let floor;
   try {
-    const workshop = await prisma.workshop.findFirstOrThrow({
-      include: {
-        workshopSlots: true,
-        intaniaLocation: true,
-      },
-      where: {
-        id: id,
-      },
+    floor = await prisma.floor.findFirstOrThrow({
+      where: { id: id },
+      include: { rooms: true },
     });
-    return NextResponse.json(workshop, { status: StatusCodes.OK });
   } catch (error) {
     return returnPrismaError(error, [
       {
         code: "P2025",
-        msg: "Workshop not found",
+        msg: "floor not found",
         status: StatusCodes.NOT_FOUND,
       },
       {
         code: "P2023",
-        msg: "Workshop not found",
+        msg: "floor not found",
         status: StatusCodes.NOT_FOUND,
       },
     ]);
   }
+
+  return NextResponse.json(floor, { status: StatusCodes.OK });
 }

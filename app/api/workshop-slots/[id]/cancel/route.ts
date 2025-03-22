@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function POST(
-  request: Request,
+  _: Request,
   { params }: { params: Promise<{ id: string }> },
 ): Promise<NextResponse<object | HTTPError>> {
   const cookieStore = await cookies();
