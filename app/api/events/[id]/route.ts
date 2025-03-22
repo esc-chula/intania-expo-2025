@@ -17,6 +17,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
     } catch (error) {
         return returnPrismaError(error, [
             { code: 'P2025', msg: 'Event not found', status: StatusCodes.NOT_FOUND },
+            { code: 'P2023', msg: 'Event not found', status: StatusCodes.NOT_FOUND },
         ]);
     }
 }
