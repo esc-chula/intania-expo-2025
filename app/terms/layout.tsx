@@ -18,7 +18,7 @@ function TermsLayout({ children }: Readonly<{ children: React.ReactNode }>) {
         </Button>
         <h1>นโยบายการคุ้มครองข้อมูลฯ</h1>
       </TopAppBar>
-      <div className="flex flex-col items-center text-center">
+      <div className="flex flex-col items-center gap-3 text-center">
         <Logo size={100} />
         <h1
           aria-hidden

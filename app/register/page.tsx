@@ -18,7 +18,7 @@ export default function Register() {
         </Button>
         <h1>ลงทะเบียนเข้าร่วมงาน</h1>
       </TopAppBar>
-      <div className="mb-8 flex flex-col items-center text-center">
+      <div className="mb-8 flex flex-col items-center gap-3 text-center">
         <Logo size={100} />
         <h1
           aria-hidden
