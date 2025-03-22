@@ -4,7 +4,7 @@ import { StyleableFC } from "@/lib/types/misc";
 /**
  * A container of menu items.
  *
- * @param children menu iterms
+ * @param children Menu iterms
  */
 const Menu: StyleableFC<{
   children: React.ReactNode;

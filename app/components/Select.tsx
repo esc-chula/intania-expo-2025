@@ -21,10 +21,10 @@ export const SelectContext = createContext<{
 });
 
 /**
- * A container of menu items.
+ * A field that lets the user pick from set choices.
  *
  * @param children Menu items. All items should have thier value set.
- * @param value The value of this controlled input. In this case, the value(s) of the selected menu item(s).
+ * @param value The value of this controlled input. In this case, the values of the selected menu items.
  * @param onChange Called when this controlled input changes.
  * @param maxChoice Limits the number of choices selected. If > 1, checkboxes appear.
  */
