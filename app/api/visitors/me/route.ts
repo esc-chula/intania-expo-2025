@@ -4,12 +4,15 @@ import { HTTPError } from "@/lib/backend/types/httpError";
 import { Visitor } from "@/lib/backend/types/user";
 import { UUID } from "crypto";
 import { StatusCodes } from "http-status-codes";
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function GET(
   request: Request,
 ): Promise<NextResponse<Visitor | HTTPError>> {
-  const middlewareResponse = onlyAuthorized(request);
+  const cookieStore = await cookies();
+
+  const middlewareResponse = onlyAuthorized(cookieStore);
   if (!middlewareResponse.pass) {
     return middlewareResponse.response!;
   }

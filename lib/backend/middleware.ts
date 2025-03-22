@@ -1,6 +1,8 @@
 import { Role } from "@prisma/client";
 import { StatusCodes } from "http-status-codes";
+import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { NextResponse } from "next/server";
+import { getJwtToken } from "./cookie";
 import { parseToken, Payload } from "./jwt";
 import { HTTPError } from "./types/httpError";
 
@@ -12,14 +14,16 @@ export interface MiddlewareResponse<T> {
 
 export type AuthorizeResult = {
   accessToken: string;
+  refreshToken: string;
+  tokenId: string;
   payload: Payload;
 };
 
 export function onlyAuthorized(
-  request: Request,
+  cookieStore: ReadonlyRequestCookies,
 ): MiddlewareResponse<AuthorizeResult> {
-  const authHeader = request.headers.get("Authorization");
-  if (!authHeader) {
+  const { accessToken, refreshToken, tokenId } = getJwtToken(cookieStore);
+  if (accessToken == "" || refreshToken == "" || tokenId == "") {
     return {
       pass: false,
       response: NextResponse.json(
@@ -29,7 +33,6 @@ export function onlyAuthorized(
     };
   }
 
-  const accessToken = authHeader.split(" ")[1]; // "Bearer ........"
   const payload = parseToken(accessToken);
   if (!payload) {
     return {
@@ -43,7 +46,7 @@ export function onlyAuthorized(
 
   return {
     pass: true,
-    data: { accessToken, payload },
+    data: { accessToken, refreshToken, tokenId, payload },
   };
 }
 export function isOneOfRole(

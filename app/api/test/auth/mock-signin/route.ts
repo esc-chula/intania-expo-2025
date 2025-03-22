@@ -1,16 +1,23 @@
+import { setJwtToken } from "@/lib/backend/cookie";
 import { generateToken } from "@/lib/backend/jwt";
 import { prisma } from "@/lib/backend/prisma";
+import { HTTPError } from "@/lib/backend/types/httpError";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-export async function POST(request: Request) {
+export async function POST(
+  request: Request,
+): Promise<NextResponse<object | HTTPError>> {
   if (process.env.NODE_ENV === "production") {
     return NextResponse.json(
       { error: ReasonPhrases.NOT_FOUND },
       { status: StatusCodes.NOT_FOUND },
     );
   }
+
+  const cookieStore = await cookies();
 
   let email;
   try {
@@ -68,8 +75,7 @@ export async function POST(request: Request) {
     );
   }
 
-  return NextResponse.json(
-    { tokenId, accessToken, refreshToken },
-    { status: StatusCodes.OK },
-  );
+  setJwtToken(cookieStore, accessToken, refreshToken, tokenId);
+
+  return NextResponse.json({}, { status: StatusCodes.OK });
 }

@@ -2,13 +2,16 @@ import { isOneOfRole, onlyAuthorized } from "@/lib/backend/middleware";
 import { prisma, returnPrismaError } from "@/lib/backend/prisma";
 import { HTTPError } from "@/lib/backend/types/httpError";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function POST(
   request: Request,
   { params }: { params: Promise<{ id: string }> },
 ): Promise<NextResponse<object | HTTPError>> {
-  const middlewareResponse = onlyAuthorized(request);
+  const cookieStore = await cookies();
+
+  const middlewareResponse = onlyAuthorized(cookieStore);
   if (!middlewareResponse.pass) {
     return middlewareResponse.response!;
   }
