@@ -2,7 +2,7 @@ import { UUID } from "crypto";
 
 export type User = {
   // ? following the document
-  id: string;
+  id: UUID;
   email: string;
 };
 
@@ -16,7 +16,6 @@ export type WorkshopStaff = {
 } & User;
 
 export type Visitor = {
-  role: "VISITOR";
   sixDigitCode: string;
   name: string;
   surname: string;
@@ -40,4 +39,5 @@ export type Visitor = {
   teacherSchool?: string;
   teacherProvince?: string;
   subjectTaught?: string;
+  role: "VISITOR";
 } & User;

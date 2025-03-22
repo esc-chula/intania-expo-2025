@@ -1,10 +1,12 @@
 import { Role } from "@prisma/client";
+import { StatusCodes } from "http-status-codes";
 import { NextResponse } from "next/server";
 import { parseToken, Payload } from "./jwt";
+import { HTTPError } from "./types/httpError";
 
 export interface MiddlewareResponse<T> {
   pass: boolean;
-  response?: NextResponse;
+  response?: NextResponse<HTTPError>;
   data?: T;
 }
 
@@ -22,21 +24,19 @@ export function onlyAuthorized(
       pass: false,
       response: NextResponse.json(
         { error: "Authorization header not found" },
-        { status: 401 },
+        { status: StatusCodes.UNAUTHORIZED },
       ),
     };
   }
 
   const accessToken = authHeader.split(" ")[1]; // "Bearer ........"
-  console.log(accessToken);
-
   const payload = parseToken(accessToken);
   if (!payload) {
     return {
       pass: false,
       response: NextResponse.json(
-        { error: "invalid Authorization token" },
-        { status: 401 },
+        { error: "Invalid authorization token" },
+        { status: StatusCodes.UNAUTHORIZED },
       ),
     };
   }
@@ -53,7 +53,10 @@ export function isOneOfRole(
   if (!roles.includes(payload.role)) {
     return {
       pass: false,
-      response: NextResponse.json({ error: "invalid role" }, { status: 403 }),
+      response: NextResponse.json(
+        { error: "invalid role" },
+        { status: StatusCodes.FORBIDDEN },
+      ),
     };
   }
   return { pass: true };
