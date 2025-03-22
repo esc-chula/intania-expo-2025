@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 function TermsLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <div className="space-y-8 px-4 pt-1 pb-20">
+    <div className="space-y-8 pt-1 pb-20">
       <TopAppBar appearance="minimal">
         <Button appearance="text" href="/">
           <Icon name="arrow_back" />
