@@ -17,11 +17,12 @@ const NavigationCard: StyleableFC<{
   body: string;
   href?: string;
 }> = ({ children, title, body, href }) => (
-  <Card className="iex-navigation-card border-cream relative">
+  <Card className="iex-navigation-card relative">
     <Interactive
       href={href}
-      className={cn(`state-layer-white flex min-h-48 flex-col items-center
-        gap-1 border-1 bg-transparent py-3.5 text-center text-balance`)}
+      className={cn(`state-layer-white border-cream flex min-h-48 w-full
+        flex-col items-center gap-1 border-1 bg-transparent py-3.5 text-center
+        text-balance`)}
     >
       <h3
         className={cn(`text-yellow text-display-md font-narrow text-center

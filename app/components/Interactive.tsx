@@ -3,7 +3,7 @@
 import cn from "@/lib/helpers/cn";
 import { StyleableFC } from "@/lib/types/misc";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { ComponentProps, useRef, useState } from "react";
 
 /**
  * Indicates interactivity with a ripple effect. The background and state layer
@@ -17,17 +17,13 @@ import { useRef, useState } from "react";
 const Interactive: StyleableFC<
   {
     children: React.ReactNode;
+    disabled?: boolean;
     href?: string;
+    type?: ComponentProps<"button">["type"];
     onClick?: () => void;
   } & React.AriaAttributes
-> = ({ children, href, onClick, className, style, ...props }) => {
-  const Element = href
-    ? href.startsWith("/")
-      ? Link
-      : `a`
-    : onClick
-      ? `button`
-      : `div`;
+> = ({ children, disabled, href, type = "button", onClick, className, style, ...props }) => {
+  const Element = href ? (href.startsWith("/") ? Link : `a`) : `button`;
 
   const rippleContainerRef = useRef<HTMLSpanElement>(null);
   const [touched, setTouched] = useState(false);
@@ -81,6 +77,8 @@ const Interactive: StyleableFC<
   return (
     <Element
       href={href!}
+      type={type}
+      tabIndex={disabled ? -1 : 0}
       onClick={onClick}
       onTouchStart={(event: React.TouchEvent) => {
         setTouched(true);
