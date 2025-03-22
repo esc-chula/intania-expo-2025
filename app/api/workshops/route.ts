@@ -13,11 +13,18 @@ export async function GET(
   const { searchParams } = new URL(request.url);
 
   // Extract query parameters
-  const data = JSON.parse(searchParams.get("data")!);
+  let data;
+  try {
+    data = JSON.parse(searchParams.get("data")!);
+  } catch (_) {
+    return NextResponse.json(
+      { error: "invalid request body" },
+      { status: StatusCodes.BAD_REQUEST },
+    );
+  }
 
   // Validate query parameters
-  const queryParams = { data };
-  const validation = WorkshopQuerySchema.safeParse(queryParams);
+  const validation = WorkshopQuerySchema.safeParse(data);
 
   if (!validation.success) {
     return NextResponse.json(

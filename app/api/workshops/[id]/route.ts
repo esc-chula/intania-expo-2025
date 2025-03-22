@@ -29,6 +29,11 @@ export async function GET(
         msg: "Workshop not found",
         status: StatusCodes.NOT_FOUND,
       },
+      {
+        code: "P2023",
+        msg: "Workshop not found",
+        status: StatusCodes.NOT_FOUND,
+      },
     ]);
   }
 }
