@@ -1,8 +1,8 @@
-import { Building, Floor, Room } from "@/lib/backend/types/buildingFloorRoom";
 import { Competition } from "@/lib/backend/types/competition";
 import { Event, EventTag } from "@/lib/backend/types/event";
 import { IntaniaLocation } from "@/lib/backend/types/intaniaLocation";
 import { Major } from "@/lib/backend/types/major";
+import { Building, Floor, Room } from "@/lib/backend/types/map";
 import { ExpoStaff, Visitor, WorkshopStaff } from "@/lib/backend/types/user";
 import { Workshop, WorkshopSlot } from "@/lib/backend/types/workshop";
 import { PrismaClient } from "@prisma/client";
