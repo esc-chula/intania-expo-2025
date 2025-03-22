@@ -2,6 +2,7 @@ import Button from "@/app/components/Button";
 import Icon from "@/app/components/Icon";
 import Logo from "@/app/components/Logo";
 import TopAppBar from "@/app/components/TopAppBar";
+import RegisterForm from "@/app/register/components/RegisterForm";
 import cn from "@/lib/helpers/cn";
 import type { Metadata } from "next";
 
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function Register() {
   return (
-    <div className="space-y-6 pt-1 pb-20">
+    <div className="space-y-8 pt-1 pb-20">
       <TopAppBar appearance="minimal">
         <Button appearance="text" href="/terms">
           <Icon name="arrow_back" />
@@ -28,6 +29,7 @@ export default function Register() {
           ลงทะเบียนเข้าร่วมงาน
         </h1>
       </div>
+      <RegisterForm />
     </div>
   );
 }
