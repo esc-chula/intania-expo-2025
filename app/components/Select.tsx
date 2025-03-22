@@ -1,5 +1,6 @@
 "use client";
 
+import Icon from "@/app/components/Icon";
 import Interactive from "@/app/components/Interactive";
 import Menu from "@/app/components/Menu";
 import cn from "@/lib/helpers/cn";
@@ -61,23 +62,40 @@ const Select: StyleableFC<{
     <SelectContext.Provider
       value={{ value, handleSelect, maxChoices, isMenuOpen }}
     >
+      <div
+        onClick={() => setIsMenuOpen(false)}
+        className={cn(`fixed inset-0`, !isMenuOpen && `hidden`)}
+      />
+
       <div className="iex-select relative">
         <Interactive
           onClick={() => setIsMenuOpen((prev) => !prev)}
           className={cn(
             `focus-visible:bg-cream valid:border-cream state-layer-white
-            focus-visible:state-layer-dark-gray block w-full truncate border-2
-            bg-black/40 px-4.5 py-2.5 text-start focus:outline-none`,
+            focus-visible:state-layer-dark-gray grid w-full
+            grid-cols-[1fr_1.25rem] items-center gap-2 truncate border-2
+            bg-black/40 py-2.5 pr-3 pl-4.5 text-start focus:outline-none`,
             className,
           )}
           style={style}
         >
-          <span>
+          <span className="grow">
             {selectedLabels.length ? selectedLabels.join(", ") : "เลือก…"}
           </span>
+          <Icon
+            name="arrow_drop_down"
+            size={20}
+            className={cn(`transition-transform`, isMenuOpen && `-scale-y-100`)}
+          />
         </Interactive>
 
-        <Menu className={cn(!isMenuOpen && `hidden`)}>{children}</Menu>
+        <Menu
+          className={cn(
+            !isMenuOpen && `pointer-events-none -translate-y-2 opacity-0`,
+          )}
+        >
+          {children}
+        </Menu>
       </div>
     </SelectContext.Provider>
   );

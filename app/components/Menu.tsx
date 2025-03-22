@@ -11,7 +11,7 @@ const Menu: StyleableFC<{
 }> = ({ children, className, style }) => (
   <div
     className={cn(
-      `iex-menu bg-brown absolute inset-x-0 top-full z-10 grid max-h-72 overflow-scroll py-2`,
+      `iex-menu bg-brown absolute inset-x-0 top-full z-10 grid max-h-72 overflow-scroll py-2 transition-all`,
       className,
     )}
     style={style}
