@@ -1,11 +1,11 @@
 "use client";
 
+import Icon from "@/app/components/Icon";
+import Interactive from "@/app/components/Interactive";
 import { SelectContext } from "@/app/components/Select";
 import cn from "@/lib/helpers/cn";
 import { StyleableFC } from "@/lib/types/misc";
 import { useContext } from "react";
-import Interactive from "./Interactive";
-import Icon from "./Icon";
 
 /**
  * A choice in a menu.
