@@ -101,7 +101,7 @@ const Interactive: StyleableFC<
         startRipple(rect.width / 2, rect.height / 2);
       }}
       className={cn(
-        `iex-interactive relative block overflow-hidden
+        `iex-interactive relative block cursor-pointer overflow-hidden
         before:pointer-events-none before:absolute before:inset-0
         before:rounded-[inherit] before:opacity-0 before:transition-opacity
         before:content-[''] hover:before:opacity-8 hover:before:duration-25
