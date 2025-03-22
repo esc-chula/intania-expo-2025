@@ -73,13 +73,13 @@ const Select: StyleableFC<{
           className={cn(
             `focus-visible:bg-cream valid:border-cream state-layer-white
             focus-visible:state-layer-dark-gray grid w-full
-            grid-cols-[1fr_1.25rem] items-center gap-2 truncate border-2
-            bg-black/40 py-2.5 pr-3 pl-4.5 text-start focus:outline-none`,
+            grid-cols-[auto_1.25rem] items-center gap-2 border-2 bg-black/40
+            py-2.5 pr-3 pl-4.5 text-start focus:outline-none`,
             className,
           )}
           style={style}
         >
-          <span className="grow">
+          <span className="grow truncate">
             {selectedLabels.length ? selectedLabels.join(", ") : "เลือก…"}
           </span>
           <Icon
