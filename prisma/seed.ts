@@ -119,7 +119,7 @@ const visitors: Visitor[] = [
     gender: "male",
     phone: "0123456789",
     category: "_category",
-    visitDate: "_visitDate",
+    visitDate: undefined,
     interestedActivities: "*",
     referralSource: "",
     studentLevel: "",

@@ -25,7 +25,7 @@ model User {
   gender               String?
   phone                String?
   category             String?
-  visitDate            String?
+  visitDate            DateTime?
   interestedActivities String?
   referralSource       String?
   studentLevel         String?

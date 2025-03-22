@@ -22,7 +22,7 @@ export type Visitor = {
   gender: string;
   phone: string;
   category: string;
-  visitDate: string;
+  visitDate?: Date;
   interestedActivities?: string;
   referralSource?: string;
   studentLevel?: string;
