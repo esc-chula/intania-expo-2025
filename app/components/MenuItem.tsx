@@ -1,9 +1,10 @@
 "use client";
 
-import { useContext } from "react";
+import { SelectContext } from "@/app/components/Select";
 import cn from "@/lib/helpers/cn";
 import { StyleableFC } from "@/lib/types/misc";
-import { SelectContext } from "@/app/components/Select";
+import { useContext } from "react";
+import Interactive from "./Interactive";
 
 /**
  * A choice in a menu.
@@ -17,25 +18,22 @@ const MenuItem: StyleableFC<{
 }> = ({ children, value, className, style }) => {
   const context = useContext(SelectContext);
   if (!context) throw new Error("MenuItem must be a child of Select.");
-
-  const { value: selectedValue, handleSelect } = context;
-  const isSelected =
-    Array.isArray(selectedValue) && selectedValue.includes(value);
+  const { value: selectedValue, handleSelect, } = context;
 
   return (
-    <div
+    <Interactive
       className={cn(
-        `iex-menu-item text-body-lg leading-headline-lg flex h-12 cursor-pointer items-center px-4`,
-        isSelected ? "bg-just-red" : "bg-brown",
-        "hover:bg-just-red",
+        `iex-menu-item text-body-lg leading-headline-lg state-layer-white flex
+        h-12 items-center px-4`,
+        selectedValue.includes(value) && `bg-just-red`,
         className,
       )}
       data-value={value}
       style={style}
-      onClick={() => handleSelect(value)}
+      onClick={() => handleSelect(value, children as string)}
     >
       {children}
-    </div>
+    </Interactive>
   );
 };
 
