@@ -2,7 +2,7 @@ import { StyleableFC } from "@/lib/types/misc";
 
 /**
  * The Intania Expo 2025 logo.
- * 
+ *
  * @param size Size in pixels.
  */
 const Logo: StyleableFC<{ size: number }> = ({ size, className, style }) =>
@@ -15,7 +15,7 @@ const Logo: StyleableFC<{ size: number }> = ({ size, className, style }) =>
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     className={className}
-    style={style}
+    style={{ width: size, height: size, ...style }}
   >
     <path d="M27 101.008V65.2324H38.492V101.008H27Z" fill="currentColor" />
     <path d="M70.7149 101.008L55.6869 83.6404V101.008H45.1309V65.2324H55.1669L70.1949 82.8604V65.2324H80.7509V101.008H70.7149Z" fill="currentColor" />
