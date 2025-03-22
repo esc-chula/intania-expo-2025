@@ -57,8 +57,12 @@
   --leading-display-lg: 4rem;
 }
 
+@utility font-width-* {
+  font-variation-settings: "wdth" --value(integer);
+}
+
 @utility state-layer-* {
-  color: --value(--color- *);
+  color: --value(--color-*);
 
   &::before,
   .iex-ripple {

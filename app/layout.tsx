@@ -1,15 +1,18 @@
 import RedCastle from "@/app/components/RedCastle";
 import "@/app/globals.css";
 import cn from "@/lib/helpers/cn";
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import { Archivo, Chakra_Petch } from "next/font/google";
 import localFont from "next/font/local";
 
 const archivo = Archivo({
+  style: ["normal", "italic"],
   subsets: ["latin"],
   axes: ["wdth"],
 });
 const chakraPetch = Chakra_Petch({
+  style: ["normal", "italic"],
   subsets: ["thai"],
   weight: ["400", "600", "700"],
 });
@@ -35,6 +38,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="th">
+      <head>
+        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+      </head>
       <body
         className={cn(
           archivo.className,
@@ -45,11 +51,12 @@ export default function RootLayout({
       >
         <div className="bg-dark-red fixed -z-10 h-32 w-screen">
           <RedCastle
-            className={cn(`bg-dark-red absolute left-1/2 w-108 -translate-x-1/2
-              text-black`)}
+            className={cn(`bg-dark-red absolute left-1/2 w-108
+              -translate-x-1/2 text-black`)}
           />
         </div>
-        <div className="mx-auto max-w-108 font-sans">{children}</div>
+        <div className="mx-auto max-w-108 px-4 font-sans">{children}</div>
+        <Analytics />
       </body>
     </html>
   );
