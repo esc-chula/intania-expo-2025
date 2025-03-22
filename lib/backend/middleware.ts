@@ -23,7 +23,7 @@ export function onlyAuthorized(
     return {
       pass: false,
       response: NextResponse.json(
-        { error: "Authorization header not found" },
+        { error: "authorization header not found" },
         { status: StatusCodes.UNAUTHORIZED },
       ),
     };
@@ -35,7 +35,7 @@ export function onlyAuthorized(
     return {
       pass: false,
       response: NextResponse.json(
-        { error: "Invalid authorization token" },
+        { error: "invalid authorization token" },
         { status: StatusCodes.UNAUTHORIZED },
       ),
     };
