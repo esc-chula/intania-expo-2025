@@ -1,0 +1,33 @@
+meta {
+  name: (expo staff) mock sign-in
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{url}}/api/test/auth/mock-signin
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "email": "staff1_expo@chula.ac.th"
+  }
+}
+
+script:pre-request {
+  const cookie = bru.getVar("cookie");
+  
+  if(cookie) {
+    req.setHeader("Cookie", cookie)
+  }
+}
+
+script:post-response {
+  const cookies = res.getHeader('set-cookie');
+  
+  if(cookies) {
+    bru.setVar("cookie", cookies.join('; '));
+  }
+}
