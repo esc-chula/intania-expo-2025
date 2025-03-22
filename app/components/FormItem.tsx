@@ -21,7 +21,7 @@ const FormItem: StyleableFC<{
   >
     <label
       className={cn(`text-title-md leading-title-md text-right font-semibold
-        text-white italic`)}
+        text-balance text-white italic`)}
     >
       {label}
     </label>
