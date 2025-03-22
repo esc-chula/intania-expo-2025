@@ -11,7 +11,7 @@ export const FetchLevelSchema = {};
 const EventDataSchema = z
   .object({
     search: z.string().optional(),
-    tags: z.string().optional(),
+    tags: z.string().array().optional(),
   })
   .strict();
 
