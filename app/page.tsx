@@ -24,7 +24,7 @@ export default function Home() {
           </address>
         </section>
         <Countdown date={EVENT_START_DATE} className="mt-11" />
-        <div aria-hidden className="min-h-28 grow" />
+        <div aria-hidden className="min-h-14 grow" />
         <Button
           appearance="tonal"
           // TODO: Replace with Google authentication.
