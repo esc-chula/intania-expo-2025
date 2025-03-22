@@ -42,7 +42,7 @@ export async function GET(
     });
 
     return NextResponse.json(workshops, { status: StatusCodes.OK });
-  } catch (error) {
+  } catch (_) {
     return NextResponse.json(
       { error: ReasonPhrases.INTERNAL_SERVER_ERROR },
       { status: StatusCodes.INTERNAL_SERVER_ERROR },
