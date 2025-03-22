@@ -5,11 +5,27 @@ meta {
 }
 
 post {
-  url: {{url}}/api/workshop-slots/03bc24c5-46c1-4599-ac1a-b6d602827322/cancel
+  url: {{url}}/api/workshop-slots/21bf0ccd-c21b-4c37-aeff-2c8bd2bbfa86/cancel
   body: none
   auth: bearer
 }
 
 auth:bearer {
   token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIxQGdtYWlsLmNvbSIsInJvbGUiOiJWSVNJVE9SIiwiaWF0IjoxNzQyNjA1ODQ2LCJleHAiOjE3NDI2MDk0NDYsImlzcyI6ImludGFuaWEtZXhwby0yMDI1LWFwaSIsInN1YiI6ImFjY2Vzcy10b2tlbiJ9.ZazsDANY9tj_tnjyqG7Go2vUGZf65uUeGZmZeWJ2zt4
+}
+
+script:pre-request {
+  const cookie = bru.getVar("cookie");
+  
+  if(cookie) {
+    req.setHeader("Cookie", cookie)
+  }
+}
+
+script:post-response {
+  const cookies = res.getHeader('set-cookie');
+  
+  if(cookies) {
+    bru.setVar("cookie", cookies.join('; '));
+  }
 }

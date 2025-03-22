@@ -1,14 +1,18 @@
+import { setJwtToken } from "@/lib/backend/cookie";
 import { generateToken } from "@/lib/backend/jwt";
 import { handleCallback } from "@/lib/backend/oauth";
 import { prisma } from "@/lib/backend/prisma";
 import { HTTPError } from "@/lib/backend/types/httpError";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { NextResponse } from "next/server";
 
 export async function GET(
   request: Request,
 ): Promise<never | NextResponse<HTTPError>> {
+  const cookieStore = await cookies();
+
   let email: string;
   let redirectUrl: string;
   try {
@@ -74,14 +78,8 @@ export async function GET(
     );
   }
 
+  setJwtToken(cookieStore, accessToken, refreshToken, tokenId);
+
   // redirect back to appropriate url. default to "/"
-  if (redirectUrl == "") {
-    redirectUrl = "/";
-  }
-  const searchParams = new URLSearchParams({
-    tokenId,
-    accessToken,
-    refreshToken,
-  });
-  return redirect(redirectUrl + "?" + searchParams);
+  return redirect(redirectUrl || "/");
 }

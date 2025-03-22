@@ -6,8 +6,8 @@ export type Payload = {
   role: Role;
 };
 const JWT_SECRET = process.env.JWT_SECRET!;
-const ACCESS_TOKEN_EXPIRES = Number(process.env.ACCESS_TOKEN_EXPIRES!);
-const REFRESH_TOKEN_EXPIRES = Number(process.env.REFRESH_TOKEN_EXPIRES!);
+export const ACCESS_TOKEN_EXPIRES = Number(process.env.ACCESS_TOKEN_EXPIRES!);
+export const REFRESH_TOKEN_EXPIRES = Number(process.env.REFRESH_TOKEN_EXPIRES!);
 
 export function generateToken(payload: Payload): {
   accessToken: string;
