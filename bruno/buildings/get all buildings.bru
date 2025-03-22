@@ -1,13 +1,17 @@
 meta {
-  name: get all workshops
+  name: get all buildings
   type: http
-  seq: 2
+  seq: 1
 }
 
 get {
-  url: {{url}}/api/workshops?data={"search": "1"}
+  url: {{url}}/api/buildings?sorting={"columns": ["name"]}
   body: none
   auth: none
+}
+
+query {
+  sorting: {"columns": ["name"]}
 }
 
 script:pre-request {
