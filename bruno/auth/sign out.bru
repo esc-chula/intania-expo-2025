@@ -1,0 +1,21 @@
+meta {
+  name: sign out
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{url}}/api/auth/signout
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImkuZGVlcGF1bmdAZ21haWwuY29tIiwicm9sZSI6IlZJU0lUT1IiLCJpYXQiOjE3NDI1MzkxMjQsImV4cCI6MTc0MjU0MjcyNCwiaXNzIjoiaW50YW5pYS1leHBvLTIwMjUtYXBpIiwic3ViIjoiYWNjZXNzLXRva2VuIn0.50KpksV1-8bA4BRFQr8oZFo_cmACziDSQS4aLBnV6eM
+}
+
+body:json {
+  {
+    "tokenId": "763371d6-e4f5-4663-819c-d7e03a454abb"
+  }
+}

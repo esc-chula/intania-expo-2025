@@ -1,0 +1,23 @@
+meta {
+  name: refresh token
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{url}}/api/auth/refresh
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImkuZGVlcGF1bmdAZ21haWwuY29tIiwicm9sZSI6IlZJU0lUT1IiLCJpYXQiOjE3NDI1MzQ5NDUsImV4cCI6MTc0MjUzODU0NSwiaXNzIjoiaW50YW5pYS1leHBvLTIwMjUtYXBpIiwic3ViIjoiYWNjZXNzLXRva2VuIn0.83DpWz0NAvw35Ca54yrgmXVS3m5J-b4B94FGtK4gDzo
+}
+
+body:json {
+  {
+    "tokenId": "04ee7c26-cdbd-4eab-8a32-5e4c5794a17e",
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImkuZGVlcGF1bmdAZ21haWwuY29tIiwicm9sZSI6IlZJU0lUT1IiLCJpYXQiOjE3NDI1NDMwNTUsImV4cCI6MTc0MjU0NjY1NSwiaXNzIjoiaW50YW5pYS1leHBvLTIwMjUtYXBpIiwic3ViIjoiYWNjZXNzLXRva2VuIn0.WVkTlNRC1XRJzFCB_LKGj1Njd9aq5eIR975hCvrFWe4",
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImkuZGVlcGF1bmdAZ21haWwuY29tIiwicm9sZSI6IlZJU0lUT1IiLCJpYXQiOjE3NDI1NDMwNTUsImV4cCI6MTc0MjYyOTQ1NSwiaXNzIjoiaW50YW5pYS1leHBvLTIwMjUtYXBpIiwic3ViIjoicmVmcmVzaC10b2tlbiJ9.dBnT-TIcO3a3D4sWk6-ZNIN1aAP8GCH-0VmBBsK_LM8"
+  }
+}
