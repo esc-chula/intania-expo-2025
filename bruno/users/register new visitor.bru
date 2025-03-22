@@ -20,9 +20,25 @@ body:json {
     "surname": "Aungsumal",
     "gender": "Male",
     "phone": "012345678",
-    "email": "i.deepaung@gmail.com",
+    "email": "staff1_expo@gmail.com",
     "category": "student",
     "visitDate": "today"
   }
   
+}
+
+script:pre-request {
+  const cookie = bru.getVar("cookie");
+  
+  if(cookie) {
+    req.setHeader("Cookie", cookie)
+  }
+}
+
+script:post-response {
+  const cookies = res.getHeader('set-cookie');
+  
+  if(cookies) {
+    bru.setVar("cookie", cookies.join('; '));
+  }
 }

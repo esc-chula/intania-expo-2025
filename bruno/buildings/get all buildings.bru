@@ -1,0 +1,31 @@
+meta {
+  name: get all buildings
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{url}}/api/buildings?sorting={"columns": ["name"]}
+  body: none
+  auth: none
+}
+
+query {
+  sorting: {"columns": ["name"]}
+}
+
+script:pre-request {
+  const cookie = bru.getVar("cookie");
+  
+  if(cookie) {
+    req.setHeader("Cookie", cookie)
+  }
+}
+
+script:post-response {
+  const cookies = res.getHeader('set-cookie');
+  
+  if(cookies) {
+    bru.setVar("cookie", cookies.join('; '));
+  }
+}

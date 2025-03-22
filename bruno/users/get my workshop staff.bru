@@ -13,3 +13,19 @@ get {
 auth:bearer {
   token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN0YWZmMV93b3Jrc2hvcEBjaHVsYS5hYy50aCIsInJvbGUiOiJXT1JLU0hPUF9TVEFGRiIsImlhdCI6MTc0MjU4Mzk3NCwiZXhwIjoxNzQyNTg3NTc0LCJpc3MiOiJpbnRhbmlhLWV4cG8tMjAyNS1hcGkiLCJzdWIiOiJhY2Nlc3MtdG9rZW4ifQ.sS3YSUycukNFM2Q8U19iupkEOR4GYAhcgvjSMlRgj0Q
 }
+
+script:pre-request {
+  const cookie = bru.getVar("cookie");
+  
+  if(cookie) {
+    req.setHeader("Cookie", cookie)
+  }
+}
+
+script:post-response {
+  const cookies = res.getHeader('set-cookie');
+  
+  if(cookies) {
+    bru.setVar("cookie", cookies.join('; '));
+  }
+}

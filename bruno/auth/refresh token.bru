@@ -21,3 +21,19 @@ body:json {
     "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImkuZGVlcGF1bmdAZ21haWwuY29tIiwicm9sZSI6IlZJU0lUT1IiLCJpYXQiOjE3NDI1NDMwNTUsImV4cCI6MTc0MjYyOTQ1NSwiaXNzIjoiaW50YW5pYS1leHBvLTIwMjUtYXBpIiwic3ViIjoicmVmcmVzaC10b2tlbiJ9.dBnT-TIcO3a3D4sWk6-ZNIN1aAP8GCH-0VmBBsK_LM8"
   }
 }
+
+script:pre-request {
+  const cookie = bru.getVar("cookie");
+  
+  if(cookie) {
+    req.setHeader("Cookie", cookie)
+  }
+}
+
+script:post-response {
+  const cookies = res.getHeader('set-cookie');
+  
+  if(cookies) {
+    bru.setVar("cookie", cookies.join('; '));
+  }
+}

@@ -1,24 +1,21 @@
+import { setJwtToken } from "@/lib/backend/cookie";
 import { generateToken, parseToken } from "@/lib/backend/jwt";
+import { onlyAuthorized } from "@/lib/backend/middleware";
 import { prisma, returnPrismaError } from "@/lib/backend/prisma";
 import { HTTPError } from "@/lib/backend/types/httpError";
-import { TokenInfo } from "@/lib/backend/types/token";
 import { StatusCodes } from "http-status-codes";
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-export async function POST(
-  request: Request,
-): Promise<NextResponse<TokenInfo | HTTPError>> {
-  let body;
-  try {
-    body = await request.json();
-  } catch (_) {
-    return NextResponse.json(
-      { error: "invalid request body" },
-      { status: StatusCodes.BAD_REQUEST },
-    );
+export async function POST(): Promise<NextResponse<object | HTTPError>> {
+  const cookieStore = await cookies();
+
+  const middlewareRes = onlyAuthorized(cookieStore);
+  if (!middlewareRes.pass) {
+    return middlewareRes.response!;
   }
-  const refreshToken = body.refreshToken || "";
-  const tokenId: string = body.tokenId || "";
+
+  const { refreshToken, tokenId } = middlewareRes.data!;
 
   const payload = parseToken(refreshToken);
   if (!payload) {
@@ -64,12 +61,12 @@ export async function POST(
     ]);
   }
 
-  return NextResponse.json(
-    {
-      tokenId: tokenId,
-      accessToken: newToken.accessToken,
-      refreshToken: newToken.refreshToken,
-    },
-    { status: StatusCodes.OK },
+  setJwtToken(
+    cookieStore,
+    newToken.accessToken,
+    newToken.refreshToken,
+    tokenId,
   );
+
+  return NextResponse.json({}, { status: StatusCodes.OK });
 }

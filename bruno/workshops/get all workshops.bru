@@ -1,0 +1,27 @@
+meta {
+  name: get all workshops
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{url}}/api/workshops?data={"search": "1"}
+  body: none
+  auth: none
+}
+
+script:pre-request {
+  const cookie = bru.getVar("cookie");
+  
+  if(cookie) {
+    req.setHeader("Cookie", cookie)
+  }
+}
+
+script:post-response {
+  const cookies = res.getHeader('set-cookie');
+  
+  if(cookies) {
+    bru.setVar("cookie", cookies.join('; '));
+  }
+}

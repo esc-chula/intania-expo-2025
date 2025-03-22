@@ -1,8 +1,8 @@
-import { Building, Floor, Room } from "@/lib/backend/types/buildingFloorRoom";
 import { Competition } from "@/lib/backend/types/competition";
 import { Event, EventTag } from "@/lib/backend/types/event";
 import { IntaniaLocation } from "@/lib/backend/types/intaniaLocation";
 import { Major } from "@/lib/backend/types/major";
+import { Building, Floor, Room } from "@/lib/backend/types/map";
 import { ExpoStaff, Visitor, WorkshopStaff } from "@/lib/backend/types/user";
 import { Workshop, WorkshopSlot } from "@/lib/backend/types/workshop";
 import { PrismaClient } from "@prisma/client";
@@ -35,6 +35,8 @@ async function main() {
   await prisma.room.deleteMany();
   await prisma.room.createMany({ data: rooms });
 
+  await prisma.registeredWorkshopSlotOnVisitor.deleteMany();
+
   await prisma.workshop.deleteMany();
   await prisma.workshop.createMany({
     data: workshops.map((obj) => {
@@ -63,6 +65,7 @@ async function main() {
   await prisma.major.deleteMany();
   await prisma.major.createMany({ data: majors });
 
+  await prisma.token.deleteMany();
   await prisma.user.deleteMany();
   await prisma.user.createMany({
     data: expoStaffs,

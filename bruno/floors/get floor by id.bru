@@ -1,0 +1,27 @@
+meta {
+  name: get floor by id
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{url}}/api/floors/7214468a-d4a8-4960-859e-86e095e27248
+  body: none
+  auth: none
+}
+
+script:pre-request {
+  const cookie = bru.getVar("cookie");
+  
+  if(cookie) {
+    req.setHeader("Cookie", cookie)
+  }
+}
+
+script:post-response {
+  const cookies = res.getHeader('set-cookie');
+  
+  if(cookies) {
+    bru.setVar("cookie", cookies.join('; '));
+  }
+}
