@@ -10,7 +10,7 @@ export const prisma = globalForPrisma.prisma || new PrismaClient();
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 
 export function returnPrismaError(
-  error: any,
+  error: unknown,
   errorCases: {
     code: string;
     msg: string;

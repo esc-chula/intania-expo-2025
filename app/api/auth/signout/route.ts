@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(
   request: Request,
-): Promise<NextResponse<{} | HTTPError>> {
+): Promise<NextResponse<object | HTTPError>> {
   const middlewareRes = onlyAuthorized(request);
   if (!onlyAuthorized(request).pass) {
     return middlewareRes.response!;
@@ -17,7 +17,7 @@ export async function POST(
   let body;
   try {
     body = await request.json();
-  } catch (error) {
+  } catch (_) {
     return NextResponse.json(
       { error: "invalid request body. expect tokenId" },
       { status: StatusCodes.BAD_REQUEST },

@@ -43,7 +43,7 @@ export async function GET(
         },
         select: { id: true, role: true },
       });
-    } catch (error) {
+    } catch (_) {
       return NextResponse.json(
         { error: ReasonPhrases.INTERNAL_SERVER_ERROR },
         { status: StatusCodes.INTERNAL_SERVER_ERROR },
@@ -67,7 +67,7 @@ export async function GET(
       select: { id: true },
     });
     tokenId = id;
-  } catch (error) {
+  } catch (_) {
     return NextResponse.json(
       { error: ReasonPhrases.INTERNAL_SERVER_ERROR },
       { status: StatusCodes.INTERNAL_SERVER_ERROR },
