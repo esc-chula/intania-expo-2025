@@ -1,11 +1,15 @@
 import { onlyAuthorized } from "@/lib/backend/middleware";
-import { prisma } from "@/lib/backend/prisma";
+import { prisma, returnPrismaError } from "@/lib/backend/prisma";
+import { HTTPError } from "@/lib/backend/types/httpError";
+import { StatusCodes } from "http-status-codes";
 import { NextResponse } from "next/server";
 
-export async function POST(request: Request) {
+export async function POST(
+  request: Request,
+): Promise<NextResponse<{} | HTTPError>> {
   const middlewareRes = onlyAuthorized(request);
   if (!onlyAuthorized(request).pass) {
-    return middlewareRes.response;
+    return middlewareRes.response!;
   }
 
   const accessToken = middlewareRes.data!.accessToken!;
@@ -15,10 +19,11 @@ export async function POST(request: Request) {
     body = await request.json();
   } catch (error) {
     return NextResponse.json(
-      { error: "invalid request body" },
-      { status: 400 },
+      { error: "invalid request body. expect tokenId" },
+      { status: StatusCodes.BAD_REQUEST },
     );
   }
+
   const tokenId = body.tokenId || "";
 
   try {
@@ -26,8 +31,13 @@ export async function POST(request: Request) {
       where: { id: tokenId, accessToken: accessToken },
     });
   } catch (error) {
-    return NextResponse.json({ error: "token not found" }, { status: 404 });
+    return returnPrismaError(
+      error,
+      "P2025",
+      "token not found",
+      StatusCodes.NOT_FOUND,
+    );
   }
 
-  return NextResponse.json({}, { status: 200 });
+  return NextResponse.json({}, { status: StatusCodes.OK });
 }
