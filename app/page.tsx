@@ -7,7 +7,7 @@ import cn from "@/lib/helpers/cn";
 
 export default function Home() {
   return (
-    <div className="px-4 pb-20">
+    <div className="pb-20">
       <section
         className={cn(`flex h-dvh flex-col items-center justify-center pt-7
           pb-20 text-center sm:h-auto`)}

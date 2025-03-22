@@ -51,11 +51,11 @@ export default function RootLayout({
       >
         <div className="bg-dark-red fixed -z-10 h-32 w-screen">
           <RedCastle
-            className={cn(`bg-dark-red absolute left-1/2 w-108 -translate-x-1/2
-              text-black`)}
+            className={cn(`bg-dark-red absolute left-1/2 w-108
+              -translate-x-1/2 text-black`)}
           />
         </div>
-        <div className="mx-auto max-w-108 font-sans">{children}</div>
+        <div className="mx-auto max-w-108 px-4 font-sans">{children}</div>
         <Analytics />
       </body>
     </html>
