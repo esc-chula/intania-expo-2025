@@ -7,9 +7,7 @@ import { StatusCodes } from "http-status-codes";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-export async function GET(
-  request: Request,
-): Promise<NextResponse<Visitor | HTTPError>> {
+export async function GET(): Promise<NextResponse<Visitor | HTTPError>> {
   const cookieStore = await cookies();
 
   const middlewareResponse = onlyAuthorized(cookieStore);

@@ -7,9 +7,7 @@ import { StatusCodes } from "http-status-codes";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-export async function POST(
-  request: Request,
-): Promise<NextResponse<object | HTTPError>> {
+export async function POST(): Promise<NextResponse<object | HTTPError>> {
   const cookieStore = await cookies();
 
   const middlewareRes = onlyAuthorized(cookieStore);
@@ -17,8 +15,7 @@ export async function POST(
     return middlewareRes.response!;
   }
 
-  // TODO:
-  const { accessToken, refreshToken, tokenId } = middlewareRes.data!;
+  const { refreshToken, tokenId } = middlewareRes.data!;
 
   const payload = parseToken(refreshToken);
   if (!payload) {

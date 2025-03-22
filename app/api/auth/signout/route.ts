@@ -6,9 +6,7 @@ import { StatusCodes } from "http-status-codes";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-export async function POST(
-  request: Request,
-): Promise<NextResponse<object | HTTPError>> {
+export async function POST(): Promise<NextResponse<object | HTTPError>> {
   const cookieStore = await cookies();
 
   const middlewareRes = onlyAuthorized(cookieStore);
@@ -17,16 +15,6 @@ export async function POST(
   }
 
   const { accessToken, tokenId } = middlewareRes.data!;
-
-  let body;
-  try {
-    body = await request.json();
-  } catch (_) {
-    return NextResponse.json(
-      { error: "invalid request body. expect tokenId" },
-      { status: StatusCodes.BAD_REQUEST },
-    );
-  }
 
   try {
     await prisma.token.delete({
