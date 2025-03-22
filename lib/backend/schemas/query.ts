@@ -8,10 +8,14 @@ export const SortingSchema = z.object({
 export const GroupingSchema = {};
 export const FetchLevelSchema = {};
 
-const EventDataSchema = z.object({
-  search: z.string().optional(),
-  tags: z.string().optional(),
-}).strict();
+const EventDataSchema = z
+  .object({
+    search: z.string().optional(),
+    tags: z.string().optional(),
+  })
+  .strict();
+
+const WorkshopDataSchema = EventDataSchema;
 
 export const EventQuerySchema = z.object({
   data: EventDataSchema.nullable().optional(),
@@ -19,5 +23,5 @@ export const EventQuerySchema = z.object({
 });
 
 export const WorkshopQuerySchema = z.object({
-  data: EventDataSchema.nullable().optional(),
+  data: WorkshopDataSchema.nullable().optional(),
 });

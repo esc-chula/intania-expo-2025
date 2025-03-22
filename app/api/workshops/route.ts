@@ -24,7 +24,7 @@ export async function GET(
   }
 
   // Validate query parameters
-  const validation = WorkshopQuerySchema.safeParse(data);
+  const validation = WorkshopQuerySchema.safeParse({ data: data });
 
   if (!validation.success) {
     return NextResponse.json(
