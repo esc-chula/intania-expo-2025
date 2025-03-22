@@ -30,7 +30,7 @@ export function parseToken(token: string): Payload | null {
   try {
     const x = jwt.verify(token, JWT_SECRET);
     return x as Payload;
-  } catch (error) {
+  } catch (_) {
     return null;
   }
 }
