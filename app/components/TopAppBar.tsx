@@ -26,9 +26,9 @@ const TopAppBar: StyleableFC<{
     <header
       className={cn(
         `iex-top-app-bar text-headline-sm leading-headline-sm fixed top-0
-        bottom-auto flex h-16 w-screen max-w-108 -translate-x-4 items-center
-        gap-2 px-2 text-white border-b-1 transition-colors [&_h1]:grow
-        [&_h1]:truncate [&_h1]:font-bold [&_h1]:transition-opacity`,
+        bottom-auto z-40 flex h-16 w-screen max-w-108 -translate-x-4
+        items-center gap-2 border-b-1 px-2 text-white transition-colors
+        [&_h1]:grow [&_h1]:truncate [&_h1]:font-bold [&_h1]:transition-opacity`,
         {
           filled: `bg-dark-red`,
           scrim: scrolled
