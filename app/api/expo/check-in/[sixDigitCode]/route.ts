@@ -1,6 +1,7 @@
 import { isOneOfRole, onlyAuthorized } from "@/lib/backend/middleware";
 import { prisma, returnPrismaError } from "@/lib/backend/prisma";
-import { StatusCodes } from "http-status-codes";
+import { stat } from "fs";
+import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 export async function PUT(
@@ -33,27 +34,60 @@ export async function PUT(
   }
 
   try{
-    let visitor = await prisma.user.findFirstOrThrow({
-      where:{
-        sixDigitCode:sixDigitCode
-      }
-    })
-    if (visitor.visitDate !== null){
-      return NextResponse.json(
-        {error : "already checked in"},
-        {status: StatusCodes.CONFLICT}
-      )
-    } 
-    visitor = await prisma.user.update({
+    const { id } = await prisma.user.findFirstOrThrow({ // this will throw if can't found user
       where:{
         sixDigitCode:sixDigitCode
       },
-      data:{
-        visitDate : new Date()
+      select:{
+        id : true
       }
-    });
-    return NextResponse.json(visitor, {status:StatusCodes.OK});
+    })
 
+    const checkInDate = await prisma.checkedInExpoOnVisitor.findFirst({
+      where : {
+        visitorId:id
+      },
+      orderBy : {
+        checkIn: 'desc'
+      },
+      select: {
+        checkIn:true
+      }
+    })
+    const nowDate = new Date();
+    const toDay = nowDate.getUTCDay();
+    if (checkInDate != null) {
+      const checkInDay = checkInDate.checkIn.getUTCDay();
+      if (checkInDay < toDay){
+        const checkInExpo = await prisma.checkedInExpoOnVisitor.create({
+          data:{
+            visitorId:id,
+            checkIn:nowDate
+          },
+          select:{
+            visitor : true,
+            visitorId : true,
+            checkIn : true
+          }
+        });
+        return NextResponse.json(checkInExpo, {status:StatusCodes.ACCEPTED});
+      } else { // already checked in //! checkInDay > toDay is not neccessary
+        return NextResponse.json({error:"already checked in"}, {status:StatusCodes.CONFLICT});          
+      }
+    } else { //first time check in
+      const checkInExpo = await prisma.checkedInExpoOnVisitor.create({
+        data:{
+          visitorId:id,
+          checkIn:nowDate
+        },
+        select:{
+          visitor : true,
+          visitorId : true,
+          checkIn : true
+        }
+      });
+      return NextResponse.json(checkInExpo, {status:StatusCodes.ACCEPTED});
+    }
   } catch (error) { // error
     return returnPrismaError(error, [
       {
@@ -63,7 +97,5 @@ export async function PUT(
       }
     ]);
   }
-
-
   
 }
