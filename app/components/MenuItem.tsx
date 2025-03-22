@@ -18,17 +18,16 @@ const MenuItem: StyleableFC<{
   const context = useContext(SelectContext);
   if (!context) throw new Error("MenuItem must be a child of Select.");
 
-  const { value: selectedValue, handleSelect, maxChoices } = context;
+  const { value: selectedValue, handleSelect } = context;
   const isSelected =
-    maxChoices === 1
-      ? selectedValue === value
-      : Array.isArray(selectedValue) && selectedValue.includes(value);
+    Array.isArray(selectedValue) && selectedValue.includes(value);
 
   return (
     <div
       className={cn(
-        `iex-menu-item text-body-lg leading-headline-lg flex h-12 items-center pl-8`,
+        `iex-menu-item text-body-lg leading-headline-lg flex h-12 cursor-pointer items-center px-4`,
         isSelected ? "bg-just-red" : "bg-brown",
+        "hover:bg-just-red",
         className,
       )}
       data-value={value}

@@ -4,13 +4,16 @@ import { StyleableFC } from "@/lib/types/misc";
 /**
  * A container of menu items.
  *
- * @param children Menu iterms
+ * @param children menu iterms
  */
 const Menu: StyleableFC<{
   children: React.ReactNode;
 }> = ({ children, className, style }) => (
   <div
-    className={cn(`iex-menu flex-col items-center justify-center`, className)}
+    className={cn(
+      `iex-menu absolute top-full left-0 z-10 w-auto min-w-full`,
+      className,
+    )}
     style={style}
   >
     {children}

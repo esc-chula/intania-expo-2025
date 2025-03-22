@@ -6,11 +6,11 @@ import { StyleableFC } from "@/lib/types/misc";
 import React, { createContext, useState } from "react";
 
 export const SelectContext = createContext<{
-  value: string | string[];
+  value: string[];
   handleSelect: (selectedValue: string) => void;
   maxChoices?: number | null;
 }>({
-  value: "",
+  value: [],
   handleSelect: () => {},
   maxChoices: 1,
 });
@@ -25,30 +25,33 @@ export const SelectContext = createContext<{
  */
 const Select: StyleableFC<{
   children: React.ReactNode;
-  value: string | string[];
-  onChange: (value: string | string[]) => void;
+  value: string[];
+  onChange: (value: string[]) => void;
   maxChoices?: number | null;
 }> = ({ children, value, onChange, maxChoices = 1, className, style }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   /** Set the selected value in the field when an option is selected. */
   function handleSelect(selectedValue: string) {
-    onChange(selectedValue);
+    onChange([selectedValue]);
     setIsMenuOpen(false);
   }
 
   return (
     <SelectContext.Provider value={{ value, handleSelect, maxChoices }}>
-      <div>
+      <div className="relative">
         <div
           onClick={() => setIsMenuOpen((prev) => !prev)}
-          className={cn(`iex-select flex h-4 border p-32`, className)}
+          className={cn(
+            "iex-select text-body-lg w-64 cursor-pointer items-center border p-2 pr-4 pl-8",
+            className,
+          )}
           style={style}
         >
-          {value || "เลือก…"}
+          <span>{value || "เลือก…"}</span>
         </div>
 
-        {isMenuOpen && <Menu className={cn("iex-menu")}>{children}</Menu>}
+        {isMenuOpen && <Menu>{children}</Menu>}
       </div>
     </SelectContext.Provider>
   );
