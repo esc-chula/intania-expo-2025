@@ -13,7 +13,7 @@ const FormItem: StyleableFC<{
 }> = ({ children, label, className, style }) => (
   <div
     className={cn(
-      `iex-form-item grid grid-cols-4 items-center justify-between gap-4 px-4
+      `iex-form-item grid grid-cols-4 items-center justify-between gap-4
       [&_.iex-field,.iex-select]:col-span-3`,
       className,
     )}
