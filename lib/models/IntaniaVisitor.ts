@@ -25,7 +25,7 @@ export default class IntaniaVisitor extends Visitor {
         (date) => date.toISOString().split("T")[0],
       ),
       interestedActivities: this.interestedActivities,
-      referralSource: this.referralSources,
+      referralSources: this.referralSources,
       alumniBatch: this.#alumniBatch,
     });
   }
