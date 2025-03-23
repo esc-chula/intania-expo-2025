@@ -1,9 +1,5 @@
-import Visitor, {
-  GENDER,
-  PROVINCES,
-  VISITOR_CATEGORY,
-} from "@/lib/models/Visitor";
 import Province from "@/lib/models/Province";
+import Visitor from "@/lib/models/Visitor";
 
 export default class TeacherVisitor extends Visitor {
   #school: string;
@@ -11,33 +7,16 @@ export default class TeacherVisitor extends Visitor {
   #subjectTaught: string;
 
   constructor(
-    name: string,
-    surname: string,
-    gender: GENDER,
-    phone: string,
-    email: string,
-    category: VISITOR_CATEGORY,
-    visitDate: Date[],
-    interestedActivities: (typeof Visitor.INTERESTED_ACTIVITIES)[],
-    referralSource: (typeof Visitor.REFERAL_SOURCES)[],
-    school: string,
-    province: keyof typeof PROVINCES,
-    subjectTaught: string,
+    data: ConstructorParameters<typeof Visitor>[0] & {
+      school: string;
+      province: Province["code"];
+      subjectTaught: string;
+    },
   ) {
-    super(
-      name,
-      surname,
-      gender,
-      phone,
-      email,
-      category,
-      visitDate,
-      interestedActivities,
-      referralSource,
-    );
-    this.#school = school;
-    this.#province = province;
-    this.#subjectTaught = subjectTaught;
+    super(data);
+    this.#school = data.school;
+    this.#province = Province.fromCode(data.province)!;
+    this.#subjectTaught = data.subjectTaught;
   }
 
   async save() {
