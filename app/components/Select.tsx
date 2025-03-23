@@ -58,6 +58,14 @@ const Select: StyleableFC<{
     );
   }, []);
 
+  // Close the Menu when the Escape key is pressed.
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) =>
+      event.key === "Escape" && setIsMenuOpen(false);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [values, setValues] = useState<{ value: string; label: string }[]>([]);
 
