@@ -5,9 +5,38 @@ import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import { WorkshopQuerySchema } from '@/lib/backend/schemas/query';
 import { fromZodError } from 'zod-validation-error';
 import { prisma } from '@/lib/backend/prisma';
+import { cookies } from 'next/headers';
+import { onlyAuthorized } from '@/lib/backend/middleware';
 
 export async function GET(request: Request): Promise<NextResponse<RegisteredWorkshopDetail[] | HTTPError>> {
     const { searchParams } = new URL(request.url);
+    const cookieStore = await cookies();
+
+    const middlewareResponse = onlyAuthorized(cookieStore);
+    if (!middlewareResponse.pass) {
+        return middlewareResponse.response!;
+    }
+    const { payload } = middlewareResponse.data!;
+
+  // const middlewareResponse2 = isOneOfRole(["VISITOR" ], payload);
+  // if (!middlewareResponse2.pass) {
+  //   return middlewareResponse2.response!;
+  // } //no need
+
+
+    const userResult = await prisma.user.findFirst({
+        where: { email: payload.email },
+        select: { id: true },
+    });
+    if (!userResult) {
+        // payload email should be valid
+        return NextResponse.json(
+            { error: ReasonPhrases.INTERNAL_SERVER_ERROR },
+            { status: StatusCodes.INTERNAL_SERVER_ERROR },
+        );
+    }
+    const visitorId = userResult.id;
+
     const data = JSON.parse(searchParams.get("data")!);
     const validation = WorkshopQuerySchema.safeParse({ data: data });
 
@@ -29,6 +58,7 @@ export async function GET(request: Request): Promise<NextResponse<RegisteredWork
                         OR: [{ workshop: { name: { contains: search?.trim(), mode: "insensitive" } } }],
                     }
                     : {}),
+                    visitorId : visitorId
             },
         });
 
