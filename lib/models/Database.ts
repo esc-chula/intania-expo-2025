@@ -40,15 +40,16 @@ export default class Database {
     body: Record<string, unknown> = {},
     options: RequestInit = {},
   ): Promise<DatabaseResponse<ExpectedData>> {
+    const isClient = typeof window !== "undefined";
+
     endpoint = `/api` + endpoint;
-    if (typeof window === "undefined")
-      endpoint = process.env.APP_URL + endpoint;
+    if (!isClient) endpoint = process.env.APP_URL + endpoint;
     if (method === "GET" && Object.keys(body).length > 0)
       endpoint += `?${new URLSearchParams(
         mapValues(body, (value) => String(value)),
       ).toString()}`;
 
-    console.log(LOG_IDENIFIER, method, endpoint);
+    if (isClient) console.log(LOG_IDENIFIER, method, endpoint);
 
     const [error, response] = await tryit(fetch)(endpoint, {
       method,
