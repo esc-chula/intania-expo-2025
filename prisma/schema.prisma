@@ -18,22 +18,22 @@ model User {
   workshopId String?   @db.Uuid
 
   // fields for Visitor
-  sixDigitCode         String? @unique // S-{incrementCode}
-  incrementCode        Int     @default(autoincrement())
+  sixDigitCode         String?  @unique // S-{incrementCode}
+  incrementCode        Int      @default(autoincrement())
   name                 String?
   surname              String?
   gender               String?
   phone                String?
   category             String?
-  visitDate            String?
-  interestedActivities String?
-  referralSource       String?
+  visitDates           String[]
+  interestedActivities String[]
+  referralSources      String[]
   studentLevel         String?
   studyStream          String?
   school               String?
   province             String?
   interestLevel        String?
-  interestedField      String?
+  interestedFields     String[]
   emergencyContact     String?
   universityYear       String?
   faculty              String?
