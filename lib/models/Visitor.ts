@@ -5,7 +5,6 @@ import StudentVisitor from "@/lib/models/StudentVisitor";
 import TeacherVisitor from "@/lib/models/TeacherVisitor";
 import UniversityVisitor from "@/lib/models/UniversityVisitor";
 import User, { UserRole } from "@/lib/models/User";
-import { DatabaseResponse } from "./Database";
 
 export enum GENDER {
   Male = "MALE",
@@ -122,7 +121,22 @@ export default abstract class Visitor extends User {
     ) as (keyof typeof Visitor.REFERRAL_SOURCES)[];
   }
 
-  abstract save(): Promise<DatabaseResponse>;
+  async save(data?: object): Promise<DatabaseResponse> {
+    return await Database.fetch("POST", "/visitors", {
+      name: this.#name,
+      surname: this.#surname,
+      gender: this.#gender,
+      phone: this.#phone,
+      email: this.email,
+      category: this.#category,
+      visitDates: this.#visitDates.map(
+        (date) => date.toISOString().split("T")[0],
+      ),
+      interestedActivities: this.#interestedActivities,
+      referralSources: this.#referralSources,
+      ...data,
+    });
+  }
 
   // Standard getters
   get name() {
