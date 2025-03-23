@@ -36,9 +36,10 @@ const Field: StyleableFC<
     {...(type === "tel" && { pattern: "0[0-9]{8,9}" })}
     onChange={(event) => onChange?.(event.target.value)}
     className={cn(`iex-field focus:bg-cream focus:text-dark-gray
-      [:user-invalid]:border-bright-red border-cream [:user-invalid]:text-white
+      [:user-invalid]:border-bright-red border-cream
       focus:[:user-invalid]:bg-bright-red block border-2 bg-black/40 px-4.5
-      py-2.5 focus:placeholder-transparent focus:outline-none`)}
+      py-2.5 focus:placeholder-transparent focus:outline-none
+      [:user-invalid]:text-white`)}
   />
 );
 
