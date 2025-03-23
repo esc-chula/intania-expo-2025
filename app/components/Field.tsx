@@ -33,6 +33,7 @@ const Field: StyleableFC<
     {...props}
     value={value}
     type={type}
+    {...(type === "tel" && { pattern: "0[0-9]{8,9}" })}
     onChange={(event) => onChange?.(event.target.value)}
     className={cn(`iex-field focus:bg-cream focus:text-dark-gray
       [:user-invalid]:border-bright-red border-cream [:user-invalid]:text-white

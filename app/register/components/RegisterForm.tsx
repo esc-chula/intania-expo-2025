@@ -112,7 +112,7 @@ const RegisterForm: StyleableFC<{
           <Field name="email" type="email" value={email} readOnly />
         </FormItem>
         <FormItem label="เบอร์โทรศัพท์">
-          <Field name="phone" type="tel" pattern="0[0-9]{8,9}" required />
+          <Field name="phone" type="tel" required />
         </FormItem>
         {category === VISITOR_CATEGORY.Student && (
           <FormItem label="เบอร์ติดต่อฉุกเฉิน">
