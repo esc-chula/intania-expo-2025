@@ -53,7 +53,6 @@ export async function GET(
   const setRegisteredWorkshopSlotId = new Set(
     allRegisteredWorkshopSlotId.map((slot) => slot.registeredWorkshopSlotId),
   );
-  console.log(setRegisteredWorkshopSlotId);
 
   // Extract query parameters
   let data;
