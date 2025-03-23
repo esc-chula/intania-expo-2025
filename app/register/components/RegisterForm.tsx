@@ -32,32 +32,31 @@ const RegisterForm: StyleableFC = ({ className, style }) => {
       string
     >;
     try {
-      const visitor = (() =>
-        new {
-          [VISITOR_CATEGORY.Student]: StudentVisitor,
-          [VISITOR_CATEGORY.Intania]: IntaniaVisitor,
-          [VISITOR_CATEGORY.University]: UniversityVisitor,
-          [VISITOR_CATEGORY.Teacher]: TeacherVisitor,
-          [VISITOR_CATEGORY.Other]: OtherVisitor,
-        }[
-          (data as { category: VISITOR_CATEGORY }).category ||
-            VISITOR_CATEGORY.Other
-        ](
-          // TypeScript shenanigans to merge all types of visitor data.
-          // Defo not type-safe. Improvements welcome!
-          data as ConstructorParameters<typeof StudentVisitor>[0] &
-            ConstructorParameters<typeof IntaniaVisitor>[0] &
-            ConstructorParameters<typeof UniversityVisitor>[0] &
-            ConstructorParameters<typeof TeacherVisitor>[0] &
-            ConstructorParameters<typeof OtherVisitor>[0],
-        ))();
-      if (!visitor) return setLoading(false);
+      const visitor = new {
+        [VISITOR_CATEGORY.Student]: StudentVisitor,
+        [VISITOR_CATEGORY.Intania]: IntaniaVisitor,
+        [VISITOR_CATEGORY.University]: UniversityVisitor,
+        [VISITOR_CATEGORY.Teacher]: TeacherVisitor,
+        [VISITOR_CATEGORY.Other]: OtherVisitor,
+      }[
+        (data as { category: VISITOR_CATEGORY }).category ||
+          VISITOR_CATEGORY.Other
+      ](
+        // TypeScript shenanigans to merge all types of visitor data.
+        // Defo not type-safe. Improvements welcome!
+        data as ConstructorParameters<typeof StudentVisitor>[0] &
+          ConstructorParameters<typeof IntaniaVisitor>[0] &
+          ConstructorParameters<typeof UniversityVisitor>[0] &
+          ConstructorParameters<typeof TeacherVisitor>[0] &
+          ConstructorParameters<typeof OtherVisitor>[0],
+      );
       const { ok } = await visitor.save();
       if (ok) redirect("/home");
-      else setLoading(false);
-    } catch (_) {
-      setTimeout(() => setLoading(false), 1000);
-    }
+    } catch (_) {}
+    // This is very dirty but I can’t get around React resetting the form data
+    // (which only clears Fields but not Selects) so the workaround is clearing
+    // everything by redirecting to the same page.
+    redirect("/register");
   }
 
   return (
