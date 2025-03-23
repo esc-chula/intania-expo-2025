@@ -1,5 +1,5 @@
 import type { HTTP_METHOD } from "next/dist/server/web/http";
-import { mapValues, pick, tryit } from "radash";
+import { mapValues, tryit } from "radash";
 
 /** A failed response from the database. */
 export type DatabaseResponseError = {
@@ -56,13 +56,13 @@ export default class Database {
       ...options,
     });
 
-    const consumed = await response?.json();
+    const data = await response?.json();
 
     if (error) console.error(LOG_IDENIFIER, method, endpoint, `\n` + error);
-    if (!consumed) return { data: null, status: null, ok: false };
-    if (!consumed.ok)
-      console.error(LOG_IDENIFIER, method, endpoint, `\n` + consumed.error);
+    if (!response) return { data: null, status: null, ok: false };
+    if (!response?.ok)
+      console.error(LOG_IDENIFIER, method, endpoint, `\n` + data.error);
 
-    return pick(consumed, ["data", "status", "ok"]);
+    return { data, status: response.status, ok: response.ok };
   }
 }
