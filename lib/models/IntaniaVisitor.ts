@@ -1,3 +1,4 @@
+import Database from "@/lib/models/Database";
 import Visitor from "@/lib/models/Visitor";
 
 export default class IntaniaVisitor extends Visitor {
@@ -13,6 +14,19 @@ export default class IntaniaVisitor extends Visitor {
   }
 
   async save() {
-    // Save to database
+    return await Database.fetch("POST", "/visitors", {
+      name: this.name,
+      surname: this.surname,
+      gender: this.gender,
+      phone: this.phone,
+      email: this.email,
+      category: this.category,
+      visitDates: this.visitDates.map(
+        (date) => date.toISOString().split("T")[0],
+      ),
+      interestedActivities: this.interestedActivities,
+      referralSource: this.referralSources,
+      alumniBatch: this.#alumniBatch,
+    });
   }
 }

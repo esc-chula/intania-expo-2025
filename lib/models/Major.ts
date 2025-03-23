@@ -10,32 +10,33 @@ export enum MAJOR_LANGUAGE {
 /** A major in the faculty. */
 export default class Major {
   #slug: string;
-  #name: string;
+  #fullName: string;
+  #displayName: string | null;
   #icon: JSX.Element;
   #language: MAJOR_LANGUAGE;
 
   // prettier-ignore
   static all: Major[] = [
-    new Major("civil", "วิศวกรรมโยธา", "flyover", MAJOR_LANGUAGE.Th),
-    new Major("electrical", "วิศวกรรมไฟฟ้า", "bolt", MAJOR_LANGUAGE.Th),
-    new Major("mechanical", "วิศวกรรมเครื่องกล", "settings", MAJOR_LANGUAGE.Th),
-    new Major("automotive", "วิศวกรรมยานยนต์", "directions_car", MAJOR_LANGUAGE.Th),
-    new Major("industrial", "วิศวกรรมอุตสาหการ", "factory", MAJOR_LANGUAGE.Th),
-    new Major("environmental", "วิศวกรรมสิ่งแวดล้อม", "park", MAJOR_LANGUAGE.Th),
-    new Major("metallurgical", "วิศวกรรมโลหการ", "hexagon", MAJOR_LANGUAGE.Th),
-    new Major("petroleum", "วิศวกรรมปิโตรเลียม", "oil_barrel", MAJOR_LANGUAGE.Th),
-    new Major("nuclear", "วิศวกรรมนิวเคลียร์", "sunny", MAJOR_LANGUAGE.Th),
-    new Major("survey", "วิศวกรรมสำรวจ", "map", MAJOR_LANGUAGE.Th),
-    new Major("chemical", "วิศวกรรมเคมี", "science", MAJOR_LANGUAGE.Th),
-    new Major("computer", "วิศวกรรมคอมพิวเตอร์", "computer", MAJOR_LANGUAGE.Th),
-    new Major("cedt", "CEDT", "code", MAJOR_LANGUAGE.Th),
-    new Major("rai", "Robotics & AI", "precision_manufacturing", MAJOR_LANGUAGE.En),
-    new Major("ice", "ICE", "code", MAJOR_LANGUAGE.En),
-    new Major("nano", "NANO", "blur_on", MAJOR_LANGUAGE.En),
-    new Major("admev", "ADME-V", "directions_car", MAJOR_LANGUAGE.En),
-    new Major("aero", "AERO", "travel", MAJOR_LANGUAGE.En),
-    new Major("semi", "SEMI", "memory", MAJOR_LANGUAGE.En),
-    new Major("chpe", "ChPe", "cycle", MAJOR_LANGUAGE.En),
+    new Major("CE", "วิศวกรรมโยธา", null , "flyover", MAJOR_LANGUAGE.Th),
+    new Major("EE", "วิศวกรรมไฟฟ้า", null , "bolt", MAJOR_LANGUAGE.Th),
+    new Major("ME", "วิศวกรรมเครื่องกล", null , "settings", MAJOR_LANGUAGE.Th),
+    new Major("AE", "วิศวกรรมยานยนต์", null , "directions_car", MAJOR_LANGUAGE.Th),
+    new Major("IE", "วิศวกรรมอุตสาหการ", null , "factory", MAJOR_LANGUAGE.Th),
+    new Major("ENV", "วิศวกรรมสิ่งแวดล้อมและความยั่งยืน", "วิศวกรรมสิ่งแวดล้อม" , "park", MAJOR_LANGUAGE.Th),
+    new Major("MT", "วิศวกรรมโลหการ", null , "hexagon", MAJOR_LANGUAGE.Th),
+    new Major("PE", "วิศวกรรมเหมืองแร่และปิโตรเลียม", "วิศวกรรมปิโตรเลียม" , "oil_barrel", MAJOR_LANGUAGE.Th),
+    new Major("NE", "วิศวกรรมนิวเคลียร์", null , "sunny", MAJOR_LANGUAGE.Th),
+    new Major("SV", "วิศวกรรมสำรวจ", null , "map", MAJOR_LANGUAGE.Th),
+    new Major("ChE", "วิศวกรรมเคมี", null , "science", MAJOR_LANGUAGE.Th),
+    new Major("CP", "วิศวกรรมคอมพิวเตอร์", null , "computer", MAJOR_LANGUAGE.Th),
+    new Major("CEDT", "วิศวกรรมคอมพิวเตอร์และเทคโนโลยีดิจิทัล (CEDT)", "CEDT", "code", MAJOR_LANGUAGE.Th),
+    new Major("robotics", "วิศวกรรมหุ่นยนต์และปัญญาประดิษฐ์ (Robotics & AI)", "Robotics & AI", "precision_manufacturing", MAJOR_LANGUAGE.En),
+    new Major("ICE", "วิศวกรรมสารสนเทศและการสื่อสาร (ICE)", "ICE", "code", MAJOR_LANGUAGE.En),
+    new Major("NANO", "วิศวกรรมนาโน (NANO)", "NANO", "blur_on", MAJOR_LANGUAGE.En),
+    new Major("ADME", "วิศวกรรมการออกแบบและการผลิตยานยนต์ (ADME)", "ADME-V", "directions_car", MAJOR_LANGUAGE.En),
+    new Major("AERO", "วิศวกรรมอากาศยาน (AERO)", "AERO", "travel", MAJOR_LANGUAGE.En),
+    new Major("ChPE", "วิศวกรรมเซมิคอนดักเตอร์ (SEMI)", "SEMI", "memory", MAJOR_LANGUAGE.En),
+    new Major("SEMI", "Chemical and Process Engineering (ChPE)", "ChPE", "cycle", MAJOR_LANGUAGE.En),
   ];
 
   static fromSlug(slug: string) {
@@ -44,22 +45,27 @@ export default class Major {
 
   constructor(
     slug: string,
-    name: string,
+    fullName: string,
+    displayName: string | null,
     iconName: string,
     language: MAJOR_LANGUAGE,
   ) {
     this.#slug = slug;
-    this.#name = name;
+    this.#displayName = displayName;
+    this.#fullName = fullName;
     this.#icon = React.createElement(Icon, { name: iconName });
     this.#language = language;
+  }
+  get displayName() {
+    return this.#displayName || this.#fullName;
   }
 
   // Standard getters
   get slug() {
     return this.#slug;
   }
-  get name() {
-    return this.#name;
+  get fullName() {
+    return this.#fullName;
   }
   get icon() {
     return this.#icon;

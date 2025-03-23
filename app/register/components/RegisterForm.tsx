@@ -148,7 +148,7 @@ const RegisterForm: StyleableFC = ({ className, style }) => {
             <Select name="interestedField" maxChoices={null}>
               {Major.all.map((major) => (
                 <MenuItem key={major.slug} value={major.slug.toUpperCase()}>
-                  {major.name}
+                  {major.fullName}
                 </MenuItem>
               ))}
             </Select>

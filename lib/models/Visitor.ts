@@ -1,4 +1,5 @@
 import User, { UserRole } from "@/lib/models/User";
+import { DatabaseResponse } from "./Database";
 
 export enum GENDER {
   Male = "MALE",
@@ -23,9 +24,9 @@ export default abstract class Visitor extends User {
   #gender: GENDER;
   #phone: string;
   #category: VISITOR_CATEGORY;
-  #visitDate: Date[];
+  #visitDates: Date[];
   #interestedActivities: (keyof typeof Visitor.INTERESTED_ACTIVITIES)[];
-  #referralSource: (keyof typeof Visitor.REFERRAL_SOURCES)[];
+  #referralSources: (keyof typeof Visitor.REFERRAL_SOURCES)[];
 
   static readonly INTERESTED_ACTIVITIES = {
     WOKRSHOP: "Workshop",
@@ -81,16 +82,16 @@ export default abstract class Visitor extends User {
     this.#gender = data.gender as GENDER;
     this.#phone = data.phone;
     this.#category = data.category as VISITOR_CATEGORY;
-    this.#visitDate = data.visitDate.split(",").map((date) => new Date(date));
+    this.#visitDates = data.visitDate.split(",").map((date) => new Date(date));
     this.#interestedActivities = data.interestedActivities.split(
       ",",
     ) as (keyof typeof Visitor.INTERESTED_ACTIVITIES)[];
-    this.#referralSource = data.referralSource.split(
+    this.#referralSources = data.referralSource.split(
       ",",
     ) as (keyof typeof Visitor.REFERRAL_SOURCES)[];
   }
 
-  abstract save(): Promise<void>;
+  abstract save(): Promise<DatabaseResponse>;
 
   // Standard getters
   get name() {
@@ -108,7 +109,13 @@ export default abstract class Visitor extends User {
   get category() {
     return this.#category;
   }
-  get visitDate() {
-    return this.#visitDate;
+  get visitDates() {
+    return this.#visitDates;
+  }
+  get interestedActivities() {
+    return this.#interestedActivities;
+  }
+  get referralSources() {
+    return this.#referralSources;
   }
 }

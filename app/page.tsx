@@ -1,9 +1,10 @@
+import Button from "@/app/components/Button";
 import Countdown from "@/app/components/Countdown";
 import Logo from "@/app/components/Logo";
 import NavigationCard from "@/app/components/NavigationCard";
-import RegisterButton from "@/app/components/RegisterButton";
 import { EVENT_START_DATE } from "@/lib/config";
 import cn from "@/lib/helpers/cn";
+import { redirect } from "next/navigation";
 
 export default function Home() {
   return (
@@ -25,7 +26,15 @@ export default function Home() {
         </section>
         <Countdown date={EVENT_START_DATE} className="mt-11" />
         <div aria-hidden className="min-h-14 grow" />
-        <RegisterButton />
+        <Button
+          appearance="tonal"
+          onClick={async () => {
+            "use server";
+            redirect("/api/auth/signin?redirect=/terms");
+          }}
+        >
+          สมัครเลย
+        </Button>
       </section>
       <section className="space-y-4">
         <NavigationCard
