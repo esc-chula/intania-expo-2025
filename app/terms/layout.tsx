@@ -1,7 +1,7 @@
 import Button from "@/app/components/Button";
-import Icon from "@/app/components/Icon";
 import Logo from "@/app/components/Logo";
 import TopAppBar from "@/app/components/TopAppBar";
+import BackButton from "@/app/terms/components/BackButton";
 import cn from "@/lib/helpers/cn";
 import type { Metadata } from "next";
 
@@ -13,9 +13,7 @@ function TermsLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <div className="space-y-8 pt-1 pb-20">
       <TopAppBar appearance="minimal">
-        <Button appearance="text" href="/">
-          <Icon name="arrow_back" />
-        </Button>
+        <BackButton />
         <h1>นโยบายการคุ้มครองข้อมูลฯ</h1>
       </TopAppBar>
       <div className="flex flex-col items-center gap-3 text-center">
