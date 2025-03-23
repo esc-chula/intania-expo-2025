@@ -19,7 +19,8 @@ const MenuItem: StyleableFC<{
 }> = ({ children, value, className, style }) => {
   const context = useContext(SelectContext);
   if (!context) throw new Error("MenuItem must be a child of Select.");
-  const { values, handleSelect, maxChoices, isMenuOpen } = context;
+  const { values, handleSelect, name, required, maxChoices, isMenuOpen } =
+    context;
   const isSelected =
     values.find((_value) => _value.value === value) !== undefined;
 
@@ -46,6 +47,19 @@ const MenuItem: StyleableFC<{
           )}
         />
       )}
+      
+      <input
+        aria-hidden
+        {...(maxChoices === 1
+          ? { type: "radio", id: value, name, value }
+          : { type: "checkbox" })}
+        checked={isSelected}
+        // Make the input required if no values are selected and the field is
+        // required.
+        required={values.length < 1 && required}
+        onChange={() => {}} // Prevents React warning
+        className="sr-only"
+      />
       {children}
     </Interactive>
   );

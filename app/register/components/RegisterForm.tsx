@@ -84,7 +84,7 @@ const RegisterForm: StyleableFC<{
           <Field name="surname" required />
         </FormItem>
         <FormItem label="เพศสภาพ">
-          <Select name="gender">
+          <Select name="gender" required>
             {Object.values(GENDER).map((gender) => (
               <MenuItem key={gender} value={gender}>
                 {Visitor.getGenderDisplayName(gender)}
@@ -95,6 +95,7 @@ const RegisterForm: StyleableFC<{
         <FormItem label="ประเภท">
           <Select
             name="category"
+            required
             onChange={([category]) => setCategory(category as VISITOR_CATEGORY)}
           >
             {Object.values(VISITOR_CATEGORY).map((category) => (
@@ -125,7 +126,7 @@ const RegisterForm: StyleableFC<{
         <section aria-labelledby="h-student">
           <h2 id="h-student">ข้อมูลนักเรียน</h2>
           <FormItem label="ระดับชั้น ปี ‘67">
-            <Select name="studentLevel">
+            <Select name="studentLevel" required>
               {list(1, 6)
                 .toReversed()
                 .map((level) => (
@@ -150,7 +151,7 @@ const RegisterForm: StyleableFC<{
             <Field name="school" required />
           </FormItem>
           <FormItem label="จังหวัด">
-            <Select name="province">
+            <Select name="province" required>
               {Province.ALL.map((province) => (
                 <MenuItem key={province.code} value={province.code}>
                   {province.name}
@@ -165,7 +166,11 @@ const RegisterForm: StyleableFC<{
         <section aria-labelledby="h-interest">
           <h2 id="h-interest">ความสนใจในวิศวะจุฬาฯ</h2>
           <FormItem label="สาขาที่สนใจ">
-            <Select name="interestedFields" maxChoices={Major.all.length}>
+            <Select
+              name="interestedFields"
+              required
+              maxChoices={Major.all.length}
+            >
               {Major.all.map((major) => (
                 <MenuItem key={major.slug} value={major.slug.toUpperCase()}>
                   {major.fullName}
@@ -198,7 +203,7 @@ const RegisterForm: StyleableFC<{
         <section aria-labelledby="h-university">
           <h2 id="h-university">ข้อมูลนิสิตจากมหาลัยอื่น</h2>
           <FormItem label="ชั้นปี">
-            <Select name="universityYear">
+            <Select name="universityYear" required>
               {list(1, 4).map((year) => (
                 <MenuItem key={year} value={year.toString()}>
                   {`ปี ${year}`}
@@ -223,7 +228,7 @@ const RegisterForm: StyleableFC<{
             <Field name="school" required />
           </FormItem>
           <FormItem label="จังหวัด">
-            <Select name="province">
+            <Select name="province" required>
               {Province.ALL.map((province) => (
                 <MenuItem key={province.code} value={province.code}>
                   {province.name}
@@ -240,7 +245,7 @@ const RegisterForm: StyleableFC<{
       <section aria-labelledby="h-expo">
         <h2 id="h-expo">Intania Expo 2025</h2>
         <FormItem label="วันที่เข้าร่วมงาน">
-          <Select name="visitDate" maxChoices={3}>
+          <Select name="visitDate" required maxChoices={3}>
             <MenuItem value="2025-03-28">ศุกร์ 28 มีนาคม 2568</MenuItem>
             <MenuItem value="2025-03-29">เสาร์ 29 มีนาคม 2568</MenuItem>
             <MenuItem value="2025-03-30">อาทิตย์ 30 มีนาคม 2568</MenuItem>
@@ -249,6 +254,7 @@ const RegisterForm: StyleableFC<{
         <FormItem label="กิจกรรมที่สนใจ">
           <Select
             name="interestedActivities"
+            required
             maxChoices={Object.keys(Visitor.INTERESTED_ACTIVITIES).length}
           >
             {Object.entries(Visitor.INTERESTED_ACTIVITIES).map(
@@ -266,6 +272,7 @@ const RegisterForm: StyleableFC<{
         <FormItem label="ช่องทางที่รู้จักงานนี้">
           <Select
             name="referralSource"
+            required
             maxChoices={Object.keys(Visitor.REFERRAL_SOURCES).length}
           >
             {Object.entries(Visitor.REFERRAL_SOURCES).map(([value, label]) => (

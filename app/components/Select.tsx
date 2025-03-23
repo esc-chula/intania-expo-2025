@@ -23,6 +23,8 @@ enum ALIGN_EDGE {
 export const SelectContext = createContext<{
   values: { value: string; label: string }[];
   handleSelect: (value: string, label: string) => void;
+  name?: string;
+  required?: boolean;
   maxChoices?: number | null;
   isMenuOpen: boolean;
 }>({
@@ -37,15 +39,25 @@ export const SelectContext = createContext<{
  *
  * @param children Menu items. All items should have thier value set.
  * @param name An identifier for form submission.
+ * @param required Whether the user must select at least one choice.
  * @param onChange Called when this input changes.
  * @param maxChoice Limits the number of choices selected. If > 1, checkboxes appear.
  */
 const Select: StyleableFC<{
   children: React.ReactNode;
   name?: string;
+  required?: boolean;
   onChange?: (value: string[]) => void;
   maxChoices?: number | null;
-}> = ({ children, name, onChange, maxChoices = 1, className, style }) => {
+}> = ({
+  children,
+  name,
+  required,
+  onChange,
+  maxChoices = 1,
+  className,
+  style,
+}) => {
   const ref = useRef<HTMLDivElement>(null);
   const [alignEdge, setAlignEdge] = useState<ALIGN_EDGE | null>(null);
   useEffect(() => {
@@ -96,7 +108,7 @@ const Select: StyleableFC<{
 
   return (
     <SelectContext.Provider
-      value={{ values, handleSelect, maxChoices, isMenuOpen }}
+      value={{ values, handleSelect, name, required, maxChoices, isMenuOpen }}
     >
       {isMenuOpen && (
         <div
@@ -146,11 +158,15 @@ const Select: StyleableFC<{
           {children}
         </Menu>
 
-        <input
-          type="hidden"
-          name={name}
-          value={values.map(({ value }) => value).join(",")}
-        />
+        {maxChoices !== 1 && (
+          // Hidden input for multi-select values.
+          // (Single-select values are handled by hidden radio buttons.)
+          <input
+            type="hidden"
+            name={name}
+            value={values.map(({ value }) => value).join(",")}
+          />
+        )}
       </div>
     </SelectContext.Provider>
   );
