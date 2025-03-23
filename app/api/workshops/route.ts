@@ -23,10 +23,10 @@ export async function GET(
   }
   const { payload } = middlewareResponse.data!;
 
-  const middlewareResponse2 = isOneOfRole(["VISITOR"], payload);
-  if (!middlewareResponse2.pass) {
-    return middlewareResponse2.response!;
-  }
+  // const middlewareResponse2 = isOneOfRole(["VISITOR" ], payload);
+  // if (!middlewareResponse2.pass) {
+  //   return middlewareResponse2.response!;
+  // } //no need
 
   // get visitor id
   const userResult = await prisma.user.findFirst({
