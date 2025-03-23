@@ -1,19 +1,13 @@
 meta {
-  name: mock signin
+  name: check in
   type: http
-  seq: 4
+  seq: 1
 }
 
-post {
-  url: {{url}}/api/test/auth/mock-signin
-  body: json
-  auth: none
-}
-
-body:json {
-  {
-    "email": "i.deepaung@gmail.com"
-  }
+put {
+  url: {{url}}/api/expo/check-in/S-000003
+  body: none
+  auth: inherit
 }
 
 script:pre-request {
