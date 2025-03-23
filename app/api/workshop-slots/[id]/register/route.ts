@@ -43,11 +43,18 @@ export async function POST(
       // get workshop id
       const workshopSlotResult = await tx.workshopSlot.findFirstOrThrow({
         where: { id: workshopSlotId },
-        select: { workshopId: true, currentRegistrantCount: true, maxRegistrantCount: true },
+        select: {
+          workshopId: true,
+          currentRegistrantCount: true,
+          maxRegistrantCount: true,
+        },
       });
 
-      if (workshopSlotResult.currentRegistrantCount >= workshopSlotResult.maxRegistrantCount!) {
-        throw new Error("Workshop slot is full");
+      if (
+        workshopSlotResult.currentRegistrantCount >=
+        workshopSlotResult.maxRegistrantCount!
+      ) {
+        throw new Error("workshop slot is full");
       }
 
       await tx.workshopSlot.update({
@@ -65,12 +72,11 @@ export async function POST(
           checkIn: false,
         },
       });
-
     });
   } catch (error) {
-    if (error instanceof Error && error.message === "Workshop slot is full") {
+    if (error instanceof Error && error.message === "workshop slot is full") {
       return NextResponse.json(
-        { error: "Workshop slot is full" },
+        { error: error.message },
         { status: StatusCodes.BAD_REQUEST },
       );
     }
