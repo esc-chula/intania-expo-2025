@@ -36,9 +36,11 @@ export async function onlyAuthorized(
     };
   }
 
-  let { payload, error } = parseToken(accessToken);
+  let payload: Payload | undefined = undefined;
+  const parseResult = parseToken(accessToken);
+  payload = parseResult.payload;
   if (!payload) {
-    if (!(error instanceof TokenExpiredError)) {
+    if (!(parseResult.error instanceof TokenExpiredError)) {
       return {
         pass: false,
         response: NextResponse.json(
@@ -106,7 +108,7 @@ async function tryRefreshToken(
         refreshToken: newToken.refreshToken,
       },
     });
-  } catch (error) {
+  } catch (_) {
     return null;
   }
 

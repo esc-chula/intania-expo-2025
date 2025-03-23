@@ -7,7 +7,7 @@ import { NextResponse } from "next/server";
 export async function PUT(
   request: Request,
   { params }: { params: Promise<{ sixDigitCode: string }> },
-): Promise<NextResponse<Object | HTTPError>> {
+): Promise<NextResponse<object | HTTPError>> {
   const { sixDigitCode } = await params;
   const cookieStore = await cookies();
 
@@ -58,7 +58,7 @@ export async function PUT(
       const checkInDay = checkInDate.checkIn.getUTCDay();
       if (checkInDay < toDay) {
         //TODO : not check in yet
-        const checkInExpo = await prisma.checkedInExpoOnVisitor.create({
+        const _ = await prisma.checkedInExpoOnVisitor.create({
           data: { visitorId: id, checkIn: nowDate },
           select: { visitor: true, visitorId: true, checkIn: true },
         });
@@ -72,7 +72,7 @@ export async function PUT(
       }
     } else {
       //TODO : first time check in
-      const checkInExpo = await prisma.checkedInExpoOnVisitor.create({
+      const _ = await prisma.checkedInExpoOnVisitor.create({
         data: {
           visitorId: id,
           checkIn: nowDate,
