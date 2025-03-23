@@ -9,16 +9,14 @@ export type DatabaseResponseError = {
 };
 
 /** A successful response from the database. */
-export type DatabaseResponseSuccess<
-  ExpectedData extends object | null = object,
-> = {
+export type DatabaseResponseSuccess<ExpectedData = object> = {
   data: ExpectedData;
   status: number;
   ok: true;
 };
 
 /** A response from the database. */
-export type DatabaseResponse<ExpectedData extends object | null = object> =
+export type DatabaseResponse<ExpectedData = object> =
   | DatabaseResponseError
   | DatabaseResponseSuccess<ExpectedData>;
 
