@@ -38,6 +38,10 @@ export default class Major {
     new Major("chpe", "ChPe", "cycle", MAJOR_LANGUAGE.En),
   ];
 
+  static fromSlug(slug: string) {
+    return Major.all.find((major) => major.slug === slug);
+  }
+
   constructor(
     slug: string,
     name: string,

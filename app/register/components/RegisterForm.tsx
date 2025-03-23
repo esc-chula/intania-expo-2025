@@ -7,6 +7,7 @@ import MenuItem from "@/app/components/MenuItem";
 import Select from "@/app/components/Select";
 import cn from "@/lib/helpers/cn";
 import Major from "@/lib/models/Major";
+import StudentVisitor from "@/lib/models/StudentVisitor";
 import Visitor, {
   GENDER,
   PROVINCES,
@@ -95,11 +96,13 @@ const RegisterForm: StyleableFC = ({ className, style }) => {
           </FormItem>
           <FormItem label="สาย (ม.ปลาย)">
             <Select name="studyStream">
-              {Object.entries(Visitor.STUDY_STREAMS).map(([value, label]) => (
-                <MenuItem key={value} value={value}>
-                  {label}
-                </MenuItem>
-              ))}
+              {Object.entries(StudentVisitor.STUDY_STREAMS).map(
+                ([value, label]) => (
+                  <MenuItem key={value} value={value}>
+                    {label}
+                  </MenuItem>
+                ),
+              )}
             </Select>
           </FormItem>
           <FormItem label="โรงเรียน">

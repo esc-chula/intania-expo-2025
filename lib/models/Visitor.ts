@@ -95,17 +95,33 @@ export const PROVINCES = {
   UBN: "อุบลราชธานี",
 };
 
-export default class Visitor extends User {
+export default abstract class Visitor extends User {
   static #role = UserRole.staff;
 
-  static STUDY_STREAMS = {
-    SCI: "สายวิทย์",
-    ART: "สายศิลป์",
-    VOC: "ปวช.",
-    OTHER: "อื่น ๆ",
-  };
+  #name: string;
+  #surname: string;
+  #gender: GENDER;
+  #phone: string;
+  #category: VISITOR_CATEGORY;
+  #visitDate: Date[];
+  #interestedActivities: (typeof Visitor.INTERESTED_ACTIVITIES)[];
+  #referralSource: (typeof Visitor.REFERAL_SOURCES)[];
+  // #studentLevel: string | null;
+  // #studyStream: string | null;
+  // #school: string | null;
+  // #province: string | null;
+  // #interestLevel: number | null;
+  // #interestedField: Major[] | null;
+  // #emergencyContact: string | null;
+  // #universityYear: string | null;
+  // #faculty: string | null;
+  // #university: string | null;
+  // #alumniBatch: string | null;
+  // #teacherSchool: string | null;
+  // #teacherProvince: string | null;
+  // #subjectTaught: string | null;
 
-  static INTERESTED_ACTIVITIES = {
+  static readonly INTERESTED_ACTIVITIES = {
     WOKRSHOP: "Workshop",
     SHOWCASE: "Showcase & Sharing Session",
     INNOVATION: "Innovation",
@@ -113,15 +129,14 @@ export default class Visitor extends User {
     HALL: "Hall & Stage",
     COMPETITION: "Competition",
     OTHER: "กิจกรรมอื่น ๆ ในงาน",
-  };
+  } as const;
 
-  static REFERAL_SOURCES = {
-    IG_CU: "Instagram (@cuopenhouse)",
-    IG_INTANIA: "Instagram (@cuintaniaopenhouse)",
-    FACEBOOK: "Facebook",
-    FRIENDS_FAMILY: "เพื่อน/ครอบครัว",
-    ADVERTISEMENT: "โฆษณา",
-  };
+  static readonly REFERAL_SOURCES = {
+    FRIEND: "เพื่อน",
+    SCHOOL: "โรงเรียน",
+    SOCIAL_MEDIA: "โซเชียลมีเดีย",
+    OTHER: "อื่นๆ",
+  } as const;
 
   static getGenderDisplayName(gender: GENDER) {
     return {
@@ -146,13 +161,47 @@ export default class Visitor extends User {
     return PROVINCES[province];
   }
 
-  static getStudyStreamDisplayName(stream: keyof typeof Visitor.STUDY_STREAMS) {
-    return Visitor.STUDY_STREAMS[stream];
+  constructor(
+    name: string,
+    surname: string,
+    gender: GENDER,
+    phone: string,
+    email: string,
+    category: VISITOR_CATEGORY,
+    visitDate: Date[],
+    interestedActivities: (typeof Visitor.INTERESTED_ACTIVITIES)[],
+    referralSource: (typeof Visitor.REFERAL_SOURCES)[],
+  ) {
+    super(email, Visitor.#role);
+    this.#name = name;
+    this.#surname = surname;
+    this.#gender = gender;
+    this.#phone = phone;
+    this.#category = category;
+    this.#visitDate = visitDate;
+    this.#interestedActivities = interestedActivities;
+    this.#referralSource = referralSource;
   }
 
-  constructor() {
-    super();
-  }
+  abstract save(): Promise<void>;
 
-  async save() {}
+  // Standard getters
+  get name() {
+    return this.#name;
+  }
+  get surname() {
+    return this.#surname;
+  }
+  get gender() {
+    return this.#gender;
+  }
+  get phone() {
+    return this.#phone;
+  }
+  get category() {
+    return this.#category;
+  }
+  get visitDate() {
+    return this.#visitDate;
+  }
 }
