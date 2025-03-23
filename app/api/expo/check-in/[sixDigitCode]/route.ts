@@ -7,7 +7,7 @@ import { NextResponse } from "next/server";
 export async function PUT(
   request: Request,
   { params }: { params: Promise<{ sixDigitCode: string }> },
-): Promise<NextResponse<Object | HTTPError>> {
+): Promise<NextResponse<object | HTTPError>> {
   const { sixDigitCode } = await params;
   const cookieStore = await cookies();
 
@@ -54,25 +54,9 @@ export async function PUT(
     const nowDate = new Date();
     const toDay = nowDate.getUTCDay();
 
-    if (checkInDate != null) {
-      const checkInDay = checkInDate.checkIn.getUTCDay();
-      if (checkInDay < toDay) {
-        //TODO : not check in yet
-        const checkInExpo = await prisma.checkedInExpoOnVisitor.create({
-          data: { visitorId: id, checkIn: nowDate },
-          select: { visitor: true, visitorId: true, checkIn: true },
-        });
-        return NextResponse.json({}, { status: StatusCodes.OK });
-      } else {
-        // already checked in //! checkInDay > toDay is not neccessary
-        return NextResponse.json(
-          { error: "already checked in" },
-          { status: StatusCodes.CONFLICT },
-        );
-      }
-    } else {
-      //TODO : first time check in
-      const checkInExpo = await prisma.checkedInExpoOnVisitor.create({
+    // first time checking in
+    if (checkInDate == null) {
+      await prisma.checkedInExpoOnVisitor.create({
         data: {
           visitorId: id,
           checkIn: nowDate,
@@ -83,8 +67,26 @@ export async function PUT(
           checkIn: true,
         },
       });
+
       return NextResponse.json({}, { status: StatusCodes.OK });
     }
+
+    // already checked in before
+    const checkInDay = checkInDate.checkIn.getUTCDay();
+    if (checkInDay >= toDay) {
+      // already checked in today
+      return NextResponse.json(
+        { error: "already checked in" },
+        { status: StatusCodes.CONFLICT },
+      );
+    }
+
+    // checked in yesterday or earlier
+    await prisma.checkedInExpoOnVisitor.create({
+      data: { visitorId: id, checkIn: nowDate },
+      select: { visitor: true, visitorId: true, checkIn: true },
+    });
+    return NextResponse.json({}, { status: StatusCodes.OK });
   } catch (error) {
     // error
     return returnPrismaError(error, [
