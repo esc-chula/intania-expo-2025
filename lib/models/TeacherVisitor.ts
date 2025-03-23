@@ -20,7 +20,10 @@ export default class TeacherVisitor extends Visitor {
   }
 
   async save() {
-    // Save to database
-    return { data: null, status: null, ok: false as const };
+    return await super.save({
+      school: this.#school,
+      province: this.#province.code,
+      subjectTaught: this.#subjectTaught,
+    });
   }
 }

@@ -49,7 +49,14 @@ export default class StudentVisitor extends Visitor {
   }
 
   async save() {
-    // Save to database
-    return { data: null, status: null, ok: false as const };
+    return await super.save({
+      studentLevel: this.#studentLevel,
+      studyStream: this.#studyStream,
+      school: this.#school,
+      province: this.#province.code,
+      interestLevel: this.#interestLevel,
+      interestedField: this.#interestedField.map((field) => field.slug),
+      emergencyContact: this.#emergencyContact,
+    });
   }
 }
