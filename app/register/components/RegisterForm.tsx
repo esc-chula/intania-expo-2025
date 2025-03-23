@@ -61,10 +61,7 @@ const RegisterForm: StyleableFC<{
       }
     } catch (_) {}
     setLoading(false);
-    // This is very dirty but I can’t get around React resetting the form data
-    // (which only clears Fields but not Selects) so the workaround is clearing
-    // everything by refreshing the page.
-    router.refresh();
+    window.scroll({ top: 0 });
   }
 
   return (
