@@ -241,9 +241,9 @@ const RegisterForm: StyleableFC<{
         <h2 id="h-expo">Intania Expo 2025</h2>
         <FormItem label="วันที่เข้าร่วมงาน">
           <Select name="visitDate" maxChoices={null}>
-            <MenuItem value="2025-03-28">ศุกร์ 28 มีนาคม 2565</MenuItem>
-            <MenuItem value="2025-03-29">เสาร์ 29 มีนาคม 2565</MenuItem>
-            <MenuItem value="2025-03-30">อาทิตย์ 30 มีนาคม 2565</MenuItem>
+            <MenuItem value="2025-03-28">ศุกร์ 28 มีนาคม 2568</MenuItem>
+            <MenuItem value="2025-03-29">เสาร์ 29 มีนาคม 2568</MenuItem>
+            <MenuItem value="2025-03-30">อาทิตย์ 30 มีนาคม 2568</MenuItem>
           </Select>
         </FormItem>
         <FormItem label="กิจกรรมที่สนใจ">
