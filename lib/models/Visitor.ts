@@ -25,7 +25,7 @@ export default abstract class Visitor extends User {
   #category: VISITOR_CATEGORY;
   #visitDate: Date[];
   #interestedActivities: (keyof typeof Visitor.INTERESTED_ACTIVITIES)[];
-  #referralSource: (keyof typeof Visitor.REFERAL_SOURCES)[];
+  #referralSource: (keyof typeof Visitor.REFERRAL_SOURCES)[];
 
   static readonly INTERESTED_ACTIVITIES = {
     WOKRSHOP: "Workshop",
@@ -37,7 +37,7 @@ export default abstract class Visitor extends User {
     OTHER: "กิจกรรมอื่น ๆ ในงาน",
   } as const;
 
-  static readonly REFERAL_SOURCES = {
+  static readonly REFERRAL_SOURCES = {
     INSTAGRAM_CU: "Instagram (@cuopenhouse)",
     INSTAGRAM_INTANIA: "Instagram (@cuintaniaopenhouse)",
     FACEBOOK: "Facebook",
@@ -87,7 +87,7 @@ export default abstract class Visitor extends User {
     ) as (keyof typeof Visitor.INTERESTED_ACTIVITIES)[];
     this.#referralSource = data.referralSource.split(
       ",",
-    ) as (keyof typeof Visitor.REFERAL_SOURCES)[];
+    ) as (keyof typeof Visitor.REFERRAL_SOURCES)[];
   }
 
   abstract save(): Promise<void>;

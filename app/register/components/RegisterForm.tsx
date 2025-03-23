@@ -236,7 +236,7 @@ const RegisterForm: StyleableFC = ({ className, style }) => {
         </FormItem>
         <FormItem label="ช่องทางที่รู้จักงานนี้">
           <Select name="referralSource" maxChoices={null}>
-            {Object.entries(Visitor.REFERAL_SOURCES).map(([value, label]) => (
+            {Object.entries(Visitor.REFERRAL_SOURCES).map(([value, label]) => (
               <MenuItem key={value} value={value}>
                 {label}
               </MenuItem>
