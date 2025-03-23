@@ -7,5 +7,6 @@ export default class OtherVisitor extends Visitor {
 
   async save() {
     // Save to database
+    return { data: null, status: null, ok: false as const };
   }
 }
