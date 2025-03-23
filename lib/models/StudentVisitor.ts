@@ -54,7 +54,7 @@ export default class StudentVisitor extends Visitor {
       studyStream: this.#studyStream,
       school: this.#school,
       province: this.#province.code,
-      interestLevel: this.#interestLevel,
+      interestLevel: this.#interestLevel.toString(),
       interestedFields: this.#interestedFields.map((field) => field.slug),
       emergencyContact: this.#emergencyContact,
     });
