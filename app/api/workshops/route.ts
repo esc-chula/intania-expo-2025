@@ -41,15 +41,18 @@ export async function GET(
     );
   }
   const visitorId = userResult.id;
-  const allRegisteredWorkshopSlotId = await prisma.registeredWorkshopSlotOnVisitor.findMany({
-    where : {
-      visitorId:visitorId
-    },
-    select : {
-      registeredWorkshopSlotId:true
-    }
-  });
-  const setRegisteredWorkshopSlotId = new Set(allRegisteredWorkshopSlotId.map((slot) => slot.registeredWorkshopSlotId));
+  const allRegisteredWorkshopSlotId =
+    await prisma.registeredWorkshopSlotOnVisitor.findMany({
+      where: {
+        visitorId: visitorId,
+      },
+      select: {
+        registeredWorkshopSlotId: true,
+      },
+    });
+  const setRegisteredWorkshopSlotId = new Set(
+    allRegisteredWorkshopSlotId.map((slot) => slot.registeredWorkshopSlotId),
+  );
 
   // Extract query parameters
   let data;
