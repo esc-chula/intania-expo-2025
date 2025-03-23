@@ -58,10 +58,10 @@ const RegisterForm: StyleableFC = ({ className, style }) => {
     >
       <section aria-label="ข้อมูลส่วนตัว">
         <FormItem label="ชื่อ">
-          <Field name="firstName" />
+          <Field name="name" />
         </FormItem>
         <FormItem label="นามสกุล">
-          <Field name="lastName" />
+          <Field name="surname" />
         </FormItem>
         <FormItem label="เพศสภาพ">
           <Select name="gender">
