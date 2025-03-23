@@ -1,4 +1,4 @@
-import { isOneOfRole, onlyAuthorized } from "@/lib/backend/middleware";
+import { onlyAuthorized } from "@/lib/backend/middleware";
 import { prisma } from "@/lib/backend/prisma";
 import { WorkshopQuerySchema } from "@/lib/backend/schemas/query";
 import { HTTPError } from "@/lib/backend/types/httpError";
@@ -15,10 +15,9 @@ export async function GET(
 ): Promise<NextResponse<WorkshopDetail[] | HTTPError>> {
   const { searchParams } = new URL(request.url);
 
-
   const cookieStore = await cookies();
 
-  const middlewareResponse = onlyAuthorized(cookieStore);
+  const middlewareResponse = await onlyAuthorized(cookieStore);
   if (!middlewareResponse.pass) {
     return middlewareResponse.response!;
   }
@@ -42,15 +41,18 @@ export async function GET(
     );
   }
   const visitorId = userResult.id;
-  const allRegisteredWorkshopSlotId = await prisma.registeredWorkshopSlotOnVisitor.findMany({
-    where : {
-      visitorId:visitorId
-    },
-    select : {
-      registeredWorkshopSlotId:true
-    }
-  });
-  const setRegisteredWorkshopSlotId = new Set(allRegisteredWorkshopSlotId.map((slot) => slot.registeredWorkshopSlotId));
+  const allRegisteredWorkshopSlotId =
+    await prisma.registeredWorkshopSlotOnVisitor.findMany({
+      where: {
+        visitorId: visitorId,
+      },
+      select: {
+        registeredWorkshopSlotId: true,
+      },
+    });
+  const setRegisteredWorkshopSlotId = new Set(
+    allRegisteredWorkshopSlotId.map((slot) => slot.registeredWorkshopSlotId),
+  );
   console.log(setRegisteredWorkshopSlotId);
 
   // Extract query parameters
@@ -90,11 +92,11 @@ export async function GET(
     });
 
     const currentTime = new Date();
-    const processedWorkshops = workshops.map(workshop => ({
+    const processedWorkshops = workshops.map((workshop) => ({
       ...workshop,
-      workshopSlots: workshop.workshopSlots.map(slot => {
+      workshopSlots: workshop.workshopSlots.map((slot) => {
         let status = "ว่าง"; // Default to available
-    
+
         if (setRegisteredWorkshopSlotId.has(slot.id)) {
           status = "ลงทะเบียนแล้ว";
         } else if (slot.currentRegistrantCount >= slot.maxRegistrantCount!) {
@@ -102,9 +104,9 @@ export async function GET(
         } else if (slot.endTime < currentTime) {
           status = "ผ่านไปแล้ว";
         }
-    
+
         return { ...slot, status };
-      })
+      }),
     }));
     return NextResponse.json(processedWorkshops, { status: StatusCodes.OK });
   } catch (_) {
