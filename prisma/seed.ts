@@ -280,6 +280,14 @@ const workshopSlots: WorkshopSlot[] = [
   {
     id: randomUUID(),
     workshopId: workshopsId[0],
+    startTime: new Date(1900, 3, 30, 6, 0, 0, 0),
+    endTime: new Date(1910, 3, 30, 8, 0, 0, 0),
+    currentRegistrantCount: 0,
+    maxRegistrantCount: 50,
+  },
+  {
+    id: randomUUID(),
+    workshopId: workshopsId[0],
     startTime: new Date(2025, 3, 30, 6, 0, 0, 0),
     endTime: new Date(2025, 3, 30, 8, 0, 0, 0),
     currentRegistrantCount: 0,

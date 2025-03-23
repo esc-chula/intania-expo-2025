@@ -47,6 +47,15 @@ model User {
   tokens Token[]
 
   registeredWorkshopSlotOnVisitor RegisteredWorkshopSlotOnVisitor[]
+  checkedInExpoOnVisitor CheckedInExpoOnVisitor[]
+}
+
+model CheckedInExpoOnVisitor {
+  visitor   User     @relation(fields: [visitorId], references: [id])
+  visitorId String   @map("userId") @db.Uuid
+  checkIn   DateTime
+
+  @@unique([visitorId, checkIn])
 }
 
 enum Role {
