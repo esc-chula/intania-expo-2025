@@ -13,7 +13,7 @@ export async function POST(
 ): Promise<NextResponse<Visitor | HTTPError>> {
   const cookieStore = await cookies();
 
-  const middlewareResponse = onlyAuthorized(cookieStore);
+  const middlewareResponse = await onlyAuthorized(cookieStore);
   if (!middlewareResponse.pass) {
     return middlewareResponse.response!;
   }
