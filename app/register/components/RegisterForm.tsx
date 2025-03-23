@@ -53,7 +53,10 @@ const RegisterForm: StyleableFC<{
           ConstructorParameters<typeof OtherVisitor>[0],
       );
       const { ok } = await visitor.save();
-      if (ok) redirect("/home");
+      if (ok) {
+        redirect("/home");
+        return;
+      }
     } catch (_) {}
     // This is very dirty but I can’t get around React resetting the form data
     // (which only clears Fields but not Selects) so the workaround is clearing
