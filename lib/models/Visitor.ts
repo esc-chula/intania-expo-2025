@@ -59,7 +59,7 @@ export default abstract class Visitor extends User {
     return {
       [VISITOR_CATEGORY.Student]: "นักเรียน/ผู้สนใจศึกษาต่อ",
       [VISITOR_CATEGORY.Intania]: "นิสิตปัจจุบัน/นิสิตเก่าวิศวะจุฬาฯ",
-      [VISITOR_CATEGORY.University]: "นิสิตจากมหาลัยอื่น",
+      [VISITOR_CATEGORY.University]: "นิสิตจากคณะ/มหาลัยอื่น",
       [VISITOR_CATEGORY.Teacher]: "ครู",
       [VISITOR_CATEGORY.Other]: "ผู้ปกครอง/บุคคลภายนอก",
     }[category];
