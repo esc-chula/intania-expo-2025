@@ -13,7 +13,7 @@ export async function POST(
 ): Promise<NextResponse<Visitor | HTTPError>> {
   const cookieStore = await cookies();
 
-  const middlewareResponse = onlyAuthorized(cookieStore);
+  const middlewareResponse = await onlyAuthorized(cookieStore);
   if (!middlewareResponse.pass) {
     return middlewareResponse.response!;
   }
@@ -51,22 +51,29 @@ export async function POST(
 
   let visitor;
   try {
-    visitor = await prisma.user.create({
-      data: { ...dto, role: "VISITOR" },
+    visitor = await prisma.user.findFirstOrThrow({
+      where: { email: payload.email },
+      select: { id: true, incrementCode: true, sixDigitCode: true },
     });
+    if (visitor.sixDigitCode) {
+      return NextResponse.json(
+        { error: "already registered" },
+        { status: StatusCodes.CONFLICT },
+      );
+    }
 
     const formatNumber = ("000000" + visitor.incrementCode).slice(-6);
-    visitor.sixDigitCode = "S-" + formatNumber;
+    const sixDigitCode = "S-" + formatNumber;
 
-    await prisma.user.update({
+    visitor = await prisma.user.update({
       where: { id: visitor.id },
-      data: { sixDigitCode: visitor.sixDigitCode },
+      data: { ...dto, sixDigitCode },
     });
   } catch (error) {
     return returnPrismaError(error, [
       {
-        code: "P2002",
-        msg: "already registered",
+        code: "P2025",
+        msg: "user not found",
         status: StatusCodes.CONFLICT,
       },
     ]);
