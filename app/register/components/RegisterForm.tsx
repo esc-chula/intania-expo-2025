@@ -61,7 +61,7 @@ const RegisterForm: StyleableFC<{
       }
     } catch (_) {}
     setLoading(false);
-    window.scroll({ top: 0 });
+    router.push("/terms");
   }
 
   return (
