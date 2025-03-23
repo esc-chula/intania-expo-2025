@@ -47,14 +47,17 @@ export default class Database {
 
     console.log(LOG_IDENIFIER, method, endpoint);
 
-    const [error, response] = await tryit(fetch)(`/api/${endpoint}`, {
-      method,
-      headers: {
-        "Content-Type": "application/json",
+    const [error, response] = await tryit(fetch)(
+      `${process.env.APP_URL}/api${endpoint}`,
+      {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        ...(method !== "GET" && { body: JSON.stringify(body) }),
+        ...options,
       },
-      ...(method !== "GET" && { body: JSON.stringify(body) }),
-      ...options,
-    });
+    );
 
     const data = await response?.json();
 
