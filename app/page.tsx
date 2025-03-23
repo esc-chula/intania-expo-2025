@@ -1,7 +1,7 @@
-import Button from "@/app/components/Button";
 import Countdown from "@/app/components/Countdown";
 import Logo from "@/app/components/Logo";
 import NavigationCard from "@/app/components/NavigationCard";
+import RegisterButton from "@/app/components/RegisterButton";
 import { EVENT_START_DATE } from "@/lib/config";
 import cn from "@/lib/helpers/cn";
 
@@ -25,13 +25,7 @@ export default function Home() {
         </section>
         <Countdown date={EVENT_START_DATE} className="mt-11" />
         <div aria-hidden className="min-h-14 grow" />
-        <Button
-          appearance="tonal"
-          // TODO: Replace with Google authentication.
-          href="/terms"
-        >
-          สมัครเลย
-        </Button>
+        <RegisterButton />
       </section>
       <section className="space-y-4">
         <NavigationCard
