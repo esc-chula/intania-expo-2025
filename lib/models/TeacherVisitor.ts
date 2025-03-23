@@ -21,8 +21,8 @@ export default class TeacherVisitor extends Visitor {
 
   async save() {
     return await super.save({
-      school: this.#school,
-      province: this.#province.code,
+      teacherSchool: this.#school,
+      teacherProvince: this.#province.code,
       subjectTaught: this.#subjectTaught,
     });
   }

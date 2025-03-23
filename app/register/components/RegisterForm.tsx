@@ -127,7 +127,7 @@ const RegisterForm: StyleableFC = ({ className, style }) => {
         <section aria-labelledby="h-interest">
           <h2 id="h-interest">ความสนใจในวิศวะจุฬาฯ</h2>
           <FormItem label="สาขาที่สนใจ">
-            <Select name="interestedField" maxChoices={null}>
+            <Select name="interestedFields" maxChoices={null}>
               {Major.all.map((major) => (
                 <MenuItem key={major.slug} value={major.slug.toUpperCase()}>
                   {major.fullName}

@@ -8,7 +8,7 @@ export default class StudentVisitor extends Visitor {
   #school: string;
   #province: Province;
   #interestLevel: number;
-  #interestedField: Major[];
+  #interestedFields: Major[];
   #emergencyContact: string;
 
   static readonly STUDY_STREAMS = {
@@ -31,7 +31,7 @@ export default class StudentVisitor extends Visitor {
       school: string;
       province: string;
       interestLevel: string;
-      interestedField: string;
+      interestedFields: string;
       emergencyContact: string;
     },
   ) {
@@ -42,7 +42,7 @@ export default class StudentVisitor extends Visitor {
     this.#school = data.school;
     this.#province = Province.fromCode(data.province)!;
     this.#interestLevel = parseInt(data.interestLevel);
-    this.#interestedField = data.interestedField
+    this.#interestedFields = data.interestedFields
       .split(",")
       .map((slug) => Major.fromSlug(slug)!);
     this.#emergencyContact = data.emergencyContact;
@@ -55,7 +55,7 @@ export default class StudentVisitor extends Visitor {
       school: this.#school,
       province: this.#province.code,
       interestLevel: this.#interestLevel,
-      interestedField: this.#interestedField.map((field) => field.slug),
+      interestedFields: this.#interestedFields.map((field) => field.slug),
       emergencyContact: this.#emergencyContact,
     });
   }
