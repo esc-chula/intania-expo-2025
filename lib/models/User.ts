@@ -15,6 +15,10 @@ export default class User {
     this.#role = role;
   }
 
+  static async signOut() {
+    await Database.fetch("POST", "/auth/signout");
+  }
+
   /**
    * Fetches the authorized user from client cookies.
    * @param cookieStore The cookie store.
