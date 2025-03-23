@@ -38,14 +38,43 @@ export async function POST(
   }
   const visitorId = userResult.id;
 
-  // get workshop id
-  let workshopSlotResult;
   try {
-    workshopSlotResult = await prisma.workshopSlot.findFirstOrThrow({
-      where: { id: workshopSlotId },
-      select: { workshopId: true },
+    await prisma.$transaction(async (tx) => {
+      // get workshop id
+      const workshopSlotResult = await tx.workshopSlot.findFirstOrThrow({
+        where: { id: workshopSlotId },
+        select: { workshopId: true, currentRegistrantCount: true, maxRegistrantCount: true },
+      });
+
+      if (workshopSlotResult.currentRegistrantCount >= workshopSlotResult.maxRegistrantCount!) {
+        throw new Error("Workshop slot is full");
+      }
+
+      await tx.workshopSlot.update({
+        where: { id: workshopSlotId },
+        data: { currentRegistrantCount: { increment: 1 } },
+      });
+
+      const workshopId = workshopSlotResult.workshopId;
+
+      await tx.registeredWorkshopSlotOnVisitor.create({
+        data: {
+          visitorId: visitorId,
+          registeredWorkshopSlotId: workshopSlotId,
+          workshopId: workshopId,
+          checkIn: false,
+        },
+      });
+
     });
   } catch (error) {
+    if (error instanceof Error && error.message === "Workshop slot is full") {
+      return NextResponse.json(
+        { error: "Workshop slot is full" },
+        { status: StatusCodes.BAD_REQUEST },
+      );
+    }
+
     return returnPrismaError(error, [
       {
         code: "P2023",
@@ -57,21 +86,6 @@ export async function POST(
         msg: "invalid workshop slot id",
         status: StatusCodes.BAD_REQUEST,
       },
-    ]);
-  }
-  const workshopId = workshopSlotResult.workshopId;
-
-  try {
-    await prisma.registeredWorkshopSlotOnVisitor.create({
-      data: {
-        visitorId: visitorId,
-        registeredWorkshopSlotId: workshopSlotId,
-        workshopId: workshopId,
-        checkIn: false,
-      },
-    });
-  } catch (error) {
-    return returnPrismaError(error, [
       {
         code: "P2002",
         msg: "already registered this workshop",
@@ -79,11 +93,6 @@ export async function POST(
       },
       {
         code: "P2003",
-        msg: "invalid workshop slot id",
-        status: StatusCodes.BAD_REQUEST,
-      },
-      {
-        code: "P2023",
         msg: "invalid workshop slot id",
         status: StatusCodes.BAD_REQUEST,
       },

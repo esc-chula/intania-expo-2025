@@ -38,13 +38,22 @@ export async function POST(
   const visitorId = result.id;
 
   try {
-    await prisma.registeredWorkshopSlotOnVisitor.delete({
-      where: {
-        visitorId_registeredWorkshopSlotId: {
-          visitorId: visitorId,
-          registeredWorkshopSlotId: workshopSlotId,
+    await prisma.$transaction(async (tx) => {
+      // delete the registration
+      await tx.registeredWorkshopSlotOnVisitor.delete({
+        where: {
+          visitorId_registeredWorkshopSlotId: {
+            visitorId: visitorId,
+            registeredWorkshopSlotId: workshopSlotId,
+          },
         },
-      },
+      });
+
+      // decrement currentRegistrantCount
+      await tx.workshopSlot.update({
+        where: { id: workshopSlotId },
+        data: { currentRegistrantCount: { decrement: 1 } },
+      });
     });
   } catch (error) {
     return returnPrismaError(error, [
