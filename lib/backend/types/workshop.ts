@@ -5,6 +5,10 @@ export type WorkshopDetail = Prisma.WorkshopGetPayload<{
   include: { intaniaLocation: true; workshopSlots: true };
 }>;
 
+export type RegisteredWorkshopDetail = Prisma.RegisteredWorkshopSlotOnVisitorGetPayload<{
+  include: { visitor: true; workshop: true; registeredWorkshopSlot: true };
+}>;
+
 export type Workshop = {
   id: UUID;
   name: string;
