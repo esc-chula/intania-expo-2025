@@ -10,7 +10,7 @@ import { NextResponse } from "next/server";
 export async function GET(): Promise<NextResponse<Visitor | HTTPError>> {
   const cookieStore = await cookies();
 
-  const middlewareResponse = onlyAuthorized(cookieStore);
+  const middlewareResponse = await onlyAuthorized(cookieStore);
   if (!middlewareResponse.pass) {
     return middlewareResponse.response!;
   }
@@ -45,15 +45,15 @@ export async function GET(): Promise<NextResponse<Visitor | HTTPError>> {
     gender: user.gender!,
     phone: user.phone!,
     category: user.category!,
-    visitDate: user.visitDate!,
+    visitDates: user.visitDates,
     interestedActivities: user.interestedActivities || undefined,
-    referralSource: user.referralSource || undefined,
+    referralSources: user.referralSources,
     studentLevel: user.studentLevel || undefined,
     studyStream: user.studyStream || undefined,
     school: user.school || undefined,
     province: user.province || undefined,
     interestLevel: user.interestLevel || undefined,
-    interestedField: user.interestedField || undefined,
+    interestedFields: user.interestedFields,
     emergencyContact: user.emergencyContact || undefined,
     universityYear: user.universityYear || undefined,
     faculty: user.faculty || undefined,
