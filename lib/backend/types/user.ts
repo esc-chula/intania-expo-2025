@@ -22,7 +22,6 @@ export type Visitor = {
   gender: string;
   phone: string;
   category: string;
-  visitDate: string;
   interestedActivities?: string;
   referralSource?: string;
   studentLevel?: string;
