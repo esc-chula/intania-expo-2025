@@ -20,7 +20,9 @@ import { list } from "radash";
 import { useState } from "react";
 
 /** A form for registering to the Intania Expo 2025. */
-const RegisterForm: StyleableFC = ({ className, style }) => {
+const RegisterForm: StyleableFC<{
+  email?: string;
+}> = ({ email, className, style }) => {
   const [category, setCategory] = useState<VISITOR_CATEGORY | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -104,12 +106,7 @@ const RegisterForm: StyleableFC = ({ className, style }) => {
       <section aria-labelledby="h-contacts">
         <h2 id="h-contacts">ช่องทางการติดต่อ</h2>
         <FormItem label="อีเมล">
-          <Field
-            name="email"
-            type="email"
-            placeholder="name@example.com"
-            required
-          />
+          <Field name="email" type="email" value={email} readOnly />
         </FormItem>
         <FormItem label="เบอร์โทรศัพท์">
           <Field name="phone" type="tel" pattern="0[0-9]{8,9}" required />

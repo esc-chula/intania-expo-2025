@@ -4,13 +4,17 @@ import Logo from "@/app/components/Logo";
 import TopAppBar from "@/app/components/TopAppBar";
 import RegisterForm from "@/app/register/components/RegisterForm";
 import cn from "@/lib/helpers/cn";
+import User from "@/lib/models/User";
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 
 export const metadata: Metadata = {
   title: "ลงทะเบียนเข้าร่วมงาน",
 };
 
-export default function Register() {
+export default async function Register() {
+  const { data } = await User.fromCookies(await cookies());
+
   return (
     <div className="space-y-8 pt-1 pb-20">
       <TopAppBar appearance="minimal">
@@ -29,7 +33,7 @@ export default function Register() {
           ลงทะเบียนเข้าร่วมงาน
         </h1>
       </div>
-      <RegisterForm />
+      <RegisterForm email={data?.email} />
     </div>
   );
 }
