@@ -1,6 +1,7 @@
 import { isOneOfRole, onlyAuthorized } from "@/lib/backend/middleware";
-import { prisma, returnPrismaError } from "@/lib/backend/prisma";
+import { prisma } from "@/lib/backend/prisma";
 import { HTTPError } from "@/lib/backend/types/httpError";
+import { Prisma } from "@prisma/client";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
@@ -11,7 +12,7 @@ export async function POST(
 ): Promise<NextResponse<object | HTTPError>> {
   const cookieStore = await cookies();
 
-  const middlewareResponse = onlyAuthorized(cookieStore);
+  const middlewareResponse = await onlyAuthorized(cookieStore);
   if (!middlewareResponse.pass) {
     return middlewareResponse.response!;
   }
@@ -38,23 +39,62 @@ export async function POST(
   const visitorId = result.id;
 
   try {
-    await prisma.registeredWorkshopSlotOnVisitor.delete({
-      where: {
-        visitorId_registeredWorkshopSlotId: {
-          visitorId: visitorId,
-          registeredWorkshopSlotId: workshopSlotId,
+    await prisma.$transaction(async (tx) => {
+      // decrement currentRegistrantCount
+      await tx.workshopSlot.update({
+        where: { id: workshopSlotId },
+        data: { currentRegistrantCount: { decrement: 1 } },
+      });
+
+      // delete the registration
+      await tx.registeredWorkshopSlotOnVisitor.delete({
+        where: {
+          visitorId_registeredWorkshopSlotId: {
+            visitorId: visitorId,
+            registeredWorkshopSlotId: workshopSlotId,
+          },
         },
-      },
+      });
     });
   } catch (error) {
-    return returnPrismaError(error, [
-      {
-        code: "P2025",
-        msg: "not registered yet",
-        status: StatusCodes.BAD_REQUEST,
-      },
-    ]);
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code == "P2023") {
+        return NextResponse.json(
+          { error: "invalid workshop slot id" },
+          { status: StatusCodes.BAD_REQUEST },
+        );
+      }
+      if (error.code == "P2025") {
+        const message = getPrismaErrorMessage(error.message);
+        if (
+          message ===
+          "An operation failed because it depends on one or more records that were required but not found. Record to update not found."
+        ) {
+          return NextResponse.json(
+            { error: "invalid workshop slot id" },
+            { status: StatusCodes.BAD_REQUEST },
+          );
+        } else if (
+          message ===
+          "An operation failed because it depends on one or more records that were required but not found. Record to delete does not exist."
+        ) {
+          return NextResponse.json(
+            { error: "not registered yet" },
+            { status: StatusCodes.BAD_REQUEST },
+          );
+        }
+      }
+    }
+    return NextResponse.json(
+      { error: ReasonPhrases.INTERNAL_SERVER_ERROR },
+      { status: StatusCodes.INTERNAL_SERVER_ERROR },
+    );
   }
 
   return NextResponse.json({}, { status: StatusCodes.OK });
+}
+
+function getPrismaErrorMessage(originalMessage: string) {
+  const tmp = originalMessage.split("\n");
+  return tmp[tmp.length - 1];
 }

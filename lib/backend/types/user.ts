@@ -22,14 +22,15 @@ export type Visitor = {
   gender: string;
   phone: string;
   category: string;
-  interestedActivities?: string;
-  referralSource?: string;
+  visitDates: string[];
+  interestedActivities: string[];
+  referralSources: string[];
   studentLevel?: string;
   studyStream?: string;
   school?: string;
   province?: string;
   interestLevel?: string;
-  interestedField?: string;
+  interestedFields: string[];
   emergencyContact?: string;
   universityYear?: string;
   faculty?: string;

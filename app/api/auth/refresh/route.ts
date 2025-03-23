@@ -10,14 +10,14 @@ import { NextResponse } from "next/server";
 export async function POST(): Promise<NextResponse<object | HTTPError>> {
   const cookieStore = await cookies();
 
-  const middlewareRes = onlyAuthorized(cookieStore);
+  const middlewareRes = await onlyAuthorized(cookieStore);
   if (!middlewareRes.pass) {
     return middlewareRes.response!;
   }
 
   const { refreshToken, tokenId } = middlewareRes.data!;
 
-  const payload = parseToken(refreshToken);
+  const { payload } = parseToken(refreshToken);
   if (!payload) {
     return NextResponse.json(
       { error: "invalid refresh token" },

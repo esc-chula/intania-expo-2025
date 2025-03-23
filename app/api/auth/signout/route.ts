@@ -9,7 +9,7 @@ import { NextResponse } from "next/server";
 export async function POST(): Promise<NextResponse<object | HTTPError>> {
   const cookieStore = await cookies();
 
-  const middlewareRes = onlyAuthorized(cookieStore);
+  const middlewareRes = await onlyAuthorized(cookieStore);
   if (!middlewareRes.pass) {
     return middlewareRes.response!;
   }
