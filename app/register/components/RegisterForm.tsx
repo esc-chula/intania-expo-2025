@@ -15,7 +15,7 @@ import TeacherVisitor from "@/lib/models/TeacherVisitor";
 import UniversityVisitor from "@/lib/models/UniversityVisitor";
 import Visitor, { GENDER, VISITOR_CATEGORY } from "@/lib/models/Visitor";
 import { StyleableFC } from "@/lib/types/misc";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { list } from "radash";
 import { useState } from "react";
 
@@ -23,6 +23,8 @@ import { useState } from "react";
 const RegisterForm: StyleableFC<{
   email?: string;
 }> = ({ email, className, style }) => {
+  const router = useRouter();
+
   const [category, setCategory] = useState<VISITOR_CATEGORY | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -54,7 +56,7 @@ const RegisterForm: StyleableFC<{
       );
       const { ok } = await visitor.save();
       if (ok) {
-        redirect("/home");
+        router.push("/home");
         return;
       }
     } catch (_) {}
