@@ -64,18 +64,20 @@ const RegisterForm: StyleableFC = ({ className, style }) => {
     <form
       action={handleSubmit}
       className={cn(
-        `[&_h2]:text-title-md [&_h2]:leading-title-md space-y-6 *:space-y-3
-        [&_h2]:text-center [&_h2]:font-bold [&_h2]:italic`,
+        `[&_h2]:text-title-md [&_h2]:leading-title-md space-y-6
+        transition-opacity *:space-y-3 [&_h2]:text-center [&_h2]:font-bold
+        [&_h2]:italic`,
+        loading && `opacity-25 [&_.iex-select_.grow]:opacity-0`,
         className,
       )}
       style={style}
     >
       <section aria-label="ข้อมูลส่วนตัว">
         <FormItem label="ชื่อ">
-          <Field name="name" />
+          <Field name="name" required />
         </FormItem>
         <FormItem label="นามสกุล">
-          <Field name="surname" />
+          <Field name="surname" required />
         </FormItem>
         <FormItem label="เพศสภาพ">
           <Select name="gender">
@@ -103,14 +105,19 @@ const RegisterForm: StyleableFC = ({ className, style }) => {
       <section aria-labelledby="h-contacts">
         <h2 id="h-contacts">ช่องทางการติดต่อ</h2>
         <FormItem label="อีเมล">
-          <Field name="email" type="email" placeholder="name@example.com" />
+          <Field
+            name="email"
+            type="email"
+            placeholder="name@example.com"
+            required
+          />
         </FormItem>
         <FormItem label="เบอร์โทรศัพท์">
-          <Field name="phone" type="tel" />
+          <Field name="phone" type="tel" pattern="0[0-9]{8,9}" required />
         </FormItem>
         {category === VISITOR_CATEGORY.Student && (
           <FormItem label="เบอร์ติดต่อฉุกเฉิน">
-            <Field name="emergencyContact" type="tel" />
+            <Field name="emergencyContact" type="tel" required />
           </FormItem>
         )}
       </section>
@@ -141,7 +148,7 @@ const RegisterForm: StyleableFC = ({ className, style }) => {
             </Select>
           </FormItem>
           <FormItem label="โรงเรียน">
-            <Field name="school" />
+            <Field name="school" required />
           </FormItem>
           <FormItem label="จังหวัด">
             <Select name="province">
@@ -168,7 +175,13 @@ const RegisterForm: StyleableFC = ({ className, style }) => {
             </Select>
           </FormItem>
           <FormItem label="อันดับที่จะใส่ใน TCAS">
-            <Field name="interestLevel" type="number" min={1} max={10} />
+            <Field
+              name="interestLevel"
+              type="number"
+              min={1}
+              max={10}
+              required
+            />
           </FormItem>
         </section>
       )}
@@ -177,7 +190,7 @@ const RegisterForm: StyleableFC = ({ className, style }) => {
         <section aria-labelledby="h-alumni">
           <h2 id="h-alumni">ข้อมูลนิสิตปัจจุบัน/นิสิตเก่า</h2>
           <FormItem label="ปีที่จบ/จะจบ (วศ.)">
-            <Field name="alumniBatch" type="number" min={2500} />
+            <Field name="alumniBatch" type="number" min={2500} required />
           </FormItem>
         </section>
       )}
@@ -196,10 +209,10 @@ const RegisterForm: StyleableFC = ({ className, style }) => {
             </Select>
           </FormItem>
           <FormItem label="คณะ">
-            <Field name="faculty" />
+            <Field name="faculty" required />
           </FormItem>
           <FormItem label="มหาวิทยาลัย">
-            <Field name="university" />
+            <Field name="university" required />
           </FormItem>
         </section>
       )}
@@ -208,7 +221,7 @@ const RegisterForm: StyleableFC = ({ className, style }) => {
         <section aria-labelledby="h-teacher">
           <h2 id="h-teacher">ข้อมูลครู</h2>
           <FormItem label="โรงเรียน">
-            <Field name="school" />
+            <Field name="school" required />
           </FormItem>
           <FormItem label="จังหวัด">
             <Select name="province">
@@ -220,7 +233,7 @@ const RegisterForm: StyleableFC = ({ className, style }) => {
             </Select>
           </FormItem>
           <FormItem label="วิชาที่สอน">
-            <Field name="subjectTaught" />
+            <Field name="subjectTaught" required />
           </FormItem>
         </section>
       )}
