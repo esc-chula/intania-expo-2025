@@ -7,12 +7,9 @@ import MenuItem from "@/app/components/MenuItem";
 import Select from "@/app/components/Select";
 import cn from "@/lib/helpers/cn";
 import Major from "@/lib/models/Major";
+import Province from "@/lib/models/Province";
 import StudentVisitor from "@/lib/models/StudentVisitor";
-import Visitor, {
-  GENDER,
-  PROVINCES,
-  VISITOR_CATEGORY,
-} from "@/lib/models/Visitor";
+import Visitor, { GENDER, VISITOR_CATEGORY } from "@/lib/models/Visitor";
 import { StyleableFC } from "@/lib/types/misc";
 import { list } from "radash";
 import { useState } from "react";
@@ -110,9 +107,9 @@ const RegisterForm: StyleableFC = ({ className, style }) => {
           </FormItem>
           <FormItem label="จังหวัด">
             <Select name="province">
-              {Object.entries(PROVINCES).map(([value, label]) => (
-                <MenuItem key={value} value={value}>
-                  {label}
+              {Province.ALL.map((province) => (
+                <MenuItem key={province.code} value={province.code}>
+                  {province.name}
                 </MenuItem>
               ))}
             </Select>
@@ -173,13 +170,13 @@ const RegisterForm: StyleableFC = ({ className, style }) => {
         <section aria-labelledby="h-teacher">
           <h2 id="h-teacher">ข้อมูลครู</h2>
           <FormItem label="โรงเรียน">
-            <Field name="teacherSchool" />
+            <Field name="school" />
           </FormItem>
           <FormItem label="จังหวัด">
-            <Select name="teacherProvince">
-              {Object.entries(PROVINCES).map(([value, label]) => (
-                <MenuItem key={value} value={value}>
-                  {label}
+            <Select name="province">
+              {Province.ALL.map((province) => (
+                <MenuItem key={province.code} value={province.code}>
+                  {province.name}
                 </MenuItem>
               ))}
             </Select>

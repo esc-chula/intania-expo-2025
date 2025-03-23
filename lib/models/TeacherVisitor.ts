@@ -3,10 +3,11 @@ import Visitor, {
   PROVINCES,
   VISITOR_CATEGORY,
 } from "@/lib/models/Visitor";
+import Province from "@/lib/models/Province";
 
 export default class TeacherVisitor extends Visitor {
   #school: string;
-  #province: keyof typeof PROVINCES;
+  #province: Province;
   #subjectTaught: string;
 
   constructor(

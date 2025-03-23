@@ -15,86 +15,6 @@ export enum VISITOR_CATEGORY {
   Other = "OTHER",
 }
 
-export const PROVINCES = {
-  KBI: "กระบี่",
-  BKK: "กรุงเทพมหานคร",
-  KRI: "กาญจนบุรี",
-  KSN: "กาฬสินธุ์",
-  KPT: "กำแพงเพชร",
-  KKN: "ขอนแก่น",
-  CTI: "จันทบุรี",
-  CCO: "ฉะเชิงเทรา",
-  CBI: "ชลบุรี",
-  CNT: "ชัยนาท",
-  CPM: "ชัยภูมิ",
-  CPN: "ชุมพร",
-  CRI: "เชียงราย",
-  CMI: "เชียงใหม่",
-  TRG: "ตรัง",
-  TRT: "ตราด",
-  TAK: "ตาก",
-  NYK: "นครนายก",
-  NPT: "นครปฐม",
-  NPM: "นครพนม",
-  NMA: "นครราชสีมา",
-  NRT: "นครศรีธรรมราช",
-  NSN: "นครสวรรค์",
-  NBI: "นนทบุรี",
-  NWT: "นราธิวาส",
-  NAN: "น่าน",
-  BKN: "บึงกาฬ",
-  BRM: "บุรีรัมย์",
-  PTE: "ปทุมธานี",
-  PKN: "ประจวบคีรีขันธ์",
-  PRI: "ปราจีนบุรี",
-  PTN: "ปัตตานี",
-  AYA: "พระนครศรีอยุธยา",
-  PYO: "พะเยา",
-  PNA: "พังงา",
-  PLG: "พัทลุง",
-  PCT: "พิจิตร",
-  PLK: "พิษณุโลก",
-  PBI: "เพชรบุรี",
-  PNB: "เพชรบูรณ์",
-  PRE: "แพร่",
-  PKT: "ภูเก็ต",
-  MKM: "มหาสารคาม",
-  MDH: "มุกดาหาร",
-  MSN: "แม่ฮ่องสอน",
-  YST: "ยโสธร",
-  YLA: "ยะลา",
-  RET: "ร้อยเอ็ด",
-  RNG: "ระนอง",
-  RYG: "ระยอง",
-  RBR: "ราชบุรี",
-  LRI: "ลพบุรี",
-  LPG: "ลำปาง",
-  LPN: "ลำพูน",
-  LEI: "เลย",
-  SSK: "ศรีสะเกษ",
-  SNK: "สกลนคร",
-  SKA: "สงขลา",
-  STN: "สตูล",
-  SPK: "สมุทรปราการ",
-  SKM: "สมุทรสงคราม",
-  SKN: "สมุทรสาคร",
-  SKW: "สระแก้ว",
-  SRI: "สระบุรี",
-  SBR: "สิงห์บุรี",
-  STI: "สุโขทัย",
-  SPB: "สุพรรณบุรี",
-  SNI: "สุราษฎร์ธานี",
-  SRN: "สุรินทร์",
-  NKI: "หนองคาย",
-  NBP: "หนองบัวลำภู",
-  ATG: "อ่างทอง",
-  ACR: "อำนาจเจริญ",
-  UDN: "อุดรธานี",
-  UTD: "อุตรดิตถ์",
-  UTI: "อุทัยธานี",
-  UBN: "อุบลราชธานี",
-};
-
 export default abstract class Visitor extends User {
   static #role = UserRole.staff;
 
@@ -157,30 +77,26 @@ export default abstract class Visitor extends User {
     }[category];
   }
 
-  static getProvinceDisplayName(province: keyof typeof PROVINCES) {
-    return PROVINCES[province];
-  }
-
-  constructor(
+  constructor(data: {
     name: string,
     surname: string,
     gender: GENDER,
     phone: string,
     email: string,
     category: VISITOR_CATEGORY,
-    visitDate: Date[],
+    visitDate: string[],
     interestedActivities: (typeof Visitor.INTERESTED_ACTIVITIES)[],
     referralSource: (typeof Visitor.REFERAL_SOURCES)[],
-  ) {
-    super(email, Visitor.#role);
-    this.#name = name;
-    this.#surname = surname;
-    this.#gender = gender;
-    this.#phone = phone;
-    this.#category = category;
-    this.#visitDate = visitDate;
-    this.#interestedActivities = interestedActivities;
-    this.#referralSource = referralSource;
+  }) {
+    super(data.email, Visitor.#role);
+    this.#name = data.name;
+    this.#surname = data.surname;
+    this.#gender = data.gender;
+    this.#phone = data.phone;
+    this.#category = data.category;
+    this.#visitDate = data.visitDate.map((date) => new Date(date));
+    this.#interestedActivities = data.interestedActivities;
+    this.#referralSource = data.referralSource;
   }
 
   abstract save(): Promise<void>;

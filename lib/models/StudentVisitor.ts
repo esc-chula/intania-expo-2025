@@ -1,15 +1,15 @@
 import Visitor, {
   GENDER,
-  PROVINCES,
   VISITOR_CATEGORY,
 } from "@/lib/models/Visitor";
 import { Major } from "@prisma/client";
+import Province from "@/lib/models/Province";
 
 export default class StudentVisitor extends Visitor {
   #studentLevel: string;
   #studyStream: keyof typeof StudentVisitor.STUDY_STREAMS | null;
   #school: string;
-  #province: keyof typeof PROVINCES;
+  #province: Province;
   #interestLevel: number;
   #interestedField: Major[];
   #emergencyContact: string;
