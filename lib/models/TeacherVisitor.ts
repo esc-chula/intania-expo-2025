@@ -9,7 +9,7 @@ export default class TeacherVisitor extends Visitor {
   constructor(
     data: ConstructorParameters<typeof Visitor>[0] & {
       school: string;
-      province: Province["code"];
+      province: string;
       subjectTaught: string;
     },
   ) {

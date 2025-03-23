@@ -27,21 +27,24 @@ export default class StudentVisitor extends Visitor {
   constructor(
     data: ConstructorParameters<typeof Visitor>[0] & {
       studentLevel: string;
-      studyStream: keyof typeof StudentVisitor.STUDY_STREAMS | null;
+      studyStream?: string;
       school: string;
-      province: Province["code"];
-      interestLevel: number;
-      interestedField: Major[];
+      province: string;
+      interestLevel: string;
+      interestedField: string;
       emergencyContact: string;
     },
   ) {
     super(data);
     this.#studentLevel = data.studentLevel;
-    this.#studyStream = data.studyStream;
+    this.#studyStream =
+      (data.studyStream as keyof typeof StudentVisitor.STUDY_STREAMS) || null;
     this.#school = data.school;
     this.#province = Province.fromCode(data.province)!;
-    this.#interestLevel = data.interestLevel;
-    this.#interestedField = data.interestedField;
+    this.#interestLevel = parseInt(data.interestLevel);
+    this.#interestedField = data.interestedField
+      .split(",")
+      .map((slug) => Major.fromSlug(slug)!);
     this.#emergencyContact = data.emergencyContact;
   }
 

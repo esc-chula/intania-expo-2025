@@ -24,22 +24,8 @@ export default abstract class Visitor extends User {
   #phone: string;
   #category: VISITOR_CATEGORY;
   #visitDate: Date[];
-  #interestedActivities: (typeof Visitor.INTERESTED_ACTIVITIES)[];
-  #referralSource: (typeof Visitor.REFERAL_SOURCES)[];
-  // #studentLevel: string | null;
-  // #studyStream: string | null;
-  // #school: string | null;
-  // #province: string | null;
-  // #interestLevel: number | null;
-  // #interestedField: Major[] | null;
-  // #emergencyContact: string | null;
-  // #universityYear: string | null;
-  // #faculty: string | null;
-  // #university: string | null;
-  // #alumniBatch: string | null;
-  // #teacherSchool: string | null;
-  // #teacherProvince: string | null;
-  // #subjectTaught: string | null;
+  #interestedActivities: (keyof typeof Visitor.INTERESTED_ACTIVITIES)[];
+  #referralSource: (keyof typeof Visitor.REFERAL_SOURCES)[];
 
   static readonly INTERESTED_ACTIVITIES = {
     WOKRSHOP: "Workshop",
@@ -52,10 +38,11 @@ export default abstract class Visitor extends User {
   } as const;
 
   static readonly REFERAL_SOURCES = {
-    FRIEND: "เพื่อน",
-    SCHOOL: "โรงเรียน",
-    SOCIAL_MEDIA: "โซเชียลมีเดีย",
-    OTHER: "อื่นๆ",
+    INSTAGRAM_CU: "Instagram (@cuopenhouse)",
+    INSTAGRAM_INTANIA: "Instagram (@cuintaniaopenhouse)",
+    FACEBOOK: "Facebook",
+    FRIEND: "เพื่อน/ครอบครัว",
+    ADVERTISEMENT: "โมษณา",
   } as const;
 
   static getGenderDisplayName(gender: GENDER) {
@@ -78,25 +65,29 @@ export default abstract class Visitor extends User {
   }
 
   constructor(data: {
-    name: string,
-    surname: string,
-    gender: GENDER,
-    phone: string,
-    email: string,
-    category: VISITOR_CATEGORY,
-    visitDate: string[],
-    interestedActivities: (typeof Visitor.INTERESTED_ACTIVITIES)[],
-    referralSource: (typeof Visitor.REFERAL_SOURCES)[],
+    name: string;
+    surname: string;
+    gender: string;
+    phone: string;
+    email: string;
+    category: string;
+    visitDate: string;
+    interestedActivities: string;
+    referralSource: string;
   }) {
     super(data.email, Visitor.#role);
     this.#name = data.name;
     this.#surname = data.surname;
-    this.#gender = data.gender;
+    this.#gender = data.gender as GENDER;
     this.#phone = data.phone;
-    this.#category = data.category;
-    this.#visitDate = data.visitDate.map((date) => new Date(date));
-    this.#interestedActivities = data.interestedActivities;
-    this.#referralSource = data.referralSource;
+    this.#category = data.category as VISITOR_CATEGORY;
+    this.#visitDate = data.visitDate.split(",").map((date) => new Date(date));
+    this.#interestedActivities = data.interestedActivities.split(
+      ",",
+    ) as (keyof typeof Visitor.INTERESTED_ACTIVITIES)[];
+    this.#referralSource = data.referralSource.split(
+      ",",
+    ) as (keyof typeof Visitor.REFERAL_SOURCES)[];
   }
 
   abstract save(): Promise<void>;

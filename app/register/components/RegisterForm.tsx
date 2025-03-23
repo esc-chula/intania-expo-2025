@@ -6,9 +6,13 @@ import FormItem from "@/app/components/FormItem";
 import MenuItem from "@/app/components/MenuItem";
 import Select from "@/app/components/Select";
 import cn from "@/lib/helpers/cn";
+import IntaniaVisitor from "@/lib/models/IntaniaVisitor";
 import Major from "@/lib/models/Major";
+import OtherVisitor from "@/lib/models/OtherVisitor";
 import Province from "@/lib/models/Province";
 import StudentVisitor from "@/lib/models/StudentVisitor";
+import TeacherVisitor from "@/lib/models/TeacherVisitor";
+import UniversityVisitor from "@/lib/models/UniversityVisitor";
 import Visitor, { GENDER, VISITOR_CATEGORY } from "@/lib/models/Visitor";
 import { StyleableFC } from "@/lib/types/misc";
 import { list } from "radash";
@@ -18,8 +22,28 @@ import { useState } from "react";
 const RegisterForm: StyleableFC = ({ className, style }) => {
   const [category, setCategory] = useState<VISITOR_CATEGORY | null>(null);
 
+  /** Create a new Visitor instance and save it to the database. */
   function handleSubmit(formData: FormData) {
-    console.log(Object.fromEntries(formData));
+    const data = Object.fromEntries(formData.entries()) as Record<
+      string,
+      string
+    >;
+    const visitor: Visitor = new {
+      [VISITOR_CATEGORY.Student]: StudentVisitor,
+      [VISITOR_CATEGORY.Intania]: IntaniaVisitor,
+      [VISITOR_CATEGORY.University]: UniversityVisitor,
+      [VISITOR_CATEGORY.Teacher]: TeacherVisitor,
+      [VISITOR_CATEGORY.Other]: OtherVisitor,
+    }[(category as VISITOR_CATEGORY) || VISITOR_CATEGORY.Other](
+      // TypeScript shenanigans to merge all types of visitor data.
+      // Defo not type-safe. Improvements welcome!
+      data as ConstructorParameters<typeof StudentVisitor>[0] &
+        ConstructorParameters<typeof IntaniaVisitor>[0] &
+        ConstructorParameters<typeof UniversityVisitor>[0] &
+        ConstructorParameters<typeof TeacherVisitor>[0] &
+        ConstructorParameters<typeof OtherVisitor>[0],
+    );
+    visitor.save();
   }
 
   return (
