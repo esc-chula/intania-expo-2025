@@ -2,7 +2,7 @@
 
 import cn from "@/lib/helpers/cn";
 import { StyleableFC } from "@/lib/types/misc";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 /**
  * Top App Bar displays the page name, a back button to navigate up, and related
@@ -18,6 +18,7 @@ const TopAppBar: StyleableFC<{
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 0);
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
