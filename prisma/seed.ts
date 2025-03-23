@@ -119,15 +119,15 @@ const visitors: Visitor[] = [
     gender: "male",
     phone: "0123456789",
     category: "_category",
-    visitDate: "_visitDate",
-    interestedActivities: "*",
-    referralSource: "",
+    visitDates: [],
+    interestedActivities: [],
+    referralSources: [],
     studentLevel: "",
     studyStream: "",
     school: "",
     province: "",
     interestLevel: "",
-    interestedField: "",
+    interestedFields: [],
     emergencyContact: "",
     universityYear: "",
     faculty: "",
@@ -277,6 +277,14 @@ const events: Event[] = [
 ];
 
 const workshopSlots: WorkshopSlot[] = [
+  {
+    id: randomUUID(),
+    workshopId: workshopsId[0],
+    startTime: new Date(1900, 3, 30, 6, 0, 0, 0),
+    endTime: new Date(1910, 3, 30, 8, 0, 0, 0),
+    currentRegistrantCount: 0,
+    maxRegistrantCount: 50,
+  },
   {
     id: randomUUID(),
     workshopId: workshopsId[0],

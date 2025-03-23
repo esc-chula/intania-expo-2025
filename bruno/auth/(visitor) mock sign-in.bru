@@ -1,17 +1,19 @@
 meta {
-  name: get all workshops
+  name: (visitor) mock sign-in
   type: http
-  seq: 2
+  seq: 4
 }
 
-get {
-  url: {{url}}/api/workshops?data={"search": "1"}
-  body: none
+post {
+  url: {{url}}/api/test/auth/mock-signin
+  body: json
   auth: none
 }
 
-params:query {
-  data: {"search": "1"}
+body:json {
+  {
+    "email": "user1@gmail.com"
+  }
 }
 
 script:pre-request {
