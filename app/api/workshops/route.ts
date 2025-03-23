@@ -9,6 +9,7 @@ import { NextResponse } from "next/server";
 import { fromZodError } from "zod-validation-error";
 
 // Get All Workshops
+//! Authorization is required
 export async function GET(
   request: Request,
 ): Promise<NextResponse<WorkshopDetail[] | HTTPError>> {

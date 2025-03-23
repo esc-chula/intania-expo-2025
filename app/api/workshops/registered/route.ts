@@ -8,6 +8,8 @@ import { prisma } from '@/lib/backend/prisma';
 import { cookies } from 'next/headers';
 import { onlyAuthorized } from '@/lib/backend/middleware';
 
+// Get All Registered Workshops for each client 
+//! Authorization is required
 export async function GET(request: Request): Promise<NextResponse<RegisteredWorkshopDetail[] | HTTPError>> {
     const { searchParams } = new URL(request.url);
     const cookieStore = await cookies();
