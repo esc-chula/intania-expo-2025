@@ -2,7 +2,7 @@ import { onlyAuthorized } from "@/lib/backend/middleware";
 import { prisma } from "@/lib/backend/prisma";
 import { WorkshopQuerySchema } from "@/lib/backend/schemas/query";
 import { HTTPError } from "@/lib/backend/types/httpError";
-import { RegisteredWorkshopDetail } from "@/lib/backend/types/workshop";
+import { RegisteredWorkshopDetail, WorkshopDetail } from "@/lib/backend/types/workshop";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
@@ -10,11 +10,6 @@ import { fromZodError } from "zod-validation-error";
 
 // Get All Registered Workshops for each client
 //! Authorization is required
-export async function GET(
-  request: Request,
-): Promise<NextResponse<RegisteredWorkshopDetail[] | HTTPError>> {
-  const { searchParams } = new URL(request.url);
-  const cookieStore = await cookies();
 export async function GET(request: Request): Promise<NextResponse<WorkshopDetail[] | HTTPError>> {
     const { searchParams } = new URL(request.url);
     const cookieStore = await cookies();
