@@ -35,9 +35,9 @@ const Field: StyleableFC<
     type={type}
     onChange={(event) => onChange?.(event.target.value)}
     className={cn(`iex-field focus:bg-cream focus:text-dark-gray
-      invalid:border-bright-red valid:border-cream
-      focus:invalid:bg-bright-red block border-2 bg-black/40 px-4.5 py-2.5
-      focus:placeholder-transparent focus:outline-none`)}
+      [:user-invalid]:border-bright-red border-cream [:user-invalid]:text-white
+      focus:[:user-invalid]:bg-bright-red block border-2 bg-black/40 px-4.5
+      py-2.5 focus:placeholder-transparent focus:outline-none`)}
   />
 );
 
