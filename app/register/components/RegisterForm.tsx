@@ -168,7 +168,7 @@ const RegisterForm: StyleableFC<{
         <section aria-labelledby="h-interest">
           <h2 id="h-interest">ความสนใจในวิศวะจุฬาฯ</h2>
           <FormItem label="สาขาที่สนใจ">
-            <Select name="interestedFields" maxChoices={null}>
+            <Select name="interestedFields" maxChoices={Major.all.length}>
               {Major.all.map((major) => (
                 <MenuItem key={major.slug} value={major.slug.toUpperCase()}>
                   {major.fullName}
@@ -243,14 +243,17 @@ const RegisterForm: StyleableFC<{
       <section aria-labelledby="h-expo">
         <h2 id="h-expo">Intania Expo 2025</h2>
         <FormItem label="วันที่เข้าร่วมงาน">
-          <Select name="visitDate" maxChoices={null}>
+          <Select name="visitDate" maxChoices={3}>
             <MenuItem value="2025-03-28">ศุกร์ 28 มีนาคม 2568</MenuItem>
             <MenuItem value="2025-03-29">เสาร์ 29 มีนาคม 2568</MenuItem>
             <MenuItem value="2025-03-30">อาทิตย์ 30 มีนาคม 2568</MenuItem>
           </Select>
         </FormItem>
         <FormItem label="กิจกรรมที่สนใจ">
-          <Select name="interestedActivities" maxChoices={null}>
+          <Select
+            name="interestedActivities"
+            maxChoices={Object.keys(Visitor.INTERESTED_ACTIVITIES).length}
+          >
             {Object.entries(Visitor.INTERESTED_ACTIVITIES).map(
               ([value, label]) =>
                 // Only show workshop to students
@@ -264,7 +267,10 @@ const RegisterForm: StyleableFC<{
           </Select>
         </FormItem>
         <FormItem label="ช่องทางที่รู้จักงานนี้">
-          <Select name="referralSource" maxChoices={null}>
+          <Select
+            name="referralSource"
+            maxChoices={Object.keys(Visitor.REFERRAL_SOURCES).length}
+          >
             {Object.entries(Visitor.REFERRAL_SOURCES).map(([value, label]) => (
               <MenuItem key={value} value={value}>
                 {label}
