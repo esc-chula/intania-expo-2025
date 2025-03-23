@@ -6,6 +6,8 @@ export enum UserRole {
   visitor = "VISITOR",
 }
 
+type CookieStore = Awaited<ReturnType<typeof cookies>>;
+
 export default class User {
   #email: string;
   #role: UserRole;
@@ -24,7 +26,7 @@ export default class User {
    * @param cookieStore The cookie store.
    */
   static async fromCookies(
-    cookieStore: Awaited<ReturnType<typeof cookies>>,
+    cookieStore: CookieStore,
   ): Promise<DatabaseResponse<User | null>> {
     const { data, status, ok } = await Database.fetch<{
       email: string;
