@@ -42,6 +42,9 @@ export default class Database {
     body: Record<string, unknown> = {},
     options: RequestInit = {},
   ): Promise<DatabaseResponse<ExpectedData>> {
+    endpoint = `/api` + endpoint;
+    if (typeof window === "undefined")
+      endpoint = process.env.APP_URL + endpoint;
     if (method === "GET" && Object.keys(body).length > 0)
       endpoint += `?${new URLSearchParams(
         mapValues(body, (value) => String(value)),
@@ -49,17 +52,14 @@ export default class Database {
 
     console.log(LOG_IDENIFIER, method, endpoint);
 
-    const [error, response] = await tryit(fetch)(
-      `${process.env.APP_URL}/api${endpoint}`,
-      {
-        method,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        ...(method !== "GET" && { body: JSON.stringify(body) }),
-        ...options,
+    const [error, response] = await tryit(fetch)(endpoint, {
+      method,
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+      ...(method !== "GET" && { body: JSON.stringify(body) }),
+      ...options,
+    });
 
     const data = await response?.json();
 
