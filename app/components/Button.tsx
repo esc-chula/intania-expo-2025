@@ -1,6 +1,7 @@
 import Interactive from "@/app/components/Interactive";
 import cn from "@/lib/helpers/cn";
 import { StyleableFC } from "@/lib/types/misc";
+import { ComponentProps } from "react";
 
 /**
  * An action the user can take.
@@ -20,6 +21,7 @@ const Button: StyleableFC<{
   disabled?: boolean;
   alt?: string;
   href?: string;
+  type?: ComponentProps<"button">["type"];
   onClick?: () => void;
 }> = ({
   children,
@@ -28,6 +30,7 @@ const Button: StyleableFC<{
   disabled = false,
   alt,
   href,
+  type = "button",
   onClick,
   className,
   style,
@@ -37,6 +40,7 @@ const Button: StyleableFC<{
       aria-label={alt}
       aria-disabled={disabled}
       href={href}
+      type={type}
       onClick={!disabled ? onClick : undefined}
       className={cn(
         `iex-button text-body-md leading-body-md relative grid

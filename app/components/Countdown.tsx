@@ -23,10 +23,9 @@ const Countdown: StyleableFC<{
   }, []);
 
   const diff = now
-    ? date.getTime() -
-      now.getTime() +
-      (now.getTimezoneOffset() || 0) * 60 * 1000
-    : 1000; // Default cannot be 0 because that triggers an animation.
+    ? date.getTime() - now.getTime()
+    : // Default cannot be 0 because that triggers an animation.
+      1000;
   if (diff < 0)
     return (
       <section className={cn(`relative flex gap-2`, className)} style={style}>
