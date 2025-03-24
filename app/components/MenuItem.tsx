@@ -31,7 +31,7 @@ const MenuItem: StyleableFC<{
       onClick={() => handleSelect(value, children as string)}
       className={cn(
         `iex-menu-item text-body-lg leading-body-lg state-layer-white flex
-        items-center gap-4 px-3.5 py-2.5 text-start`,
+        items-center gap-4 px-3.5 py-2.5 text-start text-balance`,
         isSelected && `bg-just-red`,
         className,
       )}
