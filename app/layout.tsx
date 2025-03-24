@@ -3,7 +3,7 @@ import "@/app/globals.css";
 import cn from "@/lib/helpers/cn";
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
-import { Archivo, Chakra_Petch } from "next/font/google";
+import { Archivo, Bai_Jamjuree } from "next/font/google";
 import localFont from "next/font/local";
 
 const archivo = Archivo({
@@ -11,7 +11,7 @@ const archivo = Archivo({
   subsets: ["latin"],
   axes: ["wdth"],
 });
-const chakraPetch = Chakra_Petch({
+const baiJamjuree = Bai_Jamjuree({
   style: ["normal", "italic"],
   subsets: ["thai"],
   weight: ["400", "600", "700"],
@@ -44,7 +44,7 @@ export default function RootLayout({
       <body
         className={cn(
           archivo.className,
-          chakraPetch.className,
+          baiJamjuree.className,
           icon.className,
           `bg-black text-white antialiased`,
         )}

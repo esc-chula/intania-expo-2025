@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Archivo", "Chakra Petch", sans-serif;
+  --font-sans: "Archivo", "Bai Jamjuree", sans-serif;
   --font-icon: "icon";
 
   --font-narrow: var(--font-sans);
