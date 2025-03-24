@@ -69,3 +69,14 @@
     background-color: --value(--color-*);
   }
 }
+
+@keyframes sun {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  20%,
+  80% {
+    opacity: 0;
+  }
+}

@@ -15,7 +15,16 @@ const Hero: StyleableFC<{
     )}
     style={style}
   >
-    <Logo size={280} />
+    <style>{`
+      .iex-background {
+        opacity: 1;
+        position: static;
+      }
+      .iex-background > * {
+        position: fixed;
+      }
+    `}</style>
+    <Logo size={280} className="relative -z-20" />
     <section
       className={cn(`text-cream leading-headline-sm text-headline-sm -mt-3
         space-y-2 italic [&_*]:block`)}
