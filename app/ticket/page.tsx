@@ -9,7 +9,6 @@ export default async function HomeTicket() {
   const { data: visitor } = await VisitorFactory.fetchFromCookies(
     await cookies(),
   );
-  console.log(visitor);
 
   return (
     <div className="grid h-svh place-content-center">
@@ -18,7 +17,12 @@ export default async function HomeTicket() {
           <Icon name="arrow_back" />
         </Button>
       </TopAppBar>
-      {visitor && <Ticket visitor={visitor} />}
+      {visitor && (
+        <Ticket
+          visitor={visitor}
+          className="motion-safe:animate-[fade-up_.5s_var(--ease-emphasized-decelerate)]"
+        />
+      )}
     </div>
   );
 }
