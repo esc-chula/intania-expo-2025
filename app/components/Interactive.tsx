@@ -2,7 +2,8 @@
 
 import cn from "@/lib/helpers/cn";
 import { StyleableFC } from "@/lib/types/misc";
-import { useRef, useState } from "react";
+import Link from "next/link";
+import { ComponentProps, useRef, useState } from "react";
 
 /**
  * Indicates interactivity with a ripple effect. The background and state layer
@@ -16,11 +17,13 @@ import { useRef, useState } from "react";
 const Interactive: StyleableFC<
   {
     children: React.ReactNode;
+    disabled?: boolean;
     href?: string;
+    type?: ComponentProps<"button">["type"];
     onClick?: () => void;
   } & React.AriaAttributes
-> = ({ children, href, onClick, className, style, ...props }) => {
-  const Element = href ? `a` : onClick ? `button` : `div`;
+> = ({ children, disabled, href, type = "button", onClick, className, style, ...props }) => {
+  const Element = href ? (href.startsWith("/") ? Link : `a`) : `button`;
 
   const rippleContainerRef = useRef<HTMLSpanElement>(null);
   const [touched, setTouched] = useState(false);
@@ -73,7 +76,9 @@ const Interactive: StyleableFC<
 
   return (
     <Element
-      href={href}
+      href={href!}
+      type={type}
+      tabIndex={disabled ? -1 : 0}
       onClick={onClick}
       onTouchStart={(event: React.TouchEvent) => {
         setTouched(true);
@@ -94,9 +99,11 @@ const Interactive: StyleableFC<
         startRipple(rect.width / 2, rect.height / 2);
       }}
       className={cn(
-        `iex-interactive overflow-hidden before:absolute before:inset-0
-        before:rounded-[inherit] before:opacity-0 before:content-['']
-        hover:before:opacity-8 focus-visible:before:opacity-10
+        `iex-interactive relative block cursor-pointer overflow-hidden
+        before:pointer-events-none before:absolute before:inset-0
+        before:rounded-[inherit] before:opacity-0 before:transition-opacity
+        before:content-[''] hover:before:opacity-8 hover:before:duration-25
+        focus-visible:before:opacity-10 focus-visible:before:duration-25
         active:before:opacity-10`,
         className,
       )}
@@ -106,7 +113,7 @@ const Interactive: StyleableFC<
       <span
         aria-hidden
         ref={rippleContainerRef}
-        className="absolute inset-0 blur-xs"
+        className="pointer-events-none absolute inset-0 blur-xs"
       />
       {children}
     </Element>

@@ -32,7 +32,7 @@ const Icon: StyleableFC<{
         fontVariationSettings: `"FILL" ${fill ? 1 : 0}, "opsz" ${size}`,
       }}
       className={cn(
-        `iex-icon font-icon block leading-none not-italic select-all`,
+        `iex-icon font-icon block leading-none not-italic select-none`,
         className,
       )}
       translate="no"

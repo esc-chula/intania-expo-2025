@@ -1,0 +1,31 @@
+meta {
+  name: sign in
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{url}}/api/auth/signin
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: ya29.a0AeXRPp6-lqWiuaLDdcAJsrhVVBsVgdokFRS0tkCm2bw12rk_wsLEMY3s4wRb-Q4XAyXet1-h1woyxZzjXr5XwGV9_Jwyaci6FxqWiXVJMlAbbX3UlWRyTsBceq9v7F0uu-AOcfQwG9oNEXu2g1JWqkLUzhZET83UicWUu-QZaCgYKAYASARASFQHGX2MibwcDtHd295tVq9bddU758g0175
+}
+
+script:pre-request {
+  const cookie = bru.getVar("cookie");
+  
+  if(cookie) {
+    req.setHeader("Cookie", cookie)
+  }
+}
+
+script:post-response {
+  const cookies = res.getHeader('set-cookie');
+  
+  if(cookies) {
+    bru.setVar("cookie", cookies.join('; '));
+  }
+}

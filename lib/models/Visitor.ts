@@ -1,113 +1,114 @@
-import { SEPARATOR } from "@/lib/config";
-import { last } from "radash";
+import Database, { DatabaseResponse } from "@/lib/models/Database";
+import User, { UserRole } from "@/lib/models/User";
 
-/** An Intania Expo 2025 visitor. */
-export default class Visitor {
-  /** The role of the user. */
-  static #role = "visitor";
-  /**
-   * The six-digit code, formatted like `S-12345`.
-   * The first character is the category.
-   */
-  #sixDigitCode: string;
-  /** First name. */
+export enum GENDER {
+  Male = "MALE",
+  Female = "FEMALE",
+  NotGiven = "NOT_GIVEN",
+  Other = "OTHER",
+}
+
+export enum VISITOR_CATEGORY {
+  Student = "STUDENT",
+  Intania = "INTANIA",
+  University = "UNIVERSITY",
+  Teacher = "TEACHER",
+  Other = "OTHER",
+}
+
+export default abstract class Visitor extends User {
+  static #role = UserRole.staff;
+
   #name: string;
-  /** Last name. */
   #surname: string;
-  /** Gender. */
-  #gender: "M" | "F" | "NB" | "N/A";
-  /** Phone number, formatted with only numbers. */
+  #gender: GENDER;
   #phone: string;
-  /** The category of the visitor. */
-  #category: keyof typeof Visitor.categoryList;
-  /** The date and time of all visits. */
+  #category: VISITOR_CATEGORY;
   #visitDates: Date[];
+  #interestedActivities: (keyof typeof Visitor.INTERESTED_ACTIVITIES)[];
+  #referralSources: (keyof typeof Visitor.REFERRAL_SOURCES)[];
 
-  /**
-   * A list of visitor categories.
-   *
-   * Each category is represented by a key-value pair:
-   * - The key represents what is stored in the database.
-   * - The value has `code`, the first character in the six-digit code, and
-   *   `name`, the display name.
-   */
-  static get categoryList() {
-    return Object.fromEntries(
-      [
-        ["student", "S", "นักเรียน/ผู้สนใจศึกษาต่อ"],
-        ["university", "U", "นักศึกษาต่างมหาลัยฯ"],
-        ["cuOrAlumni", "C", "นิสิตปัจจุบัน/ศิษย์เก่า วิศวฯ จุฬา"],
-        ["teacher", "T", "ครู"],
-        ["other", "O", "ผู้ปกครอง/บุคคลภายนอก"],
-      ].map(([key, code, name]) => [key, { code, name }]),
-    );
+  static readonly INTERESTED_ACTIVITIES = {
+    WOKRSHOP: "Workshop",
+    SHOWCASE: "Showcase & Sharing Session",
+    INNOVATION: "Innovation",
+    CLUB: "Club & CSR",
+    HALL: "Hall & Stage",
+    COMPETITION: "Competition",
+    OTHER: "กิจกรรมอื่น ๆ ในงาน",
+  } as const;
+
+  static readonly REFERRAL_SOURCES = {
+    INSTAGRAM_CU: "Instagram (@cuopenhouse)",
+    INSTAGRAM_INTANIA: "Instagram (@cuintaniaopenhouse)",
+    FACEBOOK: "Facebook",
+    FRIEND: "เพื่อน/ครอบครัว",
+    ADVERTISEMENT: "โมษณา",
+  } as const;
+
+  static getGenderDisplayName(gender: GENDER) {
+    return {
+      [GENDER.Male]: "ชาย",
+      [GENDER.Female]: "หญิง",
+      [GENDER.NotGiven]: "ไม่ต้องการระบุ",
+      [GENDER.Other]: "อื่น ๆ",
+    }[gender];
   }
 
-  /**
-   * Whether the given six-digit code is valid.
-   * @param code The six-digit code.
-   * @returns A boolean.
-   */
-  static isValidCode(code: string) {
-    return /^[SUCTO]-\d{5}$/.test(code);
+  static getCategoryDisplayName(category: VISITOR_CATEGORY) {
+    return {
+      [VISITOR_CATEGORY.Student]: "นักเรียน/ผู้สนใจศึกษาต่อ",
+      [VISITOR_CATEGORY.Intania]: "นิสิตปัจจุบัน/นิสิตเก่าวิศวะจุฬาฯ",
+      [VISITOR_CATEGORY.University]: "นิสิตจากคณะ/มหาลัยอื่น",
+      [VISITOR_CATEGORY.Teacher]: "ครู",
+      [VISITOR_CATEGORY.Other]: "ผู้ปกครอง/บุคคลภายนอก",
+    }[category];
   }
 
-  constructor(
-    sixDigitCode: string,
-    name: string,
-    surname: string,
-    gender: Visitor["gender"],
-    phone: string,
-    category: keyof typeof Visitor.categoryList,
-    visitDates: Date[],
-  ) {
-    this.#sixDigitCode = sixDigitCode;
-    this.#name = name;
-    this.#surname = surname;
-    this.#gender = gender;
-    this.#phone = phone;
-    this.#category = category;
-    this.#visitDates = visitDates;
+  constructor(data: {
+    name: string;
+    surname: string;
+    gender: string;
+    phone: string;
+    email: string;
+    category: string;
+    visitDate: string;
+    interestedActivities: string;
+    referralSource: string;
+  }) {
+    super(data.email, Visitor.#role);
+    this.#name = data.name;
+    this.#surname = data.surname;
+    this.#gender = data.gender as GENDER;
+    this.#phone = data.phone;
+    this.#category = data.category as VISITOR_CATEGORY;
+    this.#visitDates = data.visitDate.split(",").map((date) => new Date(date));
+    this.#interestedActivities = data.interestedActivities.split(
+      ",",
+    ) as (keyof typeof Visitor.INTERESTED_ACTIVITIES)[];
+    this.#referralSources = data.referralSource.split(
+      ",",
+    ) as (keyof typeof Visitor.REFERRAL_SOURCES)[];
   }
 
-  /** First and last name combined. */
-  get fullName() {
-    return `${this.#name} ${this.#surname}`;
-  }
-
-  /** Phone number in XXX XXX XXXX format. */
-  get formattedPhone() {
-    return this.#phone.replace(/(\d{3})(\d{3})(\d{4})/, "$1 $2 $3");
-  }
-
-  /** The display name of the category. */
-  get formattedCategory() {
-    return Visitor.categoryList[this.#category].name;
-  }
-
-  /** The display string of the most recent visit date. */
-  get formattedVisitDate() {
-    const mostRecentVisitDate = last(this.#visitDates);
-    return [
-      mostRecentVisitDate?.toLocaleDateString("th-TH", {
-        weekday: "long",
-        day: "numeric",
-        month: "short",
-      }),
-      mostRecentVisitDate?.toLocaleTimeString("th-TH", {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-    ].join(SEPARATOR);
+  async save(data?: object): Promise<DatabaseResponse> {
+    return await Database.fetch("POST", "/visitors", {
+      name: this.#name,
+      surname: this.#surname,
+      gender: this.#gender,
+      phone: this.#phone,
+      email: this.email,
+      category: this.#category,
+      visitDates: this.#visitDates.map(
+        (date) => date.toISOString().split("T")[0],
+      ),
+      interestedActivities: this.#interestedActivities,
+      referralSources: this.#referralSources,
+      ...data,
+    });
   }
 
   // Standard getters
-  get role() {
-    return Visitor.#role;
-  }
-  get sixDigitCode() {
-    return this.#sixDigitCode;
-  }
   get name() {
     return this.#name;
   }
@@ -125,5 +126,11 @@ export default class Visitor {
   }
   get visitDates() {
     return this.#visitDates;
+  }
+  get interestedActivities() {
+    return this.#interestedActivities;
+  }
+  get referralSources() {
+    return this.#referralSources;
   }
 }

@@ -1,0 +1,27 @@
+meta {
+  name: get room by id
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{url}}/api/rooms/2aa1ef0c-7381-48e2-ba06-0998724bf50b
+  body: none
+  auth: none
+}
+
+script:pre-request {
+  const cookie = bru.getVar("cookie");
+  
+  if(cookie) {
+    req.setHeader("Cookie", cookie)
+  }
+}
+
+script:post-response {
+  const cookies = res.getHeader('set-cookie');
+  
+  if(cookies) {
+    bru.setVar("cookie", cookies.join('; '));
+  }
+}

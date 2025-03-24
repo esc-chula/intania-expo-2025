@@ -1,0 +1,185 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  // field for every User
+  id    String @id @default(uuid()) @db.Uuid
+  email String @unique
+  role  Role
+
+  // fields for WorkshopStaff
+  workshop   Workshop? @relation(fields: [workshopId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  workshopId String?   @db.Uuid
+
+  // fields for Visitor
+  sixDigitCode         String?  @unique // S-{incrementCode}
+  incrementCode        Int      @default(autoincrement())
+  name                 String?
+  surname              String?
+  gender               String?
+  phone                String?
+  category             String?
+  visitDates           String[]
+  interestedActivities String[]
+  referralSources      String[]
+  studentLevel         String?
+  studyStream          String?
+  school               String?
+  province             String?
+  interestLevel        String?
+  interestedFields     String[]
+  emergencyContact     String?
+  universityYear       String?
+  faculty              String?
+  university           String?
+  alumniBatch          String?
+  teacherSchool        String?
+  teacherProvince      String?
+  subjectTaught        String?
+
+  // not needed
+  tokens Token[]
+
+  registeredWorkshopSlotOnVisitor RegisteredWorkshopSlotOnVisitor[]
+  checkedInExpoOnVisitor CheckedInExpoOnVisitor[]
+}
+
+model CheckedInExpoOnVisitor {
+  visitor   User     @relation(fields: [visitorId], references: [id])
+  visitorId String   @map("userId") @db.Uuid
+  checkIn   DateTime
+
+  @@unique([visitorId, checkIn])
+}
+
+enum Role {
+  VISITOR
+  EXPO_STAFF
+  WORKSHOP_STAFF
+}
+
+model Token {
+  id           String @id @default(uuid()) @db.Uuid
+  userId       String @db.Uuid
+  accessToken  String
+  refreshToken String
+
+  // not needed
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model Building {
+  id     String   @id @default(uuid()) @db.Uuid
+  name   String   @unique
+  slug   String?
+  images String[]
+  floors Floor[]
+}
+
+model Floor {
+  id    String  @id @default(uuid()) @db.Uuid
+  name  String  @unique
+  slug  String?
+  rooms Room[]
+
+  building   Building @relation(fields: [buildingId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  buildingId String   @db.Uuid
+}
+
+model Room {
+  id    String  @id @default(uuid()) @db.Uuid
+  name  String  @unique
+  event String?
+  body  String?
+
+  floor   Floor  @relation(fields: [floorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  floorId String @db.Uuid
+}
+
+model IntaniaLocation {
+  id       String  @id @default(uuid()) @db.Uuid
+  room     String?
+  floor    String?
+  building String
+
+  // not needed
+  event    Event[]
+  workshop Workshop[]
+}
+
+model Event {
+  id        String     @id @default(uuid()) @db.Uuid
+  name      String     @unique
+  body      String?
+  startTime DateTime?
+  endTime   DateTime?
+  tags      EventTag[]
+  picture   String?
+
+  intaniaLocation   IntaniaLocation? @relation(fields: [intaniaLocationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  intaniaLocationId String?          @db.Uuid
+}
+
+model EventTag {
+  id   String @id @default(uuid()) @db.Uuid
+  name String @unique
+
+  // not needed
+  events Event[]
+}
+
+model Workshop {
+  id            String         @id @default(uuid()) @db.Uuid
+  name          String         @unique
+  workshopSlots WorkshopSlot[]
+
+  intaniaLocation   IntaniaLocation? @relation(fields: [intaniaLocationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  intaniaLocationId String?          @db.Uuid
+
+  // not needed
+  users                           User[]
+  RegisteredWorkshopSlotOnVisitor RegisteredWorkshopSlotOnVisitor[]
+}
+
+model WorkshopSlot {
+  id                     String   @id @default(uuid()) @db.Uuid
+  startTime              DateTime
+  endTime                DateTime
+  currentRegistrantCount Int
+  maxRegistrantCount     Int?
+
+  workshop   Workshop @relation(fields: [workshopId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  workshopId String   @db.Uuid
+
+  registeredWorkshopSlotOnVisitor RegisteredWorkshopSlotOnVisitor[]
+}
+
+model RegisteredWorkshopSlotOnVisitor {
+  registeredWorkshopSlot   WorkshopSlot @relation(fields: [registeredWorkshopSlotId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  registeredWorkshopSlotId String       @map("workshopSlotId") @db.Uuid
+  workshop                 Workshop     @relation(fields: [workshopId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  workshopId               String       @db.Uuid
+  visitor                  User         @relation(fields: [visitorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  visitorId                String       @map("userId") @db.Uuid
+  checkIn                  Boolean
+
+  @@id([visitorId, registeredWorkshopSlotId])
+  @@unique([visitorId, workshopId])
+}
+
+model Competition {
+  id   String @id @default(uuid()) @db.Uuid
+  name String @unique
+}
+
+model Major {
+  id          String @id @default(uuid()) @db.Uuid
+  name        String @unique
+  description String @unique
+}
