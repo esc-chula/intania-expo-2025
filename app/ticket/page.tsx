@@ -11,7 +11,7 @@ export default async function HomeTicket() {
   );
 
   return (
-    <div className="grid h-svh place-content-center">
+    <div className="grid h-svh place-content-center pb-20">
       <TopAppBar appearance="minimal">
         <Button appearance="text" href="/home">
           <Icon name="arrow_back" />
