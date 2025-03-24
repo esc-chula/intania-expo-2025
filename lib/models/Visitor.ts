@@ -66,6 +66,10 @@ export default abstract class Visitor extends User {
     }[category];
   }
 
+  static isValidCode(code: string) {
+    return /^[SICTO]-\d{5}$/.test(code);
+  }
+
   constructor(data: {
     name: string;
     surname: string;
@@ -109,6 +113,24 @@ export default abstract class Visitor extends User {
       referralSources: this.#referralSources,
       ...data,
     });
+  }
+
+  get fullName() {
+    return [this.#name, this.#surname].join(" ");
+  }
+
+  get formattedPhone() {
+    return this.#phone.replace(/(\d{3})(\d{3})(\d{4})/, (_, p1, p2, p3) =>
+      [p1, p2, p3].join(" "),
+    );
+  }
+
+  get formattedCategory() {
+    return Visitor.getCategoryDisplayName(this.#category);
+  }
+
+  get formattedLastVisitDate() {
+    return "วันศุกร์ 28 เม.ย. • 09:41";
   }
 
   // Standard getters
