@@ -5,6 +5,7 @@ import { Major } from "@/lib/backend/types/major";
 import { Building, Floor, Room } from "@/lib/backend/types/map";
 import { ExpoStaff, Visitor, WorkshopStaff } from "@/lib/backend/types/user";
 import { Workshop, WorkshopSlot } from "@/lib/backend/types/workshop";
+import { generateSixDiditCode } from "@/lib/backend/utils";
 import { PrismaClient } from "@prisma/client";
 import { randomUUID } from "crypto";
 import * as dotenv from "dotenv";
@@ -81,8 +82,10 @@ async function main() {
       where: { id: visitor.id },
       select: { incrementCode: true },
     });
-    const formatNumber = ("000000" + data?.incrementCode).slice(-6);
-    const sixDigitCode = "S-" + formatNumber;
+    const sixDigitCode = generateSixDiditCode(
+      visitor.category,
+      data!.incrementCode,
+    );
     await prisma.user.update({
       where: { id: visitor.id },
       data: { sixDigitCode: sixDigitCode },
@@ -118,7 +121,7 @@ const visitors: Visitor[] = [
     surname: "surname1",
     gender: "male",
     phone: "0123456789",
-    category: "_category",
+    category: "STUDENT",
     visitDates: [],
     interestedActivities: [],
     referralSources: [],

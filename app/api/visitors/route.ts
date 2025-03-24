@@ -3,6 +3,7 @@ import { prisma, returnPrismaError } from "@/lib/backend/prisma";
 import { CreateVisitorSchema } from "@/lib/backend/schemas/visitor";
 import { HTTPError } from "@/lib/backend/types/httpError";
 import { Visitor } from "@/lib/backend/types/user";
+import { generateSixDiditCode } from "@/lib/backend/utils";
 import { StatusCodes } from "http-status-codes";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
@@ -62,8 +63,10 @@ export async function POST(
       );
     }
 
-    const formatNumber = ("000000" + visitor.incrementCode).slice(-6);
-    const sixDigitCode = "S-" + formatNumber;
+    const sixDigitCode = generateSixDiditCode(
+      dto.category,
+      visitor.incrementCode,
+    );
 
     visitor = await prisma.user.update({
       where: { id: visitor.id },

@@ -17,29 +17,29 @@ const TopAppBar: StyleableFC<{
 }> = ({ children, appearance = "filled", className, style }) => {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 0);
+    const handleScroll = () =>
+      setScrolled(window.scrollY > (appearance === "minimal" ? 100 : 0));
     handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [appearance]);
 
   return (
     <header
       className={cn(
         `iex-top-app-bar text-headline-sm leading-headline-sm fixed top-0
         bottom-auto z-40 flex h-16 w-screen max-w-108 -translate-x-4
-        items-center gap-2 border-b-1 px-2 text-white transition-colors
-        [&_h1]:grow [&_h1]:truncate [&_h1]:font-bold [&_h1]:transition-opacity`,
+        items-center gap-2 px-2 text-white transition-colors [&_h1]:grow
+        [&_h1]:truncate [&_h1]:font-bold [&_h1]:transition-opacity`,
         {
-          filled: `bg-dark-red`,
+          filled: `bg-black`,
           scrim: scrolled
-            ? `bg-dark-red`
+            ? `bg-black`
             : `*:z-10 before:absolute before:inset-0 before:h-30
               before:bg-gradient-to-b before:from-black before:to-transparent
               before:content-['']`,
-          minimal: scrolled ? `bg-dark-red` : `[&_h1]:opacity-0`,
+          minimal: scrolled ? `bg-black` : `[&_h1]:opacity-0`,
         }[appearance],
-        scrolled ? `border-black` : `border-transparent`,
         className,
       )}
       style={style}
