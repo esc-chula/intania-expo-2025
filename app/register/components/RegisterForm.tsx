@@ -179,7 +179,7 @@ const RegisterForm: StyleableFC<{
         </section>
       )}
 
-      {category === VISITOR_CATEGORY.University && (
+      {category === VISITOR_CATEGORY.CollegeStudent && (
         <section aria-labelledby="h-university">
           <h2 id="h-university">ข้อมูลนิสิตจากมหาลัยอื่น</h2>
           <FormItem label="ชั้นปี">
@@ -225,7 +225,7 @@ const RegisterForm: StyleableFC<{
       <section aria-labelledby="h-expo">
         <h2 id="h-expo">Intania Expo 2025</h2>
         <FormItem label="วันที่เข้าร่วมงาน">
-          <Select name="visitDate" required maxChoices={3}>
+          <Select name="visitDates" required maxChoices={3}>
             <MenuItem value="2025-03-28">ศุกร์ 28 มีนาคม 2568</MenuItem>
             <MenuItem value="2025-03-29">เสาร์ 29 มีนาคม 2568</MenuItem>
             <MenuItem value="2025-03-30">อาทิตย์ 30 มีนาคม 2568</MenuItem>
