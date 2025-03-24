@@ -1,3 +1,4 @@
+import { Category } from "@prisma/client";
 import { UUID } from "crypto";
 import { Prisma } from "@prisma/client";
 
@@ -57,7 +58,7 @@ export type Visitor = {
   surname: string;
   gender: string;
   phone: string;
-  category: string;
+  category: Category;
   visitDates: string[];
   interestedActivities: string[];
   referralSources: string[];

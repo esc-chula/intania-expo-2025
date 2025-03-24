@@ -18,13 +18,13 @@ model User {
   workshopId String?   @db.Uuid
 
   // fields for Visitor
-  sixDigitCode         String?  @unique // S-{incrementCode}
-  incrementCode        Int      @default(autoincrement())
+  sixDigitCode         String?   @unique // S-{incrementCode}
+  incrementCode        Int       @default(autoincrement())
   name                 String?
   surname              String?
   gender               String?
   phone                String?
-  category             String?
+  category             Category?
   visitDates           String[]
   interestedActivities String[]
   referralSources      String[]
@@ -47,7 +47,7 @@ model User {
   tokens Token[]
 
   registeredWorkshopSlotOnVisitor RegisteredWorkshopSlotOnVisitor[]
-  checkedInExpoOnVisitor CheckedInExpoOnVisitor[]
+  checkedInExpoOnVisitor          CheckedInExpoOnVisitor[]
 }
 
 model CheckedInExpoOnVisitor {
@@ -62,6 +62,14 @@ enum Role {
   VISITOR
   EXPO_STAFF
   WORKSHOP_STAFF
+}
+
+enum Category {
+  STUDENT
+  INTANIA
+  COLLEGE_STUDENT
+  TEACHER
+  OTHER
 }
 
 model Token {
