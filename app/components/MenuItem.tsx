@@ -47,9 +47,10 @@ const MenuItem: StyleableFC<{
           )}
         />
       )}
-      
+
       <input
         aria-hidden
+        tabIndex={-1}
         {...(maxChoices === 1
           ? { type: "radio", id: value, name, value }
           : { type: "checkbox" })}
