@@ -1,3 +1,4 @@
+import splitIfString from "@/lib/helpers/splitIfString";
 import Major from "@/lib/models/Major";
 import Province from "@/lib/models/Province";
 import Visitor from "@/lib/models/Visitor";
@@ -31,7 +32,7 @@ export default class StudentVisitor extends Visitor {
       school: string;
       province: string;
       interestLevel: string;
-      interestedFields: string;
+      interestedFields: string | string[];
       emergencyContact: string;
     },
   ) {
@@ -42,9 +43,9 @@ export default class StudentVisitor extends Visitor {
     this.#school = data.school;
     this.#province = Province.fromCode(data.province)!;
     this.#interestLevel = parseInt(data.interestLevel);
-    this.#interestedFields = data.interestedFields
-      .split(",")
-      .map((slug) => Major.fromSlug(slug)!);
+    this.#interestedFields = splitIfString(data.interestedFields).map(
+      (slug) => Major.fromSlug(slug)!,
+    );
     this.#emergencyContact = data.emergencyContact;
   }
 

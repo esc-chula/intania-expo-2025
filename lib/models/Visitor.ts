@@ -1,3 +1,4 @@
+import splitIfString from "@/lib/helpers/splitIfString";
 import Database, { DatabaseResponse } from "@/lib/models/Database";
 import User, { UserRole } from "@/lib/models/User";
 
@@ -11,7 +12,7 @@ export enum GENDER {
 export enum VISITOR_CATEGORY {
   Student = "STUDENT",
   Intania = "INTANIA",
-  University = "UNIVERSITY",
+  CollegeStudent = "COLLEGE_STUDENT",
   Teacher = "TEACHER",
   Other = "OTHER",
 }
@@ -59,7 +60,7 @@ export default abstract class Visitor extends User {
     return {
       [VISITOR_CATEGORY.Student]: "นักเรียน/ผู้สนใจศึกษาต่อ",
       [VISITOR_CATEGORY.Intania]: "นิสิตปัจจุบัน/นิสิตเก่าวิศวะจุฬาฯ",
-      [VISITOR_CATEGORY.University]: "นิสิตจากคณะ/มหาลัยอื่น",
+      [VISITOR_CATEGORY.CollegeStudent]: "นิสิตจากคณะ/มหาลัยอื่น",
       [VISITOR_CATEGORY.Teacher]: "ครู",
       [VISITOR_CATEGORY.Other]: "ผู้ปกครอง/บุคคลภายนอก",
     }[category];
@@ -72,9 +73,9 @@ export default abstract class Visitor extends User {
     phone: string;
     email: string;
     category: string;
-    visitDate: string;
-    interestedActivities: string;
-    referralSource: string;
+    visitDates: string | string[];
+    interestedActivities: string | string[];
+    referralSource: string | string[];
   }) {
     super(data.email, Visitor.#role);
     this.#name = data.name;
@@ -82,13 +83,15 @@ export default abstract class Visitor extends User {
     this.#gender = data.gender as GENDER;
     this.#phone = data.phone;
     this.#category = data.category as VISITOR_CATEGORY;
-    this.#visitDates = data.visitDate.split(",").map((date) => new Date(date));
-    this.#interestedActivities = data.interestedActivities.split(
-      ",",
-    ) as (keyof typeof Visitor.INTERESTED_ACTIVITIES)[];
-    this.#referralSources = data.referralSource.split(
-      ",",
-    ) as (keyof typeof Visitor.REFERRAL_SOURCES)[];
+    this.#visitDates = splitIfString(data.visitDates).map(
+      (date) => new Date(date),
+    );
+    this.#interestedActivities = splitIfString<
+      keyof typeof Visitor.INTERESTED_ACTIVITIES
+    >(data.interestedActivities);
+    this.#referralSources = splitIfString<
+      keyof typeof Visitor.REFERRAL_SOURCES
+    >(data.referralSource);
   }
 
   async save(data?: object): Promise<DatabaseResponse> {
