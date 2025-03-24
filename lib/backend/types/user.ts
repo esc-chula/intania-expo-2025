@@ -1,4 +1,7 @@
 import { UUID } from "crypto";
+import { Prisma } from "@prisma/client";
+
+export type VisitorDetails = Prisma.UserGetPayload<{}>;
 
 export type User = {
   // ? following the document
