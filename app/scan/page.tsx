@@ -23,7 +23,7 @@ export default function ScanPage() {
         </Button>
       </TopAppBar>
 
-      <ScanFeed onCapture={handleCapture} />
+      <ScanFeed onCapture={handleCapture} className="-mx-4" />
 
       <ScanSheet
         show={visitor !== null}
