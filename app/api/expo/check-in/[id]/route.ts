@@ -6,9 +6,9 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 export async function PUT(
   request: Request,
-  { params }: { params: Promise<{ sixDigitCode: string }> },
+  { params }: { params: Promise<{ id: string }> },
 ): Promise<NextResponse<object | HTTPError>> {
-  const { sixDigitCode } = await params;
+  const { id } = await params;
   const cookieStore = await cookies();
 
   const middlewareResponse = await onlyAuthorized(cookieStore);
@@ -35,14 +35,14 @@ export async function PUT(
   }
 
   try {
-    const { id, role } = await prisma.user.findFirstOrThrow({
+    const { role } = await prisma.user.findFirstOrThrow({
       // this will throw if can't found user
-      where: { sixDigitCode: sixDigitCode },
-      select: { id: true, role: true },
+      where: { id: id },
+      select: { role: true },
     });
     if (role != "VISITOR") {
       return NextResponse.json(
-        { error: "invalid role of six digit code" },
+        { error: "invalid role of user id" },
         { status: StatusCodes.BAD_REQUEST },
       );
     }
@@ -92,7 +92,7 @@ export async function PUT(
     return returnPrismaError(error, [
       {
         code: "P2025",
-        msg: "six digit code not found",
+        msg: "user id not found",
         status: StatusCodes.NOT_FOUND,
       },
     ]);
