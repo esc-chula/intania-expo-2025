@@ -1,38 +1,24 @@
 "use client";
 
 import Visitor from "@/lib/models/Visitor";
+import VisitorFactory from "@/lib/models/VisitorFactory";
 import { useState } from "react";
 
-const DEFAULT_VISITOR = { visitor: null, statusCode: 0 };
+const DEFAULT_VISITOR = { visitor: null, status: null };
 
 export default function useScanner() {
   const [sixDigitCode, setSixDigitCode] = useState<string | null>(null);
-  const [{ visitor, statusCode }, setVisitor] = useState<{
+  const [{ visitor, status }, setVisitor] = useState<{
     visitor: Visitor | null;
-    statusCode: number;
+    status: number | null;
   }>(DEFAULT_VISITOR);
 
-  function handleCapture(barcode: string) {
-    console.log("handleCapture")
-
+  async function handleCapture(barcode: string) {
     if (sixDigitCode) return;
     if (Visitor.isValidCode(barcode)) setSixDigitCode(barcode);
-
-    // Simulate fetching the visitor.
-    setTimeout(() => {
-      setVisitor({
-        visitor: new Visitor(
-          barcode,
-          "สทชาย",
-          "รักวิศวะ",
-          "M",
-          "0000000000",
-          "student",
-          [],
-        ),
-        statusCode: 200,
-      });
-    }, 1000);
+    const { data: visitor, status } =
+      await VisitorFactory.fetchFromCode(barcode);
+    setVisitor({ visitor, status });
   }
 
   function handleCheckin() {
@@ -44,7 +30,7 @@ export default function useScanner() {
     paused: sixDigitCode !== null,
     sixDigitCode,
     visitor,
-    statusCode,
+    status,
     handleCapture,
     handleCheckin,
   };
