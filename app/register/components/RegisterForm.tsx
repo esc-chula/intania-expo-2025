@@ -6,14 +6,11 @@ import FormItem from "@/app/components/FormItem";
 import MenuItem from "@/app/components/MenuItem";
 import Select from "@/app/components/Select";
 import cn from "@/lib/helpers/cn";
-import IntaniaVisitor from "@/lib/models/IntaniaVisitor";
 import Major from "@/lib/models/Major";
-import OtherVisitor from "@/lib/models/OtherVisitor";
 import Province from "@/lib/models/Province";
 import StudentVisitor from "@/lib/models/StudentVisitor";
-import TeacherVisitor from "@/lib/models/TeacherVisitor";
-import UniversityVisitor from "@/lib/models/UniversityVisitor";
 import Visitor, { GENDER, VISITOR_CATEGORY } from "@/lib/models/Visitor";
+import VisitorFactory from "@/lib/models/VisitorFactory";
 import { StyleableFC } from "@/lib/types/misc";
 import { useRouter } from "next/navigation";
 import { list } from "radash";
@@ -36,24 +33,7 @@ const RegisterForm: StyleableFC<{
       string
     >;
     try {
-      const visitor = new {
-        [VISITOR_CATEGORY.Student]: StudentVisitor,
-        [VISITOR_CATEGORY.Intania]: IntaniaVisitor,
-        [VISITOR_CATEGORY.University]: UniversityVisitor,
-        [VISITOR_CATEGORY.Teacher]: TeacherVisitor,
-        [VISITOR_CATEGORY.Other]: OtherVisitor,
-      }[
-        (data as { category: VISITOR_CATEGORY }).category ||
-          VISITOR_CATEGORY.Other
-      ](
-        // TypeScript shenanigans to merge all types of visitor data.
-        // Defo not type-safe. Improvements welcome!
-        data as ConstructorParameters<typeof StudentVisitor>[0] &
-          ConstructorParameters<typeof IntaniaVisitor>[0] &
-          ConstructorParameters<typeof UniversityVisitor>[0] &
-          ConstructorParameters<typeof TeacherVisitor>[0] &
-          ConstructorParameters<typeof OtherVisitor>[0],
-      );
+      const visitor = VisitorFactory.fromData(data);
       const { ok } = await visitor.save();
       if (ok) {
         router.push("/home");
