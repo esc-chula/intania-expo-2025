@@ -1,3 +1,4 @@
+import splitIfString from "@/lib/helpers/splitIfString";
 import Database, { DatabaseResponse } from "@/lib/models/Database";
 import User, { UserRole } from "@/lib/models/User";
 
@@ -11,14 +12,13 @@ export enum GENDER {
 export enum VISITOR_CATEGORY {
   Student = "STUDENT",
   Intania = "INTANIA",
-  University = "UNIVERSITY",
+  CollegeStudent = "COLLEGE_STUDENT",
   Teacher = "TEACHER",
   Other = "OTHER",
 }
 
 export default abstract class Visitor extends User {
-  static #role = UserRole.staff;
-
+  #sixDigitCode: string;
   #name: string;
   #surname: string;
   #gender: GENDER;
@@ -59,36 +59,44 @@ export default abstract class Visitor extends User {
     return {
       [VISITOR_CATEGORY.Student]: "นักเรียน/ผู้สนใจศึกษาต่อ",
       [VISITOR_CATEGORY.Intania]: "นิสิตปัจจุบัน/นิสิตเก่าวิศวะจุฬาฯ",
-      [VISITOR_CATEGORY.University]: "นิสิตจากคณะ/มหาลัยอื่น",
+      [VISITOR_CATEGORY.CollegeStudent]: "นิสิตจากคณะ/มหาลัยอื่น",
       [VISITOR_CATEGORY.Teacher]: "ครู",
       [VISITOR_CATEGORY.Other]: "ผู้ปกครอง/บุคคลภายนอก",
     }[category];
   }
 
+  static isValidCode(code: string) {
+    return /^[SICTO]-\d{5}$/.test(code);
+  }
+
   constructor(data: {
+    sixDigitCode: string;
     name: string;
     surname: string;
     gender: string;
     phone: string;
     email: string;
     category: string;
-    visitDate: string;
-    interestedActivities: string;
-    referralSource: string;
+    visitDates: string | string[];
+    interestedActivities: string | string[];
+    referralSource: string | string[];
   }) {
-    super(data.email, Visitor.#role);
+    super(data.email, UserRole.visitor);
+    this.#sixDigitCode = data.sixDigitCode;
     this.#name = data.name;
     this.#surname = data.surname;
     this.#gender = data.gender as GENDER;
     this.#phone = data.phone;
     this.#category = data.category as VISITOR_CATEGORY;
-    this.#visitDates = data.visitDate.split(",").map((date) => new Date(date));
-    this.#interestedActivities = data.interestedActivities.split(
-      ",",
-    ) as (keyof typeof Visitor.INTERESTED_ACTIVITIES)[];
-    this.#referralSources = data.referralSource.split(
-      ",",
-    ) as (keyof typeof Visitor.REFERRAL_SOURCES)[];
+    this.#visitDates = splitIfString(data.visitDates).map(
+      (date) => new Date(date),
+    );
+    this.#interestedActivities = splitIfString<
+      keyof typeof Visitor.INTERESTED_ACTIVITIES
+    >(data.interestedActivities);
+    this.#referralSources = splitIfString<
+      keyof typeof Visitor.REFERRAL_SOURCES
+    >(data.referralSource);
   }
 
   async save(data?: object): Promise<DatabaseResponse> {
@@ -108,7 +116,31 @@ export default abstract class Visitor extends User {
     });
   }
 
+  get fullName() {
+    return [this.#name, this.#surname].join(" ");
+  }
+
+  get formattedPhone() {
+    return this.#phone.replace(/(\d{3})(\d{3})(\d{4})/, (_, p1, p2, p3) =>
+      [p1, p2, p3].join(" "),
+    );
+  }
+
+  get formattedCategory() {
+    return Visitor.getCategoryDisplayName(this.#category);
+  }
+
+  get formattedLastVisitDate() {
+    return "วันศุกร์ 28 เม.ย. • 09:41";
+  }
+
+  /** The second section on the ticket shows category-specific information. */
+  abstract get ticketHighlight(): { label: string; value: string };
+
   // Standard getters
+  get sixDigitCode() {
+    return this.#sixDigitCode;
+  }
   get name() {
     return this.#name;
   }

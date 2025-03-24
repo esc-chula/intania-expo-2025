@@ -26,4 +26,8 @@ export default class TeacherVisitor extends Visitor {
       subjectTaught: this.#subjectTaught,
     });
   }
+
+  get ticketHighlight() {
+    return { label: "โรงเรียน", value: this.#school };
+  }
 }

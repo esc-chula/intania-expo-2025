@@ -6,14 +6,11 @@ import FormItem from "@/app/components/FormItem";
 import MenuItem from "@/app/components/MenuItem";
 import Select from "@/app/components/Select";
 import cn from "@/lib/helpers/cn";
-import IntaniaVisitor from "@/lib/models/IntaniaVisitor";
 import Major from "@/lib/models/Major";
-import OtherVisitor from "@/lib/models/OtherVisitor";
 import Province from "@/lib/models/Province";
 import StudentVisitor from "@/lib/models/StudentVisitor";
-import TeacherVisitor from "@/lib/models/TeacherVisitor";
-import UniversityVisitor from "@/lib/models/UniversityVisitor";
 import Visitor, { GENDER, VISITOR_CATEGORY } from "@/lib/models/Visitor";
+import VisitorFactory from "@/lib/models/VisitorFactory";
 import { StyleableFC } from "@/lib/types/misc";
 import { useRouter } from "next/navigation";
 import { list } from "radash";
@@ -36,27 +33,10 @@ const RegisterForm: StyleableFC<{
       string
     >;
     try {
-      const visitor = new {
-        [VISITOR_CATEGORY.Student]: StudentVisitor,
-        [VISITOR_CATEGORY.Intania]: IntaniaVisitor,
-        [VISITOR_CATEGORY.University]: UniversityVisitor,
-        [VISITOR_CATEGORY.Teacher]: TeacherVisitor,
-        [VISITOR_CATEGORY.Other]: OtherVisitor,
-      }[
-        (data as { category: VISITOR_CATEGORY }).category ||
-          VISITOR_CATEGORY.Other
-      ](
-        // TypeScript shenanigans to merge all types of visitor data.
-        // Defo not type-safe. Improvements welcome!
-        data as ConstructorParameters<typeof StudentVisitor>[0] &
-          ConstructorParameters<typeof IntaniaVisitor>[0] &
-          ConstructorParameters<typeof UniversityVisitor>[0] &
-          ConstructorParameters<typeof TeacherVisitor>[0] &
-          ConstructorParameters<typeof OtherVisitor>[0],
-      );
+      const visitor = VisitorFactory.fromData(data);
       const { ok } = await visitor.save();
       if (ok) {
-        router.push("/home");
+        router.push("/ticket");
         return;
       }
     } catch (_) {}
@@ -169,9 +149,9 @@ const RegisterForm: StyleableFC<{
             <Select
               name="interestedFields"
               required
-              maxChoices={Major.all.length}
+              maxChoices={Major.ALL.length}
             >
-              {Major.all.map((major) => (
+              {Major.ALL.map((major) => (
                 <MenuItem key={major.slug} value={major.slug.toUpperCase()}>
                   {major.fullName}
                 </MenuItem>
@@ -199,7 +179,7 @@ const RegisterForm: StyleableFC<{
         </section>
       )}
 
-      {category === VISITOR_CATEGORY.University && (
+      {category === VISITOR_CATEGORY.CollegeStudent && (
         <section aria-labelledby="h-university">
           <h2 id="h-university">ข้อมูลนิสิตจากมหาลัยอื่น</h2>
           <FormItem label="ชั้นปี">
@@ -245,7 +225,7 @@ const RegisterForm: StyleableFC<{
       <section aria-labelledby="h-expo">
         <h2 id="h-expo">Intania Expo 2025</h2>
         <FormItem label="วันที่เข้าร่วมงาน">
-          <Select name="visitDate" required maxChoices={3}>
+          <Select name="visitDates" required maxChoices={3}>
             <MenuItem value="2025-03-28">ศุกร์ 28 มีนาคม 2568</MenuItem>
             <MenuItem value="2025-03-29">เสาร์ 29 มีนาคม 2568</MenuItem>
             <MenuItem value="2025-03-30">อาทิตย์ 30 มีนาคม 2568</MenuItem>

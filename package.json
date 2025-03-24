@@ -27,7 +27,9 @@
     "next": "^15.2.3",
     "radash": "^12.1.0",
     "react": "^19.0.0",
+    "react-barcode": "^1.6.1",
     "react-dom": "^19.0.0",
+    "react-zxing": "^2.1.0",
     "validator": "^13.12.0",
     "zod": "^3.24.2",
     "zod-validation-error": "^3.4.0"

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Archivo", "Chakra Petch", sans-serif;
+  --font-sans: "Archivo", "Bai Jamjuree", sans-serif;
   --font-icon: "icon";
 
   --font-narrow: var(--font-sans);
@@ -16,6 +16,10 @@
   --color-dark-gray: #111312;
   --color-black: #000000;
   --color-white: #ffffff;
+
+  --ease-stadard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasized-accelerate: cubic-bezier(0.3, 0, 0.8, 0.15);
+  --ease-emphasized-decelerate: cubic-bezier(0.05, 0.7, 0, 1);
 
   --opacity-8: 0.08;
 
@@ -62,11 +66,22 @@
 }
 
 @utility state-layer-* {
-  color: --value(--color-*);
+  color: --value(--color- *);
 
   &::before,
   .iex-ripple {
-    background-color: --value(--color-*);
+    background-color: --value(--color- *);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(50%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

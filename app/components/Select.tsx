@@ -146,6 +146,9 @@ const Select: StyleableFC<{
 
         <Menu
           className={cn(
+            isMenuOpen
+              ? `ease-emphasized-decelerate duration-300`
+              : `ease-emphasized-accelerate duration-100`,
             alignEdge === null && `hidden`,
             !isMenuOpen && `pointer-events-none opacity-0`,
             !isMenuOpen &&

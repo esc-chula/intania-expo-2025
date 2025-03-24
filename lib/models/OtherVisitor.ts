@@ -8,4 +8,8 @@ export default class OtherVisitor extends Visitor {
   async save() {
     return await super.save();
   }
+
+  get ticketHighlight() {
+    return { label: "อีเมลติดต่อ", value: this.email };
+  }
 }
