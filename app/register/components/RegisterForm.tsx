@@ -36,7 +36,7 @@ const RegisterForm: StyleableFC<{
       const visitor = VisitorFactory.fromData(data);
       const { ok } = await visitor.save();
       if (ok) {
-        router.push("/home");
+        router.push("/ticket");
         return;
       }
     } catch (_) {}
