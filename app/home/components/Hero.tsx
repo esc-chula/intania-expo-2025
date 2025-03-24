@@ -4,6 +4,10 @@ import { EVENT_START_DATE } from "@/lib/config";
 import cn from "@/lib/helpers/cn";
 import { StyleableFC } from "@/lib/types/misc";
 
+/**
+ * Hero section of the home page.
+ * @param children The call to action.
+ */
 const Hero: StyleableFC<{
   children: React.ReactNode;
 }> = ({ children, className, style }) => (
@@ -15,7 +19,16 @@ const Hero: StyleableFC<{
     )}
     style={style}
   >
-    <Logo size={280} />
+    <style>{`
+      .iex-background {
+        opacity: 1;
+        position: static;
+      }
+      .iex-background > * {
+        position: fixed;
+      }
+    `}</style>
+    <Logo size={280} className="relative -z-20" />
     <section
       className={cn(`text-cream leading-headline-sm text-headline-sm -mt-3
         space-y-2 italic [&_*]:block`)}
