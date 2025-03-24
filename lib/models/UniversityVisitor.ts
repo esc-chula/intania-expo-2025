@@ -26,4 +26,8 @@ export default class UniversityVisitor extends Visitor {
       university: this.#university,
     });
   }
+
+  get ticketHighlight() {
+    return { label: "มหาวิทยาลัย", value: this.#university };
+  }
 }

@@ -60,4 +60,8 @@ export default class StudentVisitor extends Visitor {
       emergencyContact: this.#emergencyContact,
     });
   }
+
+  get ticketHighlight() {
+    return { label: "โรงเรียน", value: this.#school };
+  }
 }

@@ -17,4 +17,17 @@ export default class IntaniaVisitor extends Visitor {
       alumniBatch: this.#alumniBatch,
     });
   }
+
+  get formattedAlumniBatch() {
+    return "วศ." + this.#alumniBatch;
+  }
+
+  get ticketHighlight() {
+    return { label: "ปีที่จบ/จะจบ", value: this.formattedAlumniBatch };
+  }
+
+  // Standard getters
+  get alumniBatch() {
+    return this.#alumniBatch;
+  }
 }

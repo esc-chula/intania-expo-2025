@@ -18,8 +18,7 @@ export enum VISITOR_CATEGORY {
 }
 
 export default abstract class Visitor extends User {
-  static #role = UserRole.staff;
-
+  #sixDigitCode: string;
   #name: string;
   #surname: string;
   #gender: GENDER;
@@ -71,6 +70,7 @@ export default abstract class Visitor extends User {
   }
 
   constructor(data: {
+    sixDigitCode: string;
     name: string;
     surname: string;
     gender: string;
@@ -81,7 +81,8 @@ export default abstract class Visitor extends User {
     interestedActivities: string | string[];
     referralSource: string | string[];
   }) {
-    super(data.email, Visitor.#role);
+    super(data.email, UserRole.visitor);
+    this.#sixDigitCode = data.sixDigitCode;
     this.#name = data.name;
     this.#surname = data.surname;
     this.#gender = data.gender as GENDER;
@@ -133,7 +134,13 @@ export default abstract class Visitor extends User {
     return "วันศุกร์ 28 เม.ย. • 09:41";
   }
 
+  /** The second section on the ticket shows category-specific information. */
+  abstract get ticketHighlight(): { label: string; value: string };
+
   // Standard getters
+  get sixDigitCode() {
+    return this.#sixDigitCode;
+  }
   get name() {
     return this.#name;
   }
