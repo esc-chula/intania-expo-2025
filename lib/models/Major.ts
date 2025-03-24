@@ -16,7 +16,7 @@ export default class Major {
   #language: MAJOR_LANGUAGE;
 
   // prettier-ignore
-  static all: Major[] = [
+  static readonly ALL: Major[] = [
     new Major("CE", "วิศวกรรมโยธา", null , "flyover", MAJOR_LANGUAGE.Th),
     new Major("EE", "วิศวกรรมไฟฟ้า", null , "bolt", MAJOR_LANGUAGE.Th),
     new Major("ME", "วิศวกรรมเครื่องกล", null , "settings", MAJOR_LANGUAGE.Th),
@@ -40,7 +40,7 @@ export default class Major {
   ];
 
   static fromSlug(slug: string) {
-    return Major.all.find((major) => major.slug === slug);
+    return Major.ALL.find((major) => major.slug === slug);
   }
 
   constructor(
