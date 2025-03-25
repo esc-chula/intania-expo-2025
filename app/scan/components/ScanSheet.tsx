@@ -16,7 +16,7 @@ const STATUS_MESSAGES = {
   },
   generic: {
     iconName: "error",
-    message: "เกิดข้อผิดพลาดในการเช็คอิน",
+    message: "เกิดข้อผิดพลาด",
   },
 };
 
@@ -49,7 +49,6 @@ const ScanSheet: StyleableFC<{
       )}
       style={style}
     >
-      <div className="fixed inset-0" />
       {visitor ? (
         <Ticket visitor={visitor} hideStub>
           <Button
