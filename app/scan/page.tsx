@@ -15,7 +15,7 @@ export default function ScanPage() {
   return (
     <>
       <TopAppBar appearance="scrim">
-        <Button appearance="text">
+        <Button appearance="text" href="/staff">
           <Icon name="arrow_back" />
         </Button>
         <h1>Check ticket</h1>
