@@ -31,10 +31,13 @@ const Hero: StyleableFC<{
     <Logo size={280} className="relative -z-20" />
     <section
       className={cn(`text-cream leading-headline-sm text-headline-sm -mt-3
-        space-y-2 italic [&_*]:block`)}
+        space-y-2 italic *:-space-y-1 [&_*]:block`)}
     >
-      <time className="font-bold">28–30 March 2025</time>
-      <address className="-space-y-1">
+      <time className="font-bold">
+        <span>28–30 March 2025</span>
+        <span>08:00–16:00</span>
+      </time>
+      <address>
         <span>Faculty of Engineering</span>
         <span>Chulalongkorn University</span>
       </address>

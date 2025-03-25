@@ -8,7 +8,7 @@ import { StyleableFC } from "@/lib/types/misc";
 const Logo: StyleableFC<{ size: number }> = ({ size, className, style }) =>
   // prettier-ignore
   <svg
-    aria-label="Intania Expo 2025"
+    aria-label="Intania Expo 111"
     width={size}
     height={size}
     viewBox="0 0 280 280"
