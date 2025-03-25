@@ -1,6 +1,6 @@
 import splitIfString from "@/lib/helpers/splitIfString";
 import Database, { DatabaseResponse } from "@/lib/models/Database";
-import User, { UserRole } from "@/lib/models/User";
+import User, { USER_ROLE } from "@/lib/models/User";
 
 export enum GENDER {
   Male = "MALE",
@@ -82,7 +82,7 @@ export default abstract class Visitor extends User {
     interestedActivities: string | string[];
     referralSource: string | string[];
   }) {
-    super(data.id, data.email, UserRole.visitor);
+    super(data.id, data.email, USER_ROLE.Visitor);
     this.#sixDigitCode = data.sixDigitCode;
     this.#name = data.name;
     this.#surname = data.surname;
