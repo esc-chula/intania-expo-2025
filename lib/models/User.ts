@@ -1,5 +1,5 @@
+import Database, { DatabaseResponse } from "@/lib/models/Database";
 import { cookies } from "next/headers";
-import Database, { DatabaseResponse } from "./Database";
 
 export enum UserRole {
   staff = "STAFF",
@@ -19,8 +19,13 @@ export default class User {
     this.#role = role;
   }
 
-  static async signOut() {
+  static async signOut(cookieStore?: CookieStore) {
     await Database.fetch("POST", "/auth/signout");
+    if (cookieStore && cookieStore.has("accessToken")) {
+      cookieStore.delete("accessToken");
+      cookieStore.delete("refreshToken");
+      cookieStore.delete("tokenId");
+    }
   }
 
   /**

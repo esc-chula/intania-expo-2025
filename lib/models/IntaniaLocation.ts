@@ -1,30 +1,45 @@
 import { SEPARATOR } from "@/lib/config";
+import { sift } from "radash";
 
 /** A location in Chula Engineering. */
 export default class IntaniaLocation {
-  /** The room name, i.e. Hall of Intania. */
+  #id: string;
+  /** The room name, i.e. 420. */
   #room: string | null;
   /** The floor number, i.e. 1, M, etc. */
-  #floor: string;
+  #floor: string | null;
   /** The building name, i.e. 2, iCanteen, etc. Omit the word building. */
   #building: string;
 
-  constructor(room: string | null, floor: string, building: string) {
-    this.#room = room;
-    this.#floor = floor;
-    this.#building = building;
+  constructor(data: {
+    id: string;
+    room: string | null;
+    floor: string | null;
+    building: string;
+  }) {
+    this.#id = data.id;
+    this.#room = data.room;
+    this.#floor = data.floor;
+    this.#building = data.building;
   }
 
   /** Formats the location as a string. */
-  get text() {
-    return [
-      ...(this.#room ? [this.#room, SEPARATOR] : []),
-      `ตึก ${this.#building}`,
+  get formatted() {
+    return sift([
+      this.#room,
+      this.#room && SEPARATOR,
+      this.#building &&
+        (this.#building[0]?.match(/[\u0E00-\u0E7F]/)
+          ? this.#building
+          : `ตึก ${this.#building}`),
       `ชั้น ${this.#floor}`,
-    ].join(" ");
+    ]).join(" ");
   }
 
   // Standard getters
+  get id() {
+    return this.#id;
+  }
   get room() {
     return this.#room;
   }
