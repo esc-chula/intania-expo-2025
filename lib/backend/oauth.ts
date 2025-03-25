@@ -2,7 +2,7 @@ const GOOGLE_OAUTH_SIGNIN_API = "https://accounts.google.com/o/oauth2/v2/auth";
 const GOOGLE_OAUTH_TOKEN_URL = "https://oauth2.googleapis.com/token";
 const GOOGLE_OAUTH_USER_INFO_URL =
   "https://www.googleapis.com/oauth2/v2/userinfo";
-const CALLBACK_URL = "http://localhost:3000/api/auth/callback/google";
+const CALLBACK_URL = process.env.APP_URL + "/api/auth/callback/google";
 
 export function getOAuthSignInUrl(redirectUrl: string): string {
   const searchParams = new URLSearchParams({
