@@ -29,10 +29,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    { source: "/" },
-    { source: "/home" },
-    { source: "/terms" },
-    { source: "/register" },
-  ],
+  matcher: ["/", "/home", "/terms", "/register", "/scan"],
 };
