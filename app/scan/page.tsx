@@ -9,14 +9,8 @@ import ScanTooltip from "@/app/scan/components/ScanTooltip";
 import useScanner from "@/app/scan/helpers/useScanner";
 
 export default function ScanPage() {
-  const {
-    paused,
-    sixDigitCode,
-    visitor,
-    status,
-    handleCapture,
-    handleCheckin,
-  } = useScanner();
+  const { sixDigitCode, visitor, status, handleCapture, handleCheckin } =
+    useScanner();
 
   return (
     <>
