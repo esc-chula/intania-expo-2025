@@ -43,7 +43,11 @@ const ScanSheet: StyleableFC<{
       <div className="fixed inset-0" />
       {visitor ? (
         <Ticket visitor={visitor} hideStub>
-          <Button appearance="outlined-light" onClick={onCheckIn}>
+          <Button
+            appearance="outlined-light"
+            onClick={onCheckIn}
+            className="mx-auto"
+          >
             เช็คอิน
           </Button>
         </Ticket>

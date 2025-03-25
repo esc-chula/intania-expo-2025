@@ -13,17 +13,25 @@ export default function useScanner() {
     status: number | null;
   }>(DEFAULT_VISITOR);
 
+  function reset() {
+    setSixDigitCode(null);
+    setTimeout(() => setVisitor(DEFAULT_VISITOR), 200);
+  }
+
   async function handleCapture(barcode: string) {
     if (sixDigitCode) return;
     if (Visitor.isValidCode(barcode)) setSixDigitCode(barcode);
     const { data: visitor, status } =
       await VisitorFactory.fetchFromCode(barcode);
     setVisitor({ visitor, status });
+    if (status !== 200) setTimeout(reset, 3000);
   }
 
-  function handleCheckin() {
-    setSixDigitCode(null);
-    setTimeout(() => setVisitor(DEFAULT_VISITOR), 200);
+  async function handleCheckin() {
+    if (!visitor) return;
+    const { status, ok } = await visitor.checkIn();
+    if (!ok) setVisitor({ visitor, status });
+    else reset();
   }
 
   return {
