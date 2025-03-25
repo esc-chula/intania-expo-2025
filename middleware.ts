@@ -5,7 +5,8 @@ import { NextResponse } from "next/server";
 
 export async function middleware(request: NextRequest) {
   const url = request.nextUrl.pathname;
-  let redirect = null;
+  const redirect = (url: string) =>
+    NextResponse.redirect(new URL(url, request.url).toString());
 
   // | Page      | Public | Authorized | Registered |
   // |-----------|--------|------------|------------|
@@ -19,12 +20,10 @@ export async function middleware(request: NextRequest) {
   if (isAuthorized) {
     const isRegistered = (await User.isRegistered(cookieStore)).response;
     if (isRegistered) {
-      if (url !== "/home") redirect = "/home";
-    } else if (["/", "/home"].includes(url)) redirect = "/terms";
-  } else if (url !== "/") redirect = "/";
+      if (url !== "/home") return redirect("/home");
+    } else if (["/", "/home"].includes(url)) return redirect("/terms");
+  } else if (url !== "/") return redirect("/");
 
-  if (redirect)
-    return NextResponse.redirect(new URL(redirect, request.url).toString());
   return NextResponse.next();
 }
 
