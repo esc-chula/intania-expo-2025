@@ -38,17 +38,16 @@ const Ticket: StyleableFC<{
           leading-body-lg [&_h2]:text-just-red space-y-4 [&_h2]:font-bold`,
         )}
       >
-        {!children && (
+        <section>
+          <h2>เบอร์โทร</h2>
+          <p>{visitor.formattedPhone}</p>
+        </section>
+        {children || (
           <section>
-            <h2>เบอร์โทร</h2>
-            <p>{visitor.formattedPhone}</p>
+            <h2>{visitor.ticketHighlight.label}</h2>
+            <p>{visitor.ticketHighlight.value}</p>
           </section>
         )}
-        <section>
-          <h2>{visitor.ticketHighlight.label}</h2>
-          <p>{visitor.ticketHighlight.value}</p>
-        </section>
-        {children}
       </section>
     </section>
     {!hideStub && <TicketStub sixDigitCode={visitor.sixDigitCode} />}
