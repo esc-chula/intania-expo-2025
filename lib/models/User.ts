@@ -1,8 +1,8 @@
+import Database, { DatabaseResponse } from "@/lib/models/Database";
 import { cookies } from "next/headers";
-import Database, { DatabaseResponse } from "./Database";
 
 export enum USER_ROLE {
-  Staff = "STAFF",
+  Staff = "EXPO_STAFF",
   Visitor = "VISITOR",
 }
 
