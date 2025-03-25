@@ -22,8 +22,21 @@ const Interactive: StyleableFC<
     type?: ComponentProps<"button">["type"];
     onClick?: () => void;
   } & React.AriaAttributes
-> = ({ children, disabled, href, type = "button", onClick, className, style, ...props }) => {
-  const Element = href ? (href.startsWith("/") ? Link : `a`) : `button`;
+> = ({
+  children,
+  disabled,
+  href,
+  type = "button",
+  onClick,
+  className,
+  style,
+  ...props
+}) => {
+  const Element = href
+    ? href.startsWith("/")
+      ? Link
+      : (props: object) => <a {...props} target="_blank" />
+    : `button`;
 
   const rippleContainerRef = useRef<HTMLSpanElement>(null);
   const [touched, setTouched] = useState(false);
