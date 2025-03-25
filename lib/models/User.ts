@@ -9,10 +9,12 @@ export enum UserRole {
 type CookieStore = Awaited<ReturnType<typeof cookies>>;
 
 export default class User {
+  #id: string;
   #email: string;
   #role: UserRole;
 
-  constructor(email: string, role: UserRole) {
+  constructor(id: string, email: string, role: UserRole) {
+    this.#id = id;
     this.#email = email;
     this.#role = role;
   }
@@ -44,15 +46,19 @@ export default class User {
     cookieStore: CookieStore,
   ): Promise<DatabaseResponse<User | null>> {
     const { data, status, ok } = await Database.fetch<{
+      id: string;
       email: string;
     }>("GET", "/visitors/me", undefined, {
       headers: { Cookie: cookieStore.toString() },
     });
     let user: User | null = null;
-    if (ok) user = new User(data.email, UserRole.visitor);
+    if (ok) user = new User(data.id, data.email, UserRole.visitor);
     return { data: user, status, ok } as DatabaseResponse<User | null>;
   }
 
+  get id() {
+    return this.#id;
+  }
   get email() {
     return this.#email;
   }

@@ -70,6 +70,7 @@ export default abstract class Visitor extends User {
   }
 
   constructor(data: {
+    id: string;
     sixDigitCode: string;
     name: string;
     surname: string;
@@ -81,7 +82,7 @@ export default abstract class Visitor extends User {
     interestedActivities: string | string[];
     referralSource: string | string[];
   }) {
-    super(data.email, UserRole.visitor);
+    super(data.id, data.email, UserRole.visitor);
     this.#sixDigitCode = data.sixDigitCode;
     this.#name = data.name;
     this.#surname = data.surname;
@@ -101,6 +102,7 @@ export default abstract class Visitor extends User {
 
   async save(data?: object): Promise<DatabaseResponse> {
     return await Database.fetch("POST", "/visitors", {
+      id: this.id,
       name: this.#name,
       surname: this.#surname,
       gender: this.#gender,
@@ -114,6 +116,15 @@ export default abstract class Visitor extends User {
       referralSources: this.#referralSources,
       ...data,
     });
+  }
+
+  async checkIn() {
+    const { data, status, ok } = await Database.fetch<{
+      visitorId: string;
+      checkIn: string;
+    }>("PUT", `/expo/check-in/${this.id}`);
+    if (!ok) return { data: null, status, ok };
+    return { data: { ...data, checkIn: new Date(data!.checkIn) }, status, ok };
   }
 
   get fullName() {
