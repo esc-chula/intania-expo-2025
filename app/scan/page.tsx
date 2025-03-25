@@ -9,7 +9,14 @@ import ScanTooltip from "@/app/scan/components/ScanTooltip";
 import useScanner from "@/app/scan/helpers/useScanner";
 
 export default function ScanPage() {
-  const { sixDigitCode, visitor, handleCapture, handleCheckin } = useScanner();
+  const {
+    paused,
+    sixDigitCode,
+    visitor,
+    status,
+    handleCapture,
+    handleCheckin,
+  } = useScanner();
 
   return (
     <>
@@ -26,12 +33,13 @@ export default function ScanPage() {
       <ScanFeed onCapture={handleCapture} className="-mx-4" />
 
       <ScanSheet
-        show={visitor !== null}
+        visitor={visitor}
+        status={status}
         onCheckIn={handleCheckin}
-        className="fixed -bottom-30 z-30"
+        className="fixed -bottom-30 left-1/2 z-30 -translate-x-1/2"
       />
       <ScanTooltip
-        open={!visitor}
+        open={!(visitor || status)}
         sixDigitCode={sixDigitCode}
         className="fixed inset-x-0 bottom-11 left-1/2 z-20 -translate-1/2"
       />

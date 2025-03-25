@@ -14,7 +14,8 @@ import { StyleableFC } from "@/lib/types/misc";
 const Ticket: StyleableFC<{
   children?: React.ReactNode;
   visitor: Visitor;
-}> = ({ children, visitor, className, style }) => (
+  hideStub?: boolean;
+}> = ({ children, visitor, hideStub, className, style }) => (
   <article
     className={cn(
       `text-dark-gray h-110 w-70 bg-[url('/assets/ticket-shape.svg')]
@@ -34,22 +35,23 @@ const Ticket: StyleableFC<{
       <section
         className={cn(
           `[&_h2]:text-body-sm [&_h2]:leading-body-sm text-body-lg
-            leading-body-lg [&_h2]:text-just-red space-y-4 [&_h2]:font-bold`,
+          leading-body-lg [&_h2]:text-just-red space-y-4 [&_h2]:font-bold`,
         )}
       >
-        <section>
-          <h2>เบอร์โทร</h2>
-          <p>{visitor.formattedPhone}</p>
-        </section>
-        {children || (
+        {!children && (
           <section>
-            <h2>{visitor.ticketHighlight.label}</h2>
-            <p>{visitor.ticketHighlight.value}</p>
+            <h2>เบอร์โทร</h2>
+            <p>{visitor.formattedPhone}</p>
           </section>
         )}
+        <section>
+          <h2>{visitor.ticketHighlight.label}</h2>
+          <p>{visitor.ticketHighlight.value}</p>
+        </section>
+        {children}
       </section>
     </section>
-    <TicketStub sixDigitCode={visitor.sixDigitCode} />
+    {!hideStub && <TicketStub sixDigitCode={visitor.sixDigitCode} />}
   </article>
 );
 

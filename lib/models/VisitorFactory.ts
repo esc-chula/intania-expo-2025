@@ -30,11 +30,9 @@ export default class VisitorFactory {
   }
 
   static async fetchFromCode(sixDigitCode: string) {
-    console.log(sixDigitCode);
     const { data, status, ok } = await Database.fetch(
       "GET",
-      // `/visitors/${sixDigitCode}`,
-      "/visitors/me",
+      `/visitors/${sixDigitCode}`,
     );
     if (!ok) return { data: null, status, ok };
     return { data: VisitorFactory.fromData(data), status, ok };
