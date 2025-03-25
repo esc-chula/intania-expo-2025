@@ -1,8 +1,8 @@
 import User, { USER_ROLE } from "@/lib/models/User";
+import { jwtDecode } from "jwt-decode";
 import { cookies } from "next/headers";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
 
 export async function middleware(request: NextRequest) {
   const url = request.nextUrl.pathname;
@@ -23,8 +23,8 @@ export async function middleware(request: NextRequest) {
   if (accessToken) {
     // Decode the JWT payload. If the payload is invalid, delete the access
     // token and redirect to the home page.
-    // (Using `decode` here because verification is done by the API.)
-    const jwtPayload = jwt.decode(accessToken.value);
+    // Note: doesn’t verify the signature.
+    const jwtPayload = jwtDecode(accessToken.value);
     if (!jwtPayload || typeof jwtPayload == "string") {
       cookieStore.delete("accessToken");
       return redirect("/");
