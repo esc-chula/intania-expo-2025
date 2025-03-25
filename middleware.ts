@@ -38,7 +38,8 @@ export async function middleware(request: NextRequest) {
       (await User.isRegistered(cookieStore)).response;
 
     if (role === USER_ROLE.Staff) {
-      if (!["/staff", "/scan"].includes(url)) return redirect("/staff");
+      if (!["/staff", "/scan", "/scan/manual"].includes(url))
+        return redirect("/staff");
     } else if (isRegistered) {
       if (url !== "/home") return redirect("/home");
     } else if (!["/terms", "/register"].includes(url))
@@ -49,5 +50,13 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/home", "/terms", "/register", "/staff", "/scan"],
+  matcher: [
+    "/",
+    "/home",
+    "/terms",
+    "/register",
+    "/staff",
+    "/scan",
+    "/scan/manual",
+  ],
 };
