@@ -6,9 +6,18 @@ import Visitor from "@/lib/models/Visitor";
 import { StyleableFC } from "@/lib/types/misc";
 
 const STATUS_MESSAGES = {
-  404: { iconName: "person_cancel", message: "ไม่พบผู้เข้าร่วมงานนี้" },
-  409: { iconName: "done_all", message: "ผู้เข้าร่วมงานนี้ได้เช็คอินแล้ว" },
-  generic: { iconName: "error", message: "เกิดข้อผิดพลาดในการเช็คอิน" },
+  404: {
+    iconName: "person_cancel",
+    message: "ไม่พบผู้เข้าร่วมงานนี้",
+  },
+  409: {
+    iconName: "smart_card_reader",
+    message: "ผู้เข้าร่วมงานนี้เคยเซ็คอินไปแล้ว",
+  },
+  generic: {
+    iconName: "error",
+    message: "เกิดข้อผิดพลาดในการเช็คอิน",
+  },
 };
 
 /**
