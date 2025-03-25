@@ -31,7 +31,7 @@ const NavigationCard: StyleableFC<{
       >
         {title}
       </h3>
-      <p className="max-w-80">{body}</p>
+      <p className="max-w-84 font-bold">{body}</p>
     </Interactive>
     {children && (
       <div
