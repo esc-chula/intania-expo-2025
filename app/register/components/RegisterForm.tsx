@@ -173,8 +173,8 @@ const RegisterForm: StyleableFC<{
       {category === VISITOR_CATEGORY.Intania && (
         <section aria-labelledby="h-alumni">
           <h2 id="h-alumni">ข้อมูลนิสิตปัจจุบัน/นิสิตเก่า</h2>
-          <FormItem label="ปีที่จบ/จะจบ (วศ.)">
-            <Field name="alumniBatch" type="number" min={2500} required />
+          <FormItem label="ปีที่เข้า (วศ.)">
+            <Field name="alumniBatch" type="number" min={2459} required />
           </FormItem>
         </section>
       )}

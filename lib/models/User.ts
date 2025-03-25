@@ -1,9 +1,9 @@
+import Database, { DatabaseResponse } from "@/lib/models/Database";
 import { cookies } from "next/headers";
-import Database, { DatabaseResponse } from "./Database";
 
-export enum UserRole {
-  staff = "STAFF",
-  visitor = "VISITOR",
+export enum USER_ROLE {
+  Staff = "EXPO_STAFF",
+  Visitor = "VISITOR",
 }
 
 type CookieStore = Awaited<ReturnType<typeof cookies>>;
@@ -11,9 +11,9 @@ type CookieStore = Awaited<ReturnType<typeof cookies>>;
 export default class User {
   #id: string;
   #email: string;
-  #role: UserRole;
+  #role: USER_ROLE;
 
-  constructor(id: string, email: string, role: UserRole) {
+  constructor(id: string, email: string, role: USER_ROLE) {
     this.#id = id;
     this.#email = email;
     this.#role = role;
@@ -52,7 +52,7 @@ export default class User {
       headers: { Cookie: cookieStore.toString() },
     });
     let user: User | null = null;
-    if (ok) user = new User(data.id, data.email, UserRole.visitor);
+    if (ok) user = new User(data.id, data.email, USER_ROLE.Visitor);
     return { data: user, status, ok } as DatabaseResponse<User | null>;
   }
 
