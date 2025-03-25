@@ -43,7 +43,7 @@ export default abstract class Visitor extends User {
     INSTAGRAM_INTANIA: "Instagram (@cuintaniaopenhouse)",
     FACEBOOK: "Facebook",
     FRIEND: "เพื่อน/ครอบครัว",
-    ADVERTISEMENT: "โมษณา",
+    ADVERTISEMENT: "โฆษณา",
   } as const;
 
   static getGenderDisplayName(gender: GENDER) {
