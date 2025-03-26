@@ -4,6 +4,8 @@ import TopAppBar from "@/app/components/TopAppBar";
 import WorkshopCard from "@/app/workshops/components/WorkshopCard";
 import Workshop from "@/lib/models/Workshop";
 
+export const revalidate = 3600;
+
 export default async function Workshops() {
   const { data: workshops } = await Workshop.fetchAllPlain();
 
