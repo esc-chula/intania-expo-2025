@@ -25,25 +25,25 @@ export default class User {
 
   /**
    * Check if the authorized user has submitted the registration form. Uses
-   * `sixDigitCode` as the indicator under the hood.
+   * the existence of `sixDigitCode` as the indicator under the hood.
    *
-   * @param cookieStore The cookie store.
+   * @param cookieStore The cookie store / string.
    */
-  static async isRegistered(cookieStore: CookieStore) {
+  static async isRegistered(cookieStore: CookieStore | string) {
     const { data, status, ok } = await Database.fetch<{
       isRegistered: boolean;
     }>("GET", "/auth/is-registered", undefined, {
       headers: { Cookie: cookieStore.toString() },
     });
-    return { response: data?.isRegistered || false, status, ok };
+    return { data: data?.isRegistered || false, status, ok };
   }
 
   /**
    * Fetches the authorized user from client cookies.
-   * @param cookieStore The cookie store.
+   * @param cookieStore The cookie store / string.
    */
   static async fromCookies(
-    cookieStore: CookieStore,
+    cookieStore: CookieStore | string,
   ): Promise<DatabaseResponse<User | null>> {
     const { data, status, ok } = await Database.fetch<{
       id: string;
