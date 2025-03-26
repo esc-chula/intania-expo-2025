@@ -1,6 +1,5 @@
 import User, { USER_ROLE } from "@/lib/models/User";
 import { jwtDecode } from "jwt-decode";
-import { cookies } from "next/headers";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
@@ -18,15 +17,14 @@ export async function middleware(request: NextRequest) {
   // | /staff    | /      | /terms     | /home      | null      |
   // | /scan     | /      | /terms     | /home      | null      |
 
-  const cookieStore = await cookies();
-  const accessToken = cookieStore.get("accessToken");
+  const accessToken = request.cookies.get("accessToken");
   if (accessToken) {
     // Decode the JWT payload. If the payload is invalid, delete the access
     // token and redirect to the home page.
     // Note: doesn’t verify the signature.
     const jwtPayload = jwtDecode(accessToken.value);
-    if (!jwtPayload || typeof jwtPayload == "string") {
-      cookieStore.delete("accessToken");
+    if (!jwtPayload || typeof jwtPayload === "string") {
+      request.cookies.delete("accessToken");
       return redirect("/");
     }
     // If the user is a visitor, check if they have registered.
@@ -35,7 +33,7 @@ export async function middleware(request: NextRequest) {
     const { role } = jwtPayload as { role: USER_ROLE };
     const isRegistered =
       role === USER_ROLE.Visitor &&
-      (await User.isRegistered(cookieStore)).response;
+      (await User.isRegistered(request.cookies.toString())).data;
 
     if (role === USER_ROLE.Staff) {
       if (!["/staff", "/scan", "/scan/manual"].includes(url))
