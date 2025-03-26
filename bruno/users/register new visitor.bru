@@ -1,0 +1,43 @@
+meta {
+  name: register new visitor
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{url}}/api/visitors
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImkuZGVlcGF1bmdAZ21haWwuY29tIiwicm9sZSI6IlZJU0lUT1IiLCJpYXQiOjE3NDI1ODYxMTYsImV4cCI6MTc0MjU4OTcxNiwiaXNzIjoiaW50YW5pYS1leHBvLTIwMjUtYXBpIiwic3ViIjoiYWNjZXNzLXRva2VuIn0.9FWSQIgJWDVzloCHOwfyXVnIv6ye58-U8yYQoJiT6Eo
+}
+
+body:json {
+  {
+    "name": "Ashira",
+    "surname": "Aungsumal",
+    "gender": "Male",
+    "phone": "012345678",
+    "email": "user1@gmail.com",
+    "category": "student"
+  }
+  
+}
+
+script:pre-request {
+  const cookie = bru.getVar("cookie");
+  
+  if(cookie) {
+    req.setHeader("Cookie", cookie)
+  }
+}
+
+script:post-response {
+  const cookies = res.getHeader('set-cookie');
+  
+  if(cookies) {
+    bru.setVar("cookie", cookies.join('; '));
+  }
+}

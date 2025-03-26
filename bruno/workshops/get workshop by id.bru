@@ -1,0 +1,27 @@
+meta {
+  name: get workshop by id
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{url}}/api/workshops/37ce0270-307d-4f10-aadd-020ee806226c
+  body: none
+  auth: none
+}
+
+script:pre-request {
+  const cookie = bru.getVar("cookie");
+  
+  if(cookie) {
+    req.setHeader("Cookie", cookie)
+  }
+}
+
+script:post-response {
+  const cookies = res.getHeader('set-cookie');
+  
+  if(cookies) {
+    bru.setVar("cookie", cookies.join('; '));
+  }
+}
