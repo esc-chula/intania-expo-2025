@@ -29,9 +29,12 @@ export default function useScanner() {
 
   async function handleCheckin() {
     if (!visitor) return;
+    setVisitor(DEFAULT_VISITOR);
     const { status, ok } = await visitor.checkIn();
-    if (!ok) setVisitor({ visitor, status });
-    else reset();
+    if (!ok) {
+      setVisitor({ visitor: null, status });
+      setTimeout(reset, 3000);
+    } else reset();
   }
 
   return {

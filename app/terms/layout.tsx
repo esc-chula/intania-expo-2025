@@ -1,4 +1,5 @@
 import Button from "@/app/components/Button";
+import Icon from "@/app/components/Icon";
 import Logo from "@/app/components/Logo";
 import TopAppBar from "@/app/components/TopAppBar";
 import BackButton from "@/app/terms/components/BackButton";
@@ -13,7 +14,9 @@ function TermsLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <div className="space-y-8 pt-1 pb-20">
       <TopAppBar appearance="minimal">
-        <BackButton />
+        <BackButton appearance="text">
+          <Icon name="arrow_back" />
+        </BackButton>
         <h1>นโยบายการคุ้มครองข้อมูลฯ</h1>
       </TopAppBar>
       <div className="flex flex-col items-center gap-3 text-center">
@@ -37,9 +40,7 @@ function TermsLayout({ children }: Readonly<{ children: React.ReactNode }>) {
           justify-center gap-4 bg-gradient-to-t from-black via-black via-40%
           *:w-27`)}
       >
-        <Button appearance="outlined" href="/">
-          ย้อนกลับ
-        </Button>
+        <BackButton appearance="outlined">ย้อนกลับ</BackButton>
         <Button appearance="tonal" href="/register">
           รับทราบ
         </Button>

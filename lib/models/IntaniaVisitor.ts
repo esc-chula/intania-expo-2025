@@ -23,7 +23,7 @@ export default class IntaniaVisitor extends Visitor {
   }
 
   get ticketHighlight() {
-    return { label: "ปีที่จบ/จะจบ", value: this.formattedAlumniBatch };
+    return { label: "ปีที่เข้า", value: this.formattedAlumniBatch };
   }
 
   // Standard getters
