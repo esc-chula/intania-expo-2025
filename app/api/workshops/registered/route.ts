@@ -9,7 +9,6 @@ import { NextResponse } from "next/server";
 import { fromZodError } from "zod-validation-error";
 
 // Get All Registered Workshops for each client
-//! Authorization is required
 export async function GET(
   request: Request,
 ): Promise<NextResponse<WorkshopDetail[] | HTTPError>> {
@@ -21,11 +20,6 @@ export async function GET(
     return middlewareResponse.response!;
   }
   const { payload } = middlewareResponse.data!;
-
-  // const middlewareResponse2 = isOneOfRole(["VISITOR" ], payload);
-  // if (!middlewareResponse2.pass) {
-  //   return middlewareResponse2.response!;
-  // } //no need
 
   const userResult = await prisma.user.findFirst({
     where: { email: payload.email },
@@ -67,13 +61,9 @@ export async function GET(
         where: {
           ...(search
             ? {
-                OR: [
-                  {
-                    workshop: {
-                      name: { contains: search?.trim(), mode: "insensitive" },
-                    },
-                  },
-                ],
+                workshop: {
+                  name: { contains: search?.trim(), mode: "insensitive" },
+                },
               }
             : {}),
           visitorId: visitorId,

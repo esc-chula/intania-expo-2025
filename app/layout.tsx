@@ -23,7 +23,7 @@ const icon = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Intania Expo 2025",
+  title: "Intania Expo 111",
 };
 
 export const viewport: Viewport = {
