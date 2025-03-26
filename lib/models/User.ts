@@ -19,8 +19,9 @@ export default class User {
     this.#role = role;
   }
 
+  /** Signs out the authorized user. */
   static async signOut() {
-    await Database.fetch("POST", "/auth/signout");
+    return await Database.fetch("POST", "/auth/signout");
   }
 
   /**
