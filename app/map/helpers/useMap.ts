@@ -70,7 +70,7 @@ export default function useMap() {
     return () => window.removeEventListener("resize", onResize);
   }, [position]);
 
-  const [atttemtedCompass, setAttemptedCompass] = useState(false);
+  const [attemptedCompass, setAttemptedCompass] = useState(false);
 
   /** Update the heading of the marker based on the device’s orientation. */
   function handleDeviceOrientation(event: DeviceOrientationEvent) {
@@ -120,7 +120,7 @@ export default function useMap() {
 
   const isPermittedLocation = position !== null;
   const isPermittedOrientation =
-    typeof position?.heading === "number" || atttemtedCompass;
+    typeof position?.heading === "number" || attemptedCompass;
 
   return {
     styles,
