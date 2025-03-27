@@ -95,3 +95,10 @@
     opacity: 0;
   }
 }
+
+@keyframes location {
+  to {
+    transform: scale(6);
+    opacity: 0;
+  }
+}
