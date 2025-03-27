@@ -73,10 +73,12 @@ enum Category {
 }
 
 model Token {
-  id           String @id @default(uuid()) @db.Uuid
-  userId       String @db.Uuid
+  id           String   @id @default(uuid()) @db.Uuid
+  userId       String   @db.Uuid
   accessToken  String
   refreshToken String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   // not needed
   User User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
