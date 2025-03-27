@@ -1,6 +1,10 @@
 import { Prisma, Room as PrismaRoom } from "@prisma/client";
 import { UUID } from "crypto";
 
+export type BuildingList = Prisma.BuildingGetPayload<{
+  include: { floors: true };
+}>;
+
 export type BuildingDetail = Prisma.BuildingGetPayload<{
   include: { floors: { include: { rooms: true } } };
 }>;
@@ -16,6 +20,7 @@ export type Building = {
   name: string;
   slug?: string;
   images: string[];
+  summary?: string;
 };
 
 export type Floor = {

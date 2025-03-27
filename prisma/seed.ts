@@ -147,32 +147,37 @@ const buildings: Building[] = [
   {
     id: randomUUID(),
     name: "ENG3",
-    slug: "",
+    slug: "eng3",
     images: [],
+    summary: "just the third building",
   },
   {
     id: randomUUID(),
     name: "ENG1",
-    slug: "",
+    slug: "eng1",
     images: [],
+    summary: "just the first building",
   },
   {
     id: randomUUID(),
     name: "ENG2",
-    slug: "",
+    slug: "eng2",
     images: [],
+    summary: "just the second building",
   },
   {
     id: randomUUID(),
     name: "ENG100",
-    slug: "",
+    slug: "eng100",
     images: [],
+    summary: "the hundredth building???",
   },
   {
     id: randomUUID(),
     name: "ENG4",
-    slug: "",
+    slug: "eng4",
     images: [],
+    summary: "just the fourth building",
   },
 ];
 
@@ -181,19 +186,19 @@ const floors: Floor[] = [
     id: randomUUID(),
     buildingId: buildings[0].id,
     name: "1",
-    slug: "",
+    slug: "floor 1",
   },
   {
     id: randomUUID(),
     buildingId: buildings[0].id,
     name: "2",
-    slug: "",
+    slug: "floor 2",
   },
   {
     id: randomUUID(),
     buildingId: buildings[0].id,
     name: "3",
-    slug: "",
+    slug: "floor 3",
   },
 ];
 
