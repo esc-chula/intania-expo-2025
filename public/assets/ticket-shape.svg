@@ -1,0 +1,46 @@
+<svg width="280" height="440" viewBox="0 0 280 440" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g clip-path="url(#clip0_985_3676)">
+    <path fill-rule="evenodd" clip-rule="evenodd"
+      d="M171.741 0C165.671 11.3095 153.734 19 140 19C126.266 19 114.329 11.3095 108.259 0H0V440H108.259C114.329 428.69 126.266 421 140 421C153.734 421 165.671 428.69 171.741 440H280V308L272 298L280 288V0H171.741ZM8.00006 298L6.10352e-05 308V288L8.00006 298Z"
+      fill="#CFC3AD" />
+    <path d="M7.20008 299L8.00007 298L7.20007 297H9.01517L9.01517 299L7.20008 299Z" fill="black" />
+    <path d="M272.8 297L272 298L272.8 299L270.985 299V297L272.8 297Z" fill="black" />
+    <path d="M13.0455 299L17.0758 299V297H13.0455V299Z" fill="black" />
+    <path d="M21.1061 299L25.1364 299L25.1364 297H21.1061V299Z" fill="black" />
+    <path d="M29.1667 299L33.197 299L33.197 297L29.1667 297L29.1667 299Z" fill="black" />
+    <path d="M37.2273 299L41.2576 299V297L37.2273 297L37.2273 299Z" fill="black" />
+    <path d="M45.2879 299L49.3182 299V297L45.2879 297V299Z" fill="black" />
+    <path d="M53.3485 299L57.3788 299V297L53.3485 297V299Z" fill="black" />
+    <path d="M61.4091 299L65.4394 299V297L61.4091 297V299Z" fill="black" />
+    <path d="M69.4697 299L73.5 299V297L69.4697 297V299Z" fill="black" />
+    <path d="M77.5303 299L81.5606 299V297L77.5303 297V299Z" fill="black" />
+    <path d="M85.5909 299L89.6212 299V297L85.5909 297V299Z" fill="black" />
+    <path d="M93.6515 299L97.6818 299V297L93.6515 297V299Z" fill="black" />
+    <path d="M101.712 299L105.742 299V297L101.712 297V299Z" fill="black" />
+    <path d="M109.773 299L113.803 299V297L109.773 297V299Z" fill="black" />
+    <path d="M117.833 299L121.864 299V297L117.833 297V299Z" fill="black" />
+    <path d="M125.894 299L129.924 299V297L125.894 297V299Z" fill="black" />
+    <path d="M133.955 299L137.985 299V297L133.955 297V299Z" fill="black" />
+    <path d="M142.015 299L146.045 299V297L142.015 297V299Z" fill="black" />
+    <path d="M150.076 299L154.106 299V297L150.076 297V299Z" fill="black" />
+    <path d="M158.136 299L162.167 299V297L158.136 297V299Z" fill="black" />
+    <path d="M166.197 299L170.227 299V297L166.197 297V299Z" fill="black" />
+    <path d="M174.258 299L178.288 299V297L174.258 297V299Z" fill="black" />
+    <path d="M182.318 299L186.349 299V297L182.318 297V299Z" fill="black" />
+    <path d="M190.379 299L194.409 299V297L190.379 297V299Z" fill="black" />
+    <path d="M198.439 299L202.47 299V297L198.439 297V299Z" fill="black" />
+    <path d="M206.5 299L210.53 299V297L206.5 297V299Z" fill="black" />
+    <path d="M214.561 299L218.591 299V297L214.561 297V299Z" fill="black" />
+    <path d="M222.621 299L226.652 299V297L222.621 297V299Z" fill="black" />
+    <path d="M230.682 299L234.712 299V297L230.682 297V299Z" fill="black" />
+    <path d="M238.742 299L242.773 299V297L238.742 297V299Z" fill="black" />
+    <path d="M246.803 299L250.833 299V297L246.803 297V299Z" fill="black" />
+    <path d="M254.864 299L258.894 299V297L254.864 297V299Z" fill="black" />
+    <path d="M262.924 299L266.955 299V297L262.924 297V299Z" fill="black" />
+  </g>
+  <defs>
+    <clipPath id="clip0_985_3676">
+      <rect width="280" height="440" fill="white" />
+    </clipPath>
+  </defs>
+</svg>

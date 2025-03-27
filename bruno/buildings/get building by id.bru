@@ -1,0 +1,27 @@
+meta {
+  name: get building by id
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{url}}/api/buildings/309a1bea-58c8-459f-a7ca-210228ac7b99
+  body: none
+  auth: none
+}
+
+script:pre-request {
+  const cookie = bru.getVar("cookie");
+  
+  if(cookie) {
+    req.setHeader("Cookie", cookie)
+  }
+}
+
+script:post-response {
+  const cookies = res.getHeader('set-cookie');
+  
+  if(cookies) {
+    bru.setVar("cookie", cookies.join('; '));
+  }
+}

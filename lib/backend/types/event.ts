@@ -1,5 +1,9 @@
 import { UUID } from "crypto";
-import { IntaniaLocation } from "./intaniaLocation";
+import { Prisma, IntaniaLocation } from "@prisma/client";
+
+export type EventDetail = Prisma.EventGetPayload<{
+  include: { tags: true, intaniaLocation: true };
+}>;
 
 export type Event = {
   id: UUID;
@@ -17,4 +21,6 @@ export type Event = {
 export type EventTag = {
   id: UUID;
   name: string;
+
+  events?: Event[];
 };

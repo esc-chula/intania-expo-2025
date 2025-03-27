@@ -18,21 +18,22 @@ model User {
   workshopId String?   @db.Uuid
 
   // fields for Visitor
-  sixDigitCode         String? @unique
+  sixDigitCode         String?   @unique // S-{incrementCode}
+  incrementCode        Int       @default(autoincrement())
   name                 String?
   surname              String?
   gender               String?
   phone                String?
-  category             String?
-  visitDate            String?
-  interestedActivities String?
-  referralSource       String?
+  category             Category?
+  visitDates           String[]
+  interestedActivities String[]
+  referralSources      String[]
   studentLevel         String?
   studyStream          String?
   school               String?
   province             String?
   interestLevel        String?
-  interestedField      String?
+  interestedFields     String[]
   emergencyContact     String?
   universityYear       String?
   faculty              String?
@@ -46,12 +47,32 @@ model User {
   tokens Token[]
 
   registeredWorkshopSlotOnVisitor RegisteredWorkshopSlotOnVisitor[]
+  checkedInExpoOnVisitor          CheckedInExpoOnVisitor[]
+
+  @@index([email])
+  @@index([sixDigitCode])
+}
+
+model CheckedInExpoOnVisitor {
+  visitor   User     @relation(fields: [visitorId], references: [id])
+  visitorId String   @map("userId") @db.Uuid
+  checkIn   DateTime
+
+  @@unique([visitorId, checkIn])
 }
 
 enum Role {
   VISITOR
   EXPO_STAFF
   WORKSHOP_STAFF
+}
+
+enum Category {
+  STUDENT
+  INTANIA
+  COLLEGE_STUDENT
+  TEACHER
+  OTHER
 }
 
 model Token {
@@ -61,15 +82,16 @@ model Token {
   refreshToken String
 
   // not needed
-  User User @relation(fields: [userId], references: [id])
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Building {
-  id     String   @id @default(uuid()) @db.Uuid
-  name   String   @unique
-  slug   String?
-  images String[]
-  floors Floor[]
+  id      String   @id @default(uuid()) @db.Uuid
+  name    String   @unique
+  slug    String?
+  images  String[]
+  summary String?
+  floors  Floor[]
 }
 
 model Floor {
@@ -133,7 +155,8 @@ model Workshop {
   intaniaLocationId String?          @db.Uuid
 
   // not needed
-  users User[]
+  users                           User[]
+  RegisteredWorkshopSlotOnVisitor RegisteredWorkshopSlotOnVisitor[]
 }
 
 model WorkshopSlot {
@@ -150,13 +173,16 @@ model WorkshopSlot {
 }
 
 model RegisteredWorkshopSlotOnVisitor {
-  registeredWorkshopSlot   WorkshopSlot @relation(fields: [registeredWorkshopSlotId], references: [id])
+  registeredWorkshopSlot   WorkshopSlot @relation(fields: [registeredWorkshopSlotId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   registeredWorkshopSlotId String       @map("workshopSlotId") @db.Uuid
-  visitor                  User         @relation(fields: [visitorId], references: [id])
+  workshop                 Workshop     @relation(fields: [workshopId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  workshopId               String       @db.Uuid
+  visitor                  User         @relation(fields: [visitorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   visitorId                String       @map("userId") @db.Uuid
   checkIn                  Boolean
 
   @@id([visitorId, registeredWorkshopSlotId])
+  @@unique([visitorId, workshopId])
 }
 
 model Competition {

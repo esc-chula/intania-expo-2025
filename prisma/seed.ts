@@ -1,10 +1,11 @@
-import { Building, Floor, Room } from "@/lib/backend/types/buildingFloorRoom";
 import { Competition } from "@/lib/backend/types/competition";
 import { Event, EventTag } from "@/lib/backend/types/event";
 import { IntaniaLocation } from "@/lib/backend/types/intaniaLocation";
 import { Major } from "@/lib/backend/types/major";
+import { Building, Floor, Room } from "@/lib/backend/types/map";
 import { ExpoStaff, Visitor, WorkshopStaff } from "@/lib/backend/types/user";
 import { Workshop, WorkshopSlot } from "@/lib/backend/types/workshop";
+import { generateSixDiditCode } from "@/lib/backend/utils";
 import { PrismaClient } from "@prisma/client";
 import { randomUUID } from "crypto";
 import * as dotenv from "dotenv";
@@ -35,6 +36,8 @@ async function main() {
   await prisma.room.deleteMany();
   await prisma.room.createMany({ data: rooms });
 
+  await prisma.registeredWorkshopSlotOnVisitor.deleteMany();
+
   await prisma.workshop.deleteMany();
   await prisma.workshop.createMany({
     data: workshops.map((obj) => {
@@ -63,6 +66,7 @@ async function main() {
   await prisma.major.deleteMany();
   await prisma.major.createMany({ data: majors });
 
+  await prisma.token.deleteMany();
   await prisma.user.deleteMany();
   await prisma.user.createMany({
     data: expoStaffs,
@@ -72,6 +76,20 @@ async function main() {
   });
   await prisma.user.createMany({
     data: visitors,
+  });
+  visitors.forEach(async (visitor) => {
+    const data = await prisma.user.findFirst({
+      where: { id: visitor.id },
+      select: { incrementCode: true },
+    });
+    const sixDigitCode = generateSixDiditCode(
+      visitor.category,
+      data!.incrementCode,
+    );
+    await prisma.user.update({
+      where: { id: visitor.id },
+      data: { sixDigitCode: sixDigitCode },
+    });
   });
 }
 
@@ -98,21 +116,21 @@ const visitors: Visitor[] = [
   {
     id: randomUUID(),
     email: "user1@gmail.com",
-    sixDigitCode: "904769",
+    sixDigitCode: "",
     name: "name1",
     surname: "surname1",
     gender: "male",
     phone: "0123456789",
-    category: "_category",
-    visitDate: "_visitDate",
-    interestedActivities: "*",
-    referralSource: "",
+    category: "STUDENT",
+    visitDates: [],
+    interestedActivities: [],
+    referralSources: [],
     studentLevel: "",
     studyStream: "",
     school: "",
     province: "",
     interestLevel: "",
-    interestedField: "",
+    interestedFields: [],
     emergencyContact: "",
     universityYear: "",
     faculty: "",
@@ -129,32 +147,37 @@ const buildings: Building[] = [
   {
     id: randomUUID(),
     name: "ENG3",
-    slug: "",
+    slug: "eng3",
     images: [],
+    summary: "just the third building",
   },
   {
     id: randomUUID(),
     name: "ENG1",
-    slug: "",
+    slug: "eng1",
     images: [],
+    summary: "just the first building",
   },
   {
     id: randomUUID(),
     name: "ENG2",
-    slug: "",
+    slug: "eng2",
     images: [],
+    summary: "just the second building",
   },
   {
     id: randomUUID(),
     name: "ENG100",
-    slug: "",
+    slug: "eng100",
     images: [],
+    summary: "the hundredth building???",
   },
   {
     id: randomUUID(),
     name: "ENG4",
-    slug: "",
+    slug: "eng4",
     images: [],
+    summary: "just the fourth building",
   },
 ];
 
@@ -163,19 +186,19 @@ const floors: Floor[] = [
     id: randomUUID(),
     buildingId: buildings[0].id,
     name: "1",
-    slug: "",
+    slug: "floor 1",
   },
   {
     id: randomUUID(),
     buildingId: buildings[0].id,
     name: "2",
-    slug: "",
+    slug: "floor 2",
   },
   {
     id: randomUUID(),
     buildingId: buildings[0].id,
     name: "3",
-    slug: "",
+    slug: "floor 3",
   },
 ];
 
@@ -265,6 +288,14 @@ const workshopSlots: WorkshopSlot[] = [
   {
     id: randomUUID(),
     workshopId: workshopsId[0],
+    startTime: new Date(1900, 3, 30, 6, 0, 0, 0),
+    endTime: new Date(1910, 3, 30, 8, 0, 0, 0),
+    currentRegistrantCount: 0,
+    maxRegistrantCount: 50,
+  },
+  {
+    id: randomUUID(),
+    workshopId: workshopsId[0],
     startTime: new Date(2025, 3, 30, 6, 0, 0, 0),
     endTime: new Date(2025, 3, 30, 8, 0, 0, 0),
     currentRegistrantCount: 0,
@@ -330,12 +361,12 @@ const majors: Major[] = [
   },
   {
     id: randomUUID(),
-    name: "CP",
+    name: "CEDT",
     description: "CEDT description here",
   },
   {
     id: randomUUID(),
-    name: "CP",
+    name: "ICE",
     description: "ICE description here",
   },
 ];

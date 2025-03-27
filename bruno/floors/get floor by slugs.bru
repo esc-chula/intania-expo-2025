@@ -1,0 +1,27 @@
+meta {
+  name: get floor by slugs
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{url}}/api/floors/eng3/floor 1
+  body: none
+  auth: none
+}
+
+script:pre-request {
+  const cookie = bru.getVar("cookie");
+  
+  if(cookie) {
+    req.setHeader("Cookie", cookie)
+  }
+}
+
+script:post-response {
+  const cookies = res.getHeader('set-cookie');
+  
+  if(cookies) {
+    bru.setVar("cookie", cookies.join('; '));
+  }
+}

@@ -1,0 +1,27 @@
+meta {
+  name: get visitor by six digit code
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{url}}/api/visitors/xxx
+  body: none
+  auth: none
+}
+
+script:pre-request {
+  const cookie = bru.getVar("cookie");
+  
+  if(cookie) {
+    req.setHeader("Cookie", cookie)
+  }
+}
+
+script:post-response {
+  const cookies = res.getHeader('set-cookie');
+  
+  if(cookies) {
+    bru.setVar("cookie", cookies.join('; '));
+  }
+}

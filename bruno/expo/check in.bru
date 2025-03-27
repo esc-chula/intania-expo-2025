@@ -1,0 +1,27 @@
+meta {
+  name: check in
+  type: http
+  seq: 1
+}
+
+put {
+  url: {{url}}/api/expo/check-in/2ad4a726-1b20-400e-86ee-bfc7623e024e
+  body: none
+  auth: inherit
+}
+
+script:pre-request {
+  const cookie = bru.getVar("cookie");
+  
+  if(cookie) {
+    req.setHeader("Cookie", cookie)
+  }
+}
+
+script:post-response {
+  const cookies = res.getHeader('set-cookie');
+  
+  if(cookies) {
+    bru.setVar("cookie", cookies.join('; '));
+  }
+}

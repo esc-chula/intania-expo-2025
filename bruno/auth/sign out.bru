@@ -1,0 +1,33 @@
+meta {
+  name: sign out
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{url}}/api/auth/signout
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "tokenId": "763371d6-e4f5-4663-819c-d7e03a454abb"
+  }
+}
+
+script:pre-request {
+  const cookie = bru.getVar("cookie");
+  
+  if(cookie) {
+    req.setHeader("Cookie", cookie)
+  }
+}
+
+script:post-response {
+  const cookies = res.getHeader('set-cookie');
+  
+  if(cookies) {
+    bru.setVar("cookie", cookies.join('; '));
+  }
+}

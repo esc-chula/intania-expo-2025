@@ -5,9 +5,10 @@ export type Payload = {
   email: string;
   role: Role;
 };
+
 const JWT_SECRET = process.env.JWT_SECRET!;
-const ACCESS_TOKEN_EXPIRES = Number(process.env.ACCESS_TOKEN_EXPIRES!);
-const REFRESH_TOKEN_EXPIRES = Number(process.env.REFRESH_TOKEN_EXPIRES!);
+export const ACCESS_TOKEN_EXPIRES = Number(process.env.ACCESS_TOKEN_EXPIRES!);
+export const REFRESH_TOKEN_EXPIRES = Number(process.env.REFRESH_TOKEN_EXPIRES!);
 
 export function generateToken(payload: Payload): {
   accessToken: string;
@@ -26,12 +27,15 @@ export function generateToken(payload: Payload): {
   return { accessToken, refreshToken };
 }
 
-export function parseToken(token: string): Payload | null {
+export function parseToken(token: string): {
+  payload: Payload | undefined;
+  error: Error | undefined;
+} {
   try {
     const x = jwt.verify(token, JWT_SECRET);
-    return x as Payload;
+    return { payload: x as Payload, error: undefined };
   } catch (error) {
-    return null;
+    return { payload: undefined, error: error as Error };
   }
 }
 

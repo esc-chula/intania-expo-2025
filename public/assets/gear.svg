@@ -1,0 +1,29 @@
+<svg width="374" height="374" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <mask id="prefix__a" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="374" height="374">
+    <path fill-rule="evenodd" clip-rule="evenodd"
+      d="M323.136 102.893a159.088 159.088 0 0119.616 47.324L374 163v48l-31.249 12.784a159.06 159.06 0 01-19.615 47.324l13.063 31.151-33.941 33.941-31.152-13.063a159.067 159.067 0 01-47.323 19.614L211 374h-48l-12.784-31.249a159.053 159.053 0 01-47.323-19.615L71.742 336.2 37.8 302.259l13.064-31.152a159.062 159.062 0 01-19.615-47.323L0 211v-48l31.248-12.783a159.065 159.065 0 0119.616-47.324L37.8 71.743 71.741 37.8l31.151 13.063a159.061 159.061 0 0147.324-19.615L163 0h48l12.783 31.248a159.055 159.055 0 0147.324 19.616l31.151-13.063L336.2 71.74l-13.064 31.152zM187 299c61.856 0 112-50.144 112-112S248.856 75 187 75 75 125.144 75 187s50.144 112 112 112z"
+      fill="#000" />
+  </mask>
+  <g mask="url(#prefix__a)">
+    <path fill="url(#prefix__paint0_linear_1349_6510)" d="M0 0h374v374H0z" />
+    <path fill="#000" fill-opacity=".5" d="M0 0h374v374H0z" />
+    <g opacity=".4" filter="url(#prefix__filter0_f_1349_6510)">
+      <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M340.752 146.217a159.09 159.09 0 00-19.616-47.324L334.2 67.742 300.258 33.8l-31.151 13.063a159.055 159.055 0 00-47.324-19.615L210.636 0H374v374H0V207.819l29.249 11.965a159.062 159.062 0 0019.615 47.323L35.8 298.259 69.74 332.2l31.152-13.064a159.053 159.053 0 0047.323 19.615L161 370h48l12.783-31.249a159.067 159.067 0 0047.323-19.614l31.152 13.063 33.941-33.941-13.063-31.151a159.06 159.06 0 0019.615-47.324L372 207v-48l-31.248-12.783zM0 158.182V0h159.364l-11.148 27.248a159.061 159.061 0 00-47.324 19.616l-31.15-13.063L35.8 67.742l13.064 31.151a159.062 159.062 0 00-19.616 47.324L0 158.182zM297 183c0 61.856-50.144 112-112 112S73 244.856 73 183 123.144 71 185 71s112 50.144 112 112z"
+        fill="#FEF200" />
+    </g>
+  </g>
+  <defs>
+    <linearGradient id="prefix__paint0_linear_1349_6510" x1="374" y1="374" x2="9.206" y2="-8.774"
+      gradientUnits="userSpaceOnUse">
+      <stop stop-color="#821923" />
+      <stop offset="1" stop-color="#420D12" />
+    </linearGradient>
+    <filter id="prefix__filter0_f_1349_6510" x="-8" y="-8" width="390" height="390" filterUnits="userSpaceOnUse"
+      color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix" />
+      <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+      <feGaussianBlur stdDeviation="4" result="effect1_foregroundBlur_1349_6510" />
+    </filter>
+  </defs>
+</svg>
