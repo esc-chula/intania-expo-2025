@@ -1,0 +1,15 @@
+{
+  "name": "intania-expo-2025-tools",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "checkExpiredToken": "npx tsx checkExpiredToken/checkExpiredToken.ts",
+    "stressTesting": "npx tsx stressTesting/stressTesting.ts"
+  },
+  "dependencies": {
+    "os-utils": "^0.0.14"
+  },
+  "devDependencies": {
+    "@types/os-utils": "^0.0.4"
+  }
+}
