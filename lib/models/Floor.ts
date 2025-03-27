@@ -1,3 +1,4 @@
+import Database from "@/lib/models/Database";
 import Room from "@/lib/models/Room";
 import { dash } from "radash";
 
@@ -8,15 +9,23 @@ export default class Floor {
   #slug: string | null;
   #rooms: Room[];
 
+  static async fetchFromSlug(buildingSlug: string, floorSlug: string) {
+    const { data, status, ok } = await Database.fetch<
+      ConstructorParameters<typeof Floor>[0]
+    >("GET", `/floors/${buildingSlug}/${floorSlug}`);
+    return { data: ok ? new Floor(data) : null, status, ok };
+  }
+
   constructor(data: {
     id: string;
     name: string;
+    summary: string;
     slug: string | null;
     rooms: Room[];
   }) {
     this.#id = data.id;
     this.#name = data.name;
-    this.#summary = data.name; // Temporary
+    this.#summary = data.summary;
     this.#slug = data.slug || dash(this.#name);
     this.#rooms = data.rooms;
   }
@@ -33,7 +42,7 @@ export default class Floor {
     return this.#name;
   }
   get summary() {
-    return this.#summary
+    return this.#summary;
   }
   get slug() {
     return this.#slug;

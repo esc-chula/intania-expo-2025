@@ -30,16 +30,16 @@ const BuildingCard: StyleableFC<{
             <Interactive
               href={floor.urlFrom(building.slug)}
               className={cn(`state-layer-cream grid h-11 w-full grid-cols-4
-                items-center text-start`)}
+                items-center text-start group`)}
             >
               <h4
                 className={cn(`text-title-md leading-title-md ml-4 font-bold
-                  text-white`)}
+                  text-white group-has-[>p:empty]:col-span-3`)}
               >
                 {floor.name}
               </h4>
-              <p className="text-body-lg leading-body-lg col-span-2">
-                {floor.name}
+              <p className="text-body-lg leading-body-lg col-span-2 empty:hidden">
+                {floor.summary}
               </p>
               <Icon name="arrow_forward" className="mr-2.5 ml-auto" />
             </Interactive>

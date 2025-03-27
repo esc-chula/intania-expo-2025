@@ -1,10 +1,15 @@
 export default class Room {
   #id: string;
   #name: string;
-  #event: string;
-  #body: string;
+  #event: string | null;
+  #body: string | null;
 
-  constructor(data: { id: string; name: string; event: string; body: string }) {
+  constructor(data: {
+    id: string;
+    name: string;
+    event: string | null;
+    body: string | null;
+  }) {
     this.#id = data.id;
     this.#name = data.name;
     this.#event = data.event;
