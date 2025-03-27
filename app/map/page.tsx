@@ -5,6 +5,12 @@ import BuildingCard from "@/app/map/components/BuildingCard";
 import PositionedMap from "@/app/map/components/PositionedMap";
 import Building from "@/lib/models/Building";
 import Overview from "@/public/assets/map/overview.png";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Explore the map",
+  description: "คณะวิศวฯ มีตึกอะไรบ้าง น่าตาเป็นยังไง มีบูทอะไรบ้าง มาดูกันเลย",
+}
 
 export default async function ExploreTheMap() {
   const { data: buildings } = await Building.fetchAll();
