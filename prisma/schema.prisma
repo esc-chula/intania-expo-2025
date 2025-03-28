@@ -48,6 +48,9 @@ model User {
 
   registeredWorkshopSlotOnVisitor RegisteredWorkshopSlotOnVisitor[]
   checkedInExpoOnVisitor          CheckedInExpoOnVisitor[]
+
+  @@index([email])
+  @@index([sixDigitCode])
 }
 
 model CheckedInExpoOnVisitor {
@@ -83,11 +86,12 @@ model Token {
 }
 
 model Building {
-  id     String   @id @default(uuid()) @db.Uuid
-  name   String   @unique
-  slug   String?
-  images String[]
-  floors Floor[]
+  id      String   @id @default(uuid()) @db.Uuid
+  name    String   @unique
+  slug    String?
+  images  String[]
+  summary String?
+  floors  Floor[]
 }
 
 model Floor {

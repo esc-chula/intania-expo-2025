@@ -1,14 +1,14 @@
 import { prisma } from "@/lib/backend/prisma";
 import { SortingSchema } from "@/lib/backend/schemas/query";
 import { HTTPError } from "@/lib/backend/types/httpError";
-import { BuildingDetail } from "@/lib/backend/types/map";
+import { BuildingList } from "@/lib/backend/types/map";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { NextResponse } from "next/server";
 import { fromZodError } from "zod-validation-error";
 
 export async function GET(
   request: Request,
-): Promise<NextResponse<BuildingDetail[] | HTTPError>> {
+): Promise<NextResponse<BuildingList[] | HTTPError>> {
   const { searchParams } = new URL(request.url);
 
   let sorting;
@@ -31,7 +31,7 @@ export async function GET(
 
   try {
     const buildings = await prisma.building.findMany({
-      include: { floors: { include: { rooms: true } } },
+      include: { floors: true },
       orderBy: validation.data
         ? validation.data.columns.map((column) => {
             return {

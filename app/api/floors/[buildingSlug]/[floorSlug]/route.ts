@@ -6,14 +6,14 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   _: Request,
-  { params }: { params: Promise<{ id: string }> },
+  { params }: { params: Promise<{ buildingSlug: string; floorSlug: string }> },
 ): Promise<NextResponse<FloorDetail | HTTPError>> {
-  const { id } = await params;
+  const { buildingSlug, floorSlug } = await params;
 
   let floor;
   try {
     floor = await prisma.floor.findFirstOrThrow({
-      where: { id: id },
+      where: { slug: floorSlug, building: { slug: buildingSlug } },
       include: { rooms: true },
     });
   } catch (error) {
