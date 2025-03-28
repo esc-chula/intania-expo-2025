@@ -7,7 +7,7 @@ const PositionMarker: StyleableFC<{
 }> = ({ children, suppressAnimation, className, style }) => (
   <div
     className={cn(
-      `absolute transition-transform duration-5000 *:absolute *:top-0 *:left-0
+      `transition-transform duration-5000 *:absolute *:top-0 *:left-0
       *:overflow-visible`,
       className,
     )}

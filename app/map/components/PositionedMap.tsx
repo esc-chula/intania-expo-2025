@@ -37,7 +37,7 @@ const PositionedMap: StyleableFC<{
   return (
     <div>
       <div className="relative overflow-hidden">
-        <Image src={src} alt="แผนที่" quality={100} priority />
+        <Image src={src} alt="แผนที่" quality={100} priority className="mb-3" />
         <div className="pointer-events-none absolute inset-0">
           <div
             className={cn(
@@ -49,7 +49,10 @@ const PositionedMap: StyleableFC<{
             style={style}
           >
             {styles && (
-              <PositionMarker className="-rotate-9" style={positionStyle}>
+              <PositionMarker
+                className="absolute -rotate-9"
+                style={positionStyle}
+              >
                 <AccuracyMarker style={accuracyStyle} />
                 <HeadingMarker style={headingStyle} />
               </PositionMarker>
