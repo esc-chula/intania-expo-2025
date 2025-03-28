@@ -22,7 +22,7 @@ export default class Competition {
     ),
     new Competition(
       "Integration Bee Challenge",
-      "เตรียมตัวพบกับ Intania Hackathon — งานที่จะสร้าง บรรยากาศที่ทำให้ทุกคนได้สร้างสิ่งใหม่ ๆ แก้ไขปัญหาใหม่ ๆ ที่สร้าง Impact ได้จริงไปด้วยกัน",
+      "การแข่งขันอินทิเกรตสุดเดือดในระดับมัธยมศึกษาตอนปลาย เปิดเนื้อหาต้อนรับเข้าสู่โลกแห่งวิศวะ สามารถเข้าชมงานการแข่งขันรอบชิงชนะเลิศได้ที่หน้าเวที ณ หอประชุมอาคาร 4 ชั้น 2",
       "/arena/ib.png",
       [
         { name: "ชมถ่ายทอดสด", url: "https://www.facebook.com/profile.php?id=61574441578556&sk=live_videos", appearance: "filled" },
