@@ -149,35 +149,30 @@ const buildings: Building[] = [
     name: "ENG3",
     slug: "eng3",
     images: [],
-    summary: "just the third building",
   },
   {
     id: randomUUID(),
     name: "ENG1",
     slug: "eng1",
     images: [],
-    summary: "just the first building",
   },
   {
     id: randomUUID(),
     name: "ENG2",
     slug: "eng2",
     images: [],
-    summary: "just the second building",
   },
   {
     id: randomUUID(),
     name: "ENG100",
     slug: "eng100",
     images: [],
-    summary: "the hundredth building???",
   },
   {
     id: randomUUID(),
     name: "ENG4",
     slug: "eng4",
     images: [],
-    summary: "just the fourth building",
   },
 ];
 
@@ -187,18 +182,21 @@ const floors: Floor[] = [
     buildingId: buildings[0].id,
     name: "1",
     slug: "floor 1",
+    summary: "Hall of Legends, Innovation"
   },
   {
     id: randomUUID(),
     buildingId: buildings[0].id,
     name: "2",
     slug: "floor 2",
+    summary: "Showcase & Sharing"
   },
   {
     id: randomUUID(),
     buildingId: buildings[0].id,
     name: "3",
     slug: "floor 3",
+    summary: "S&S, Intania Arena"
   },
 ];
 

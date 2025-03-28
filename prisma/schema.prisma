@@ -90,15 +90,15 @@ model Building {
   name    String   @unique
   slug    String?
   images  String[]
-  summary String?
   floors  Floor[]
 }
 
 model Floor {
-  id    String  @id @default(uuid()) @db.Uuid
-  name  String  @unique
-  slug  String?
-  rooms Room[]
+  id      String  @id @default(uuid()) @db.Uuid
+  name    String  @unique
+  slug    String?
+  summary String?
+  rooms   Room[]
 
   building   Building @relation(fields: [buildingId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   buildingId String   @db.Uuid

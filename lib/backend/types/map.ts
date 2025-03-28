@@ -20,13 +20,13 @@ export type Building = {
   name: string;
   slug?: string;
   images: string[];
-  summary?: string;
 };
 
 export type Floor = {
   id: UUID;
   buildingId: UUID;
   name: string;
+  summary?: string;
   slug?: string;
 };
 

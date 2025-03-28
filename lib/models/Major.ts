@@ -35,8 +35,8 @@ export default class Major {
     new Major("NANO", "วิศวกรรมนาโน (NANO)", "NANO", "blur_on", MAJOR_LANGUAGE.En),
     new Major("ADME", "วิศวกรรมการออกแบบและการผลิตยานยนต์ (ADME)", "ADME-V", "directions_car", MAJOR_LANGUAGE.En),
     new Major("AERO", "วิศวกรรมอากาศยาน (AERO)", "AERO", "travel", MAJOR_LANGUAGE.En),
-    new Major("ChPE", "วิศวกรรมเซมิคอนดักเตอร์ (SEMI)", "SEMI", "memory", MAJOR_LANGUAGE.En),
-    new Major("SEMI", "Chemical and Process Engineering (ChPE)", "ChPE", "cycle", MAJOR_LANGUAGE.En),
+    new Major("SEMI", "วิศวกรรมเซมิคอนดักเตอร์ (SEMI)", "SEMI", "memory", MAJOR_LANGUAGE.En),
+    new Major("ChPE", "Chemical and Process Engineering (ChPE)", "ChPE", "cycle", MAJOR_LANGUAGE.En),
   ];
 
   static fromSlug(slug: string) {

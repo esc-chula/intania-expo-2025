@@ -28,11 +28,10 @@ export default class IntaniaLocation {
     return sift([
       this.#room,
       this.#room && SEPARATOR,
-      this.#building &&
-        (this.#building[0]?.match(/[\u0E00-\u0E7F]/)
-          ? this.#building
-          : `ตึก ${this.#building}`),
-      `ชั้น ${this.#floor}`,
+      this.#building[0]?.match(/[\u0E00-\u0E7F]/)
+        ? this.#building
+        : `ตึก ${this.#building}`,
+      this.#floor && `ชั้น ${this.#floor}`,
     ]).join(" ");
   }
 
