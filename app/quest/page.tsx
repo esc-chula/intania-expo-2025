@@ -1,7 +1,7 @@
 import Button from "@/app/components/Button";
 import Icon from "@/app/components/Icon";
 import TopAppBar from "@/app/components/TopAppBar";
-import WorkshopCard from "@/app/workshops/components/WorkshopCard";
+import WorkshopCard from "@/app/quest/components/WorkshopCard";
 import Workshop from "@/lib/models/Workshop";
 
 export const revalidate = 3600;
