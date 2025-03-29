@@ -7,6 +7,12 @@ import ScanFeed from "@/app/scan/components/ScanFeed";
 import ScanSheet from "@/app/scan/components/ScanSheet";
 import ScanTooltip from "@/app/scan/components/ScanTooltip";
 import useScanner from "@/app/scan/helpers/useScanner";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Check ticket",
+  description: "ใช้กล้องโทรศัพท์สแกนบาร์โค้ดบนตั๋วของผู้ร่วมงาน",
+};
 
 export default function ScanPage() {
   const { sixDigitCode, visitor, status, handleCapture, handleCheckin } =

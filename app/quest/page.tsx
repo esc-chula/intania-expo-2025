@@ -3,6 +3,12 @@ import Icon from "@/app/components/Icon";
 import TopAppBar from "@/app/components/TopAppBar";
 import WorkshopCard from "@/app/quest/components/WorkshopCard";
 import Workshop from "@/lib/models/Workshop";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Intania Quest",
+  description: "เจาะลึกภาควิชาแบบจัดเต็มผ่านเวิร์กชอปสุดเข้มข้น!",
+};
 
 export const revalidate = 3600;
 
