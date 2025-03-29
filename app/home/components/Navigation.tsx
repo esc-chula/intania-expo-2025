@@ -17,7 +17,7 @@ const Navigation: StyleableFC = ({ className, style }) => (
     <NavigationCard
       title="Intania Quest"
       body="เจาะลึกภาควิชาแบบจัดเต็มผ่านเวิร์กชอปสุดเข้มข้น!"
-      href="/workshops"
+      href="/quest"
     />
     <NavigationCard
       title="Intania Arena"
