@@ -1,4 +1,5 @@
 import Card from "@/app/components/Card";
+import Icon from "@/app/components/Icon";
 import Interactive from "@/app/components/Interactive";
 import cn from "@/lib/helpers/cn";
 import { StyleableFC } from "@/lib/types/misc";
@@ -26,20 +27,25 @@ const NavigationCard: StyleableFC<{
     >
       <h3
         className={cn(`text-yellow text-display-md font-narrow text-center
-          leading-none font-bold uppercase italic
+          leading-none font-bold tracking-tight uppercase italic
           [text-shadow:_4px_4px_0px_var(--color-bright-red)]`)}
       >
         {title}
       </h3>
       <p className="max-w-84 font-bold">{body}</p>
     </Interactive>
-    {children && (
+    {children ? (
       <div
         className={cn(`pointer-events-none absolute inset-x-0 -bottom-1 z-10
           grid place-items-center *:pointer-events-auto`)}
       >
         {children}
       </div>
+    ) : (
+      <Icon
+        name="arrow_forward"
+        className="text-cream absolute right-4 bottom-4"
+      />
     )}
   </Card>
 );
