@@ -5,6 +5,7 @@ import React from "react";
 export enum MAJOR_LANGUAGE {
   En = "en",
   Th = "th",
+  ChPE = "chpe",
 }
 
 /** A major in the faculty. */
@@ -36,7 +37,7 @@ export default class Major {
     new Major("ADME", "วิศวกรรมการออกแบบและการผลิตยานยนต์ (ADME)", "ADME-V", "directions_car", MAJOR_LANGUAGE.En),
     new Major("AERO", "วิศวกรรมอากาศยาน (AERO)", "AERO", "travel", MAJOR_LANGUAGE.En),
     new Major("SEMI", "วิศวกรรมเซมิคอนดักเตอร์ (SEMI)", "SEMI", "memory", MAJOR_LANGUAGE.En),
-    new Major("ChPE", "Chemical and Process Engineering (ChPE)", "ChPE", "cycle", MAJOR_LANGUAGE.En),
+    new Major("ChPE", "Chemical and Process Engineering (ChPE)", "ChPE", "cycle", MAJOR_LANGUAGE.ChPE),
   ];
 
   static fromSlug(slug: string) {

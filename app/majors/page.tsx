@@ -34,6 +34,16 @@ export default function Page() {
           </li>
         ))}
       </ul>
+      <h2 className="!mt-9 !text-white">
+        Chemical and Process Engineering (ChPE)
+      </h2>
+      <ul className="grid !list-none grid-cols-4 gap-4 !pl-0">
+        {majors.chpe?.map((major) => (
+          <li key={major.slug}>
+            <MajorCard major={major} />
+          </li>
+        ))}
+      </ul>
     </>
   );
 }
