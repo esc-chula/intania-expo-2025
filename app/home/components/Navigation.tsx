@@ -11,7 +11,7 @@ const Navigation: StyleableFC = ({ className, style }) => (
     />
     <NavigationCard
       title="Activity schedule"
-      body="เวทีกลางเรามีกิจกรรมตลอดทั้งวัน ทั้งสนุก ทั้งสาระ!"
+      body="Intania Expo เรามีกิจกรรมแน่นเอี๊ยด มาดูกันว่าวันงานมีกิจกรรมอะไรบ้าง"
       href="/schedule"
     />
     <NavigationCard
