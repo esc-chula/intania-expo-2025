@@ -13,8 +13,8 @@ const Hero: StyleableFC<{
 }> = ({ children, className, style }) => (
   <section
     className={cn(
-      `flex h-dvh flex-col items-center justify-center pt-7 pb-10 text-center
-      sm:h-auto`,
+      `flex h-[calc(100vh-2rem)] flex-col items-center justify-center pt-7 pb-10
+      text-center sm:h-auto`,
       className,
     )}
     style={style}
@@ -43,7 +43,7 @@ const Hero: StyleableFC<{
       </address>
     </section>
     <Countdown date={EVENT_START_DATE} className="mt-11" />
-    <div aria-hidden className="min-h-14 grow" />
+    <div aria-hidden className="min-h-16 grow" />
     {children}
   </section>
 );
