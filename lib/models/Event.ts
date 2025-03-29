@@ -106,7 +106,7 @@ export default class Event {
         Event.formatTime(this.#startTime, this.isIntaniaExpo),
         Event.formatTime(this.#endTime, true),
       ].join("–");
-    return this.formattedStartTime || this.formattedStartTime;
+    return this.formattedStartTime || this.formattedEndTime;
   }
 
   // Standard getters
