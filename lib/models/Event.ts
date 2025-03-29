@@ -11,6 +11,9 @@ export enum EVENT_GROUP {
   Later,
 }
 
+const DEFAULT_EVENT_DURATION = 1000 * 60 * 60 * 3; // 3 hours
+const EXPO_DURATION = 1000 * 60 * 60 * 7; // 7 hours
+
 export default class Event {
   #id: string;
   #name: string;
@@ -64,10 +67,13 @@ export default class Event {
   get isOngoing() {
     const now = new Date("2025-03-30T06:30:00.000+07:00");
     return (
-      (this.startTime !== null &&
-        this.startTime <= now &&
-        (!this.endTime || this.endTime >= now)) ||
-      false
+      this.startTime !== null &&
+      this.startTime <= now &&
+      (this.endTime === null
+        ? this.isIntaniaExpo
+          ? EVENT_START_DATE.getTime() + EXPO_DURATION > now.getTime()
+          : this.startTime.getTime() + DEFAULT_EVENT_DURATION > now.getTime()
+        : this.endTime.getTime() > now.getTime())
     );
   }
   get isIntaniaExpo() {
