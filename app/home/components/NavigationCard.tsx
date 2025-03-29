@@ -26,7 +26,7 @@ const NavigationCard: StyleableFC<{
     >
       <h3
         className={cn(`text-yellow text-display-md font-narrow text-center
-          leading-none font-bold uppercase italic
+          leading-none font-bold tracking-tight uppercase italic
           [text-shadow:_4px_4px_0px_var(--color-bright-red)]`)}
       >
         {title}
