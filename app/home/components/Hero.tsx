@@ -34,8 +34,8 @@ const Hero: StyleableFC<{
         space-y-2 italic *:-space-y-1 [&_*]:block`)}
     >
       <time className="font-bold">
-        <span>28–30 March 2025</span>
-        <span>08:00–16:00</span>
+        <span>30 March 2025</span>
+        <span>10:00–17:00</span>
       </time>
       <address>
         <span>Faculty of Engineering</span>
