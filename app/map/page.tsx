@@ -10,7 +10,7 @@ import PositionMarker from "./components/PositionMarker";
 
 export const metadata: Metadata = {
   title: "Explore the map",
-  description: "คณะวิศวฯ มีตึกอะไรบ้าง น่าตาเป็นยังไง มีบูทอะไรบ้าง มาดูกันเลย",
+  description: "คณะวิศวฯ มีตึกอะไรบ้าง น่าตาเป็นยังไง มีโซนอะไรบ้าง มาดูกันเลย",
 };
 
 export default async function ExploreTheMap() {
