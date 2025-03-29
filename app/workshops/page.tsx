@@ -17,16 +17,12 @@ export default async function Workshops() {
         </Button>
         <h1>Intania Quest</h1>
       </TopAppBar>
-      <section aria-labelledby="register" className="space-y-2">
-        <h2
-          id="register"
-          className="text-headline-sm leading-headline-sm font-bold"
-        >
-          Register
-        </h2>
+      <section className="space-y-2">
         <p className="text-body-lg leading-body-lg">
-          Workshop ของเรามีที่นั่งจำกัด อย่าลืมทำการลงทะเบียนล่วงหน้าผ่าน Google
-          Form ของเรา!
+          <strong className="text-yellow">
+            เนื่องจากเหตุการณ์แผ่นดินไหว ทางทีมงาน Intania Expo
+            จำเป็นต้องยกเลิกกิจกรรม Workshop ทั้งหมด
+          </strong>
         </p>
         <div className="flex justify-end gap-2 pt-2">
           <Button
@@ -37,6 +33,7 @@ export default async function Workshops() {
           </Button>
           <Button
             appearance="filled"
+            disabled
             href="https://forms.gle/hMsHmPmF8XyeQnFS9"
           >
             สมัคร
