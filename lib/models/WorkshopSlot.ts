@@ -39,7 +39,6 @@ export default class WorkshopSlot {
   }
 
   get hasStarted() {
-    console.log(this.#startTime);
     return this.#startTime < new Date();
   }
 

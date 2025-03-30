@@ -4,7 +4,7 @@ import Button from "@/app/components/Button";
 import Card from "@/app/components/Card";
 import Icon from "@/app/components/Icon";
 import Interactive from "@/app/components/Interactive";
-import WorkshopSlotElement from "@/app/workshops/components/WorkshopSlotElement";
+import WorkshopSlotElement from "@/app/quest/components/WorkshopSlotElement";
 import { EVENT_DATES } from "@/lib/config";
 import cn from "@/lib/helpers/cn";
 import getWeekday from "@/lib/helpers/getWeekday";
@@ -47,14 +47,15 @@ const WorkshopCard: StyleableFC<{
       </div>
       <div
         className={cn(
-          `[&_ul]:flex [&_ul]:flex-wrap [&_ul:not([role='navigation'])]:gap-x-5
-          [&_ul:not([role='navigation'])]:gap-y-3 pb-4 space-y-4`,
+          `space-y-4 pb-4 [&_ul]:flex [&_ul]:flex-wrap
+          [&_ul:not([role='navigation'])]:gap-x-5
+          [&_ul:not([role='navigation'])]:gap-y-3`,
           !expanded && `hidden`,
         )}
       >
         <ul
           role="navigation"
-          className="border-cream flex flex-nowrap border-b-1 mb-4"
+          className="border-cream mb-4 flex flex-nowrap border-b-1"
         >
           {EVENT_DATES.map((date) => (
             <li key={date.toISOString()}>
