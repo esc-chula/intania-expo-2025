@@ -8,7 +8,7 @@ const MajorCard: StyleableFC<{
 }> = ({ major, className, style }) => (
   <Interactive
     aria-label={major.displayName}
-    href={`/majors/${major.slug.toLowerCase()}`}
+    href={major.url}
     className={cn(
       `[&_.iex-icon]:text-yellow bg-brown state-layer-white flex h-30
         flex-col items-center gap-5 pt-5`,
@@ -18,8 +18,8 @@ const MajorCard: StyleableFC<{
   >
     {major.icon}
     <h3
-      className={cn(`text-title-sm leading-title-sm text-center font-bold
-        text-balance max-w-18`)}
+      className={cn(`text-title-sm leading-title-sm max-w-18 text-center
+        font-bold text-balance`)}
     >
       {
         // Civil Engineering displays really badly by default.

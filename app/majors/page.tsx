@@ -6,7 +6,7 @@ import Major from "@/lib/models/Major";
 import { group } from "radash";
 
 export default function Page() {
-  const majors = group(Major.ALL, (major) => major.language);
+  const majors = group(Major.ALL, (major) => major.category);
 
   return (
     <>
@@ -18,8 +18,8 @@ export default function Page() {
       </TopAppBar>
       <h2 className="!mt-1 !text-white">ภาคไทย</h2>
       <ul className="grid !list-none grid-cols-4 gap-4 !pl-0">
-        {majors.th?.map((major) => (
-          <li key={major.slug}>
+        {majors.thai?.map((major) => (
+          <li key={major.code}>
             <MajorCard major={major} />
           </li>
         ))}
@@ -28,8 +28,8 @@ export default function Page() {
         International School of Engineering (ISE)
       </h2>
       <ul className="grid !list-none grid-cols-4 gap-4 !pl-0">
-        {majors.en?.map((major) => (
-          <li key={major.slug}>
+        {majors.ise?.map((major) => (
+          <li key={major.code}>
             <MajorCard major={major} />
           </li>
         ))}
@@ -39,7 +39,7 @@ export default function Page() {
       </h2>
       <ul className="grid !list-none grid-cols-4 gap-4 !pl-0">
         {majors.chpe?.map((major) => (
-          <li key={major.slug}>
+          <li key={major.code}>
             <MajorCard major={major} />
           </li>
         ))}
