@@ -12,6 +12,7 @@ export async function middleware(request: NextRequest) {
   // |-----------|--------|------------|------------|-----------|
   // | /         | null   | /terms     | /home      | /staff    |
   // | /home     | /      | /terms     | null       | /staff    |
+  // | /ticket   | /      | /terms     | null       | /staff    |
   // | /terms    | /      | null       | /home      | /staff    |
   // | /register | /      | null       | /home      | /staff    |
   // | /staff    | /      | /terms     | /home      | null      |
@@ -39,7 +40,7 @@ export async function middleware(request: NextRequest) {
       if (!["/staff", "/scan", "/scan/manual"].includes(url))
         return redirect("/staff");
     } else if (isRegistered) {
-      if (url !== "/home") return redirect("/home");
+      if (!["/home", "/ticket"].includes(url)) return redirect("/home");
     } else if (!["/terms", "/register"].includes(url))
       return redirect("/terms");
   } else if (url !== "/") return redirect("/");
@@ -51,6 +52,7 @@ export const config = {
   matcher: [
     "/",
     "/home",
+    "/ticket",
     "/terms",
     "/register",
     "/staff",
