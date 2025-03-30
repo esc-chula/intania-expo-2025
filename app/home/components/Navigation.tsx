@@ -29,7 +29,6 @@ const Navigation: StyleableFC = ({ className, style }) => (
       body="แต่ละภาควิชาเรียนอะไร มีสาขาอะไรบ้าง มาเลือก “ดวงดาว” ที่ใช่กันเถอะ!"
       href="/majors"
     />
-  </nav>
 );
 
 export default Navigation;

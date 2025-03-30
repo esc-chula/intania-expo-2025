@@ -5,7 +5,7 @@ import Visitor from "@/lib/models/Visitor";
 import { StyleableFC } from "@/lib/types/misc";
 
 /**
- * This e-ticket admits the user to Intania Expo 2025. Staff will scan the
+ * This e-ticket admits the user to Intania Expo 111. Staff will scan the
  * barcode located at the bottom of the ticket to verify the user’s identity.
  *
  * @param children Replaces the bottom info item.
@@ -18,8 +18,9 @@ const Ticket: StyleableFC<{
 }> = ({ children, visitor, hideStub, className, style }) => (
   <article
     className={cn(
-      `text-dark-gray h-110 w-70 bg-[url('/assets/ticket-shape.svg')]
-        bg-contain bg-center bg-no-repeat text-center`,
+      `text-dark-gray h-110 w-70 overflow-hidden
+      bg-[url('/assets/ticket-shape.svg')] bg-contain bg-center bg-no-repeat
+      text-center whitespace-nowrap`,
       className,
     )}
     style={style}
