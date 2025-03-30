@@ -1,3 +1,5 @@
+import { LOCALE } from "@/lib/config";
+
 export default class WorkshopSlot {
   #id: string;
   #startTime: Date;
@@ -20,7 +22,7 @@ export default class WorkshopSlot {
   }
 
   private static formatTime(date: Date) {
-    return date.toLocaleTimeString("th-TH", {
+    return date.toLocaleTimeString(LOCALE, {
       hour: "2-digit",
       minute: "2-digit",
     });
