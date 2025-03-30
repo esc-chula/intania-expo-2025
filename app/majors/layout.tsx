@@ -15,6 +15,8 @@ export default function MajorLayout({
         [&_h2]:mt-10 [&_h2]:font-bold [&_h2]:text-balance [&>h1]:hidden`,
         // Bold
         `[&_strong]:text-yellow`,
+        // Links
+        `[&>a]:text-yellow [&>a]:underline [&>a]:underline-offset-6`,
         // Blockquote
         `[&_blockquote]:bg-brown [&_blockquote]:px-4 [&_blockquote]:py-3`,
         // List
