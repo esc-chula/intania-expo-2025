@@ -51,14 +51,14 @@ export default class Major {
     fullName: string,
     displayName: string | null,
     iconName: string,
-    language: MAJOR_CATEGORY,
+    category: MAJOR_CATEGORY,
   ) {
     this.#code = code;
     this.#slug = slug;
     this.#displayName = displayName;
     this.#fullName = fullName;
     this.#icon = React.createElement(Icon, { name: iconName });
-    this.#category = language;
+    this.#category = category;
   }
   get displayName() {
     return this.#displayName || this.#fullName;
