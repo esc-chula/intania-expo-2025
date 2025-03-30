@@ -1,8 +1,14 @@
 import Button from "@/app/components/Button";
 import Icon from "@/app/components/Icon";
 import TopAppBar from "@/app/components/TopAppBar";
-import WorkshopCard from "@/app/workshops/components/WorkshopCard";
+import WorkshopCard from "@/app/quest/components/WorkshopCard";
 import Workshop from "@/lib/models/Workshop";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Intania Quest",
+  description: "เจาะลึกภาควิชาแบบจัดเต็มผ่านเวิร์กชอปสุดเข้มข้น!",
+};
 
 export const revalidate = 3600;
 
@@ -17,16 +23,12 @@ export default async function Workshops() {
         </Button>
         <h1>Intania Quest</h1>
       </TopAppBar>
-      <section aria-labelledby="register" className="space-y-2">
-        <h2
-          id="register"
-          className="text-headline-sm leading-headline-sm font-bold"
-        >
-          Register
-        </h2>
+      <section className="space-y-2">
         <p className="text-body-lg leading-body-lg">
-          Workshop ของเรามีที่นั่งจำกัด อย่าลืมทำการลงทะเบียนล่วงหน้าผ่าน Google
-          Form ของเรา!
+          <strong className="text-yellow">
+            เนื่องจากเหตุการณ์แผ่นดินไหว ทางทีมงาน Intania Expo
+            จำเป็นต้องยกเลิกกิจกรรม Workshop ทั้งหมด
+          </strong>
         </p>
         <div className="flex justify-end gap-2 pt-2">
           <Button
@@ -37,6 +39,7 @@ export default async function Workshops() {
           </Button>
           <Button
             appearance="filled"
+            disabled
             href="https://forms.gle/hMsHmPmF8XyeQnFS9"
           >
             สมัคร
