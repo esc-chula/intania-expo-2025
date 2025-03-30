@@ -24,7 +24,7 @@ const MajorCard: StyleableFC<{
       {
         // Civil Engineering displays really badly by default.
         // prettier-ignore
-        major.slug === "CE" ? <>วิศวกรรม<br />โยธา</> : major.displayName
+        major.code === "CE" ? <>วิศวกรรม<br />โยธา</> : major.displayName
       }
     </h3>
   </Interactive>
